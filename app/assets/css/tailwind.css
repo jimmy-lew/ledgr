@@ -1,2 +1,23 @@
 @import "tailwindcss";
-/*@import "tw-animate-css";*/
+@import "@nuxt/ui";
+
+@theme {
+  --font-sans: "Geist", sans-serif;
+  --font-header: "Outfit", var(--font-sans);
+  --font-mono:
+    "Geist Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+}
+
+@theme static {
+  --color-zinc-950: oklch(0% 0 0);
+  --color-zinc-900: oklch(0% 0 0);
+  --color-zinc-800: oklch(26% 0 0);
+  --color-zinc-700: oklch(35% 0 0);
+  --color-zinc-600: oklch(45% 0 0);
+  --color-zinc-500: oklch(55% 0 0);
+  --color-zinc-400: oklch(65% 0 0);
+  --color-zinc-300: oklch(75% 0 0);
+  --color-zinc-200: oklch(85% 0 0);
+  --color-zinc-100: oklch(100% 0 0);
+}
