@@ -1,14 +1,14 @@
 <!-- Inspired by Henrik Ruscon https://x.com/henrikruscon/status/1800862855648129449 -->
 
 <template>
-  <div ref="navRef" class="flex items-center justify-center gap-2 rounded-2xl bg-transparent absolute -translate-x-1/2 left-1/2 bottom-14 z-2">
+  <div ref="navRef" class="flex items-center justify-center rounded-2xl bg-transparent absolute -translate-x-1/2 left-1/2 bottom-14 z-2">
     <button
       v-for="(item, index) in items"
       :key="item.title"
       @click="handleClick(index)"
       @mouseenter="handleItemHover(index)"
       @mouseleave="handleItemLeave"
-      class="item flex items-center justify-center gap-2 hover:bg-default hover:invert duration-300 transition-all py-3 px-4 rounded-2xl"
+      class="item flex items-center justify-center gap-2 hover:bg-default hover:invert active:scale-95 duration-300 transition-all py-3 px-4 rounded-2xl"
     >
       <Icon :name="item.icon" class="size-6" />
       <span class="font-bold">{{ item.title }}</span>
@@ -25,7 +25,7 @@
       damping: 26,
       mass: 1
     }"
-    class="absolute bg-default backdrop-blur-xl -translate-x-1/2 left-1/2 bottom-14 overflow-hidden"
+    class="absolute bg-black/5 dark:bg-white/5 backdrop-blur-xl -translate-x-1/2 left-1/2 bottom-14 overflow-hidden"
     >
     <Motion
       v-for="(item, index) in items"
@@ -38,10 +38,11 @@
         zIndex: activeDetail === index ? 2 : 1
       }"
       :transition="{ duration: 0.3 }"
-      class="p-4 flex flex-col items-center absolute min-w-110.5 w-max gap-1 overflow-y-scroll max-h-64"
+      :class="['p-4 flex flex-col items-center absolute min-w-110.5 w-max gap-1 overflow-y-scroll max-h-64', { mask: hasOverflow && !isScrolledToBottom }]"
+      @scroll="handleScroll"
       :style="{ pointerEvents: activeDetail === index ? 'auto' : 'none' }"
     >
-      <button @click="handleSubItemClick(index, subItemIndex, subItem)" v-for="(subItem, subItemIndex) in item.items" :key="subItem.title" class="w-full group transition-transform duration-75" :class="{ 'scale-95 bg-black/5': activeSubItemKey === `${index}-${subItemIndex}` }">
+      <button @click="handleSubItemClick(index, subItemIndex, subItem)" v-for="(subItem, subItemIndex) in item.items" :key="subItem.title" class="w-full group transition-transform duration-75 active:scale-95" >
         <div class="flex items-center gap-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 rounded-2xl py-3 hover:px-3 duration-300 w-full mx-auto px-2">
           <!-- Icon or Gradient Box -->
           <div
@@ -62,7 +63,7 @@
               </div>
                <!-- Right Side: Trailing info -->
                <div class="flex items-center gap-3 ml-auto pl-4">
-                 <span v-if="subItem.subtrailing" class="block shrink-0 py-1 px-2 text-sm rounded-lg opacity-80 border border-black/50">
+                 <span v-if="subItem.subtrailing" class="block shrink-0 py-1 px-2 text-sm rounded-lg opacity-80 border border-default">
                   {{ subItem.subtrailing }}
                 </span>
                 <span v-if="subItem.trailing" class="block">{{ subItem.trailing }}</span>
@@ -77,8 +78,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-
 interface ActionBarSubItem {
   title: string
   action?: () => void
@@ -189,6 +188,8 @@ const activeDetail = ref<number | null>(null)
 const activeIndex = ref<number | null>(null)
 const activeSubItemKey = ref<string | null>(null)
 const measuredDimensions = ref({ width: 220, height: 48 })
+const hasOverflow = ref(false)
+const isScrolledToBottom = ref(false)
 
 const handleClick = (index: number) => {
   activeIndex.value = index
@@ -235,6 +236,8 @@ const handleItemHover = (index: number) => {
     const h = Math.min(el.scrollHeight + 64, 320)
 
     measuredDimensions.value = { width: w, height: h }
+    hasOverflow.value = el.scrollHeight > 320
+    isScrolledToBottom.value = false
   }
 
   activeDetail.value = index
@@ -265,6 +268,16 @@ const handleDetailLeave = () => {
 const resetContainer = () => {
   activeIndex.value = null
   activeDetail.value = null
+  hasOverflow.value = false
+  isScrolledToBottom.value = false
+}
+
+const handleScroll = (event: Event) => {
+  const target = event.target as HTMLElement
+  const scrollTop = target.scrollTop
+  const scrollHeight = target.scrollHeight
+  const clientHeight = target.clientHeight
+  isScrolledToBottom.value = scrollTop + clientHeight >= scrollHeight - 2
 }
 
 watch([activeIndex, activeDetail], ([ni, nd]) => { console.log(ni, nd) })
@@ -276,6 +289,48 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.mask {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 10px,
+    rgba(0, 0, 0, 1) 20px,
+    rgba(0, 0, 0, 1) calc(100% - 64px),
+    rgba(0, 0, 0, 0.2) calc(100% - calc(64px / 2)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 10px,
+    rgba(0, 0, 0, 1) 20px,
+    rgba(0, 0, 0, 1) calc(100% - 64px),
+    rgba(0, 0, 0, 0.2) calc(100% - calc(64px / 2)),
+    transparent 100%
+  );
+}
+
+.dark .mask {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 10px,
+    rgba(255, 255, 255, 1) 20px,
+    rgba(255, 255, 255, 1) calc(100% - 64px),
+    rgba(255, 255, 255, 0.2) calc(100% - calc(64px / 2)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 10px,
+    rgba(255, 255, 255, 1) 20px,
+    rgba(255, 255, 255, 1) calc(100% - 64px),
+    rgba(255, 255, 255, 0.2) calc(100% - calc(64px / 2)),
+    transparent 100%
+  );
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
