@@ -1,82 +1,4 @@
 <!-- Inspired by Henrik Ruscon https://x.com/henrikruscon/status/1800862855648129449 -->
-
-<template>
-  <div ref="navRef" class="flex items-center justify-center rounded-2xl bg-transparent absolute -translate-x-1/2 left-1/2 bottom-14 z-2">
-    <button
-      v-for="(item, index) in items"
-      :key="item.title"
-      @click="handleClick(index)"
-      @mouseenter="handleItemHover(index)"
-      @mouseleave="handleItemLeave"
-      class="item flex items-center justify-center gap-2 hover:bg-default hover:invert active:scale-95 duration-300 transition-all py-3 px-4 rounded-2xl"
-    >
-      <Icon :name="item.icon" class="size-6" />
-      <span class="font-bold">{{ item.title }}</span>
-    </button>
-  </div>
-
-  <Motion
-    ref="containerRef"
-    :initial="{ width: navSize, height: 48, y: 0, borderRadius: 16 }"
-    :animate="containerAnimate"
-    :transition="{
-      type: 'spring',
-      stiffness: 170,
-      damping: 26,
-      mass: 1
-    }"
-    class="absolute bg-black/5 dark:bg-white/5 backdrop-blur-xl -translate-x-1/2 left-1/2 bottom-14 overflow-hidden"
-    >
-    <Motion
-      v-for="(item, index) in items"
-      :key="item.title"
-      :ref="(el) => setDetailRef(el, index)"
-      @mouseleave="handleDetailLeave"
-      :initial="{ opacity: 0, zIndex: 1 }"
-      :animate="{
-        opacity: activeDetail === index ? 1 : 0,
-        zIndex: activeDetail === index ? 2 : 1
-      }"
-      :transition="{ duration: 0.3 }"
-      :class="['p-4 flex flex-col items-center absolute min-w-110.5 w-max gap-1 overflow-y-scroll max-h-64', { mask: hasOverflow && !isScrolledToBottom }]"
-      @scroll="handleScroll"
-      :style="{ pointerEvents: activeDetail === index ? 'auto' : 'none' }"
-    >
-      <button @click="handleSubItemClick(index, subItemIndex, subItem)" v-for="(subItem, subItemIndex) in item.items" :key="subItem.title" class="w-full group transition-transform duration-75 active:scale-95" >
-        <div class="flex items-center gap-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 rounded-2xl py-3 hover:px-3 duration-300 w-full mx-auto px-2">
-          <!-- Icon or Gradient Box -->
-          <div
-            v-if="subItem.iconClass"
-            :class="['w-16 h-16 rounded-xl shrink-0', subItem.iconClass]"
-          ></div>
-          <Icon
-            v-else-if="subItem.icon"
-            :name="subItem.icon"
-            class="size-6 shrink-0 opacity-75"
-          />
-
-          <!-- Content -->
-          <div class="w-full flex flex-col items-start whitespace-nowrap">
-            <div class="flex items-center gap-3 w-full justify-between">
-              <div class="flex items-center gap-3">
-                 <span class="font-bold">{{ subItem.title }}</span>
-              </div>
-               <!-- Right Side: Trailing info -->
-               <div class="flex items-center gap-3 ml-auto pl-4">
-                 <span v-if="subItem.subtrailing" class="block shrink-0 py-1 px-2 text-sm rounded-lg opacity-80 border border-default">
-                  {{ subItem.subtrailing }}
-                </span>
-                <span v-if="subItem.trailing" class="block">{{ subItem.trailing }}</span>
-              </div>
-            </div>
-            <p v-if="subItem.description" class="opacity-80">{{ subItem.description }}</p>
-          </div>
-        </div>
-      </button>
-    </Motion>
-  </Motion>
-</template>
-
 <script setup lang="ts">
 interface ActionBarSubItem {
   title: string
@@ -287,6 +209,83 @@ onMounted(() => {
   measuredDimensions.value = { width: navSize.value, height: 48 }
 })
 </script>
+
+<template>
+  <div ref="navRef" class="flex items-center justify-center rounded-2xl bg-transparent absolute -translate-x-1/2 left-1/2 bottom-14 z-2">
+    <button
+      v-for="(item, index) in items"
+      :key="item.title"
+      @click="handleClick(index)"
+      @mouseenter="handleItemHover(index)"
+      @mouseleave="handleItemLeave"
+      class="item flex items-center justify-center gap-2 hover:bg-default hover:invert active:scale-95 duration-300 transition-all py-3 px-4 rounded-2xl"
+    >
+      <Icon :name="item.icon" class="size-6" />
+      <span class="font-bold">{{ item.title }}</span>
+    </button>
+  </div>
+
+  <Motion
+    ref="containerRef"
+    :initial="{ width: navSize, height: 48, y: 0, borderRadius: 16 }"
+    :animate="containerAnimate"
+    :transition="{
+      type: 'spring',
+      stiffness: 170,
+      damping: 26,
+      mass: 1
+    }"
+    class="absolute bg-black/5 dark:bg-white/5 backdrop-blur-xl -translate-x-1/2 left-1/2 bottom-14 overflow-hidden"
+    >
+    <Motion
+      v-for="(item, index) in items"
+      :key="item.title"
+      :ref="(el) => setDetailRef(el, index)"
+      @mouseleave="handleDetailLeave"
+      :initial="{ opacity: 0, zIndex: 1 }"
+      :animate="{
+        opacity: activeDetail === index ? 1 : 0,
+        zIndex: activeDetail === index ? 2 : 1
+      }"
+      :transition="{ duration: 0.3 }"
+      :class="['p-4 flex flex-col items-center absolute min-w-110.5 w-max gap-1 overflow-y-scroll max-h-64', { mask: hasOverflow && !isScrolledToBottom }]"
+      @scroll="handleScroll"
+      :style="{ pointerEvents: activeDetail === index ? 'auto' : 'none' }"
+    >
+      <button @click="handleSubItemClick(index, subItemIndex, subItem)" v-for="(subItem, subItemIndex) in item.items" :key="subItem.title" class="w-full group transition-transform duration-75 active:scale-95" >
+        <div class="flex items-center gap-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 rounded-2xl py-3 hover:px-3 duration-300 w-full mx-auto px-2">
+          <!-- Icon or Gradient Box -->
+          <div
+            v-if="subItem.iconClass"
+            :class="['w-16 h-16 rounded-xl shrink-0', subItem.iconClass]"
+          ></div>
+          <Icon
+            v-else-if="subItem.icon"
+            :name="subItem.icon"
+            class="size-6 shrink-0 opacity-75"
+          />
+
+          <!-- Content -->
+          <div class="w-full flex flex-col items-start whitespace-nowrap">
+            <div class="flex items-center gap-3 w-full justify-between">
+              <div class="flex items-center gap-3">
+                 <span class="font-bold">{{ subItem.title }}</span>
+              </div>
+               <!-- Right Side: Trailing info -->
+               <div class="flex items-center gap-3 ml-auto pl-4">
+                 <span v-if="subItem.subtrailing" class="block shrink-0 py-1 px-2 text-sm rounded-lg opacity-80 border border-default">
+                  {{ subItem.subtrailing }}
+                </span>
+                <span v-if="subItem.trailing" class="block">{{ subItem.trailing }}</span>
+              </div>
+            </div>
+            <p v-if="subItem.description" class="opacity-80">{{ subItem.description }}</p>
+          </div>
+        </div>
+      </button>
+    </Motion>
+  </Motion>
+</template>
 
 <style scoped>
 .mask {
