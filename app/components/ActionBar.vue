@@ -1,3 +1,5 @@
+<!-- Inspired by Henrik Ruscon https://x.com/henrikruscon/status/1800862855648129449 -->
+
 <template>
   <div ref="navRef" class="flex items-center justify-center gap-2 rounded-2xl bg-transparent absolute -translate-x-1/2 left-1/2 bottom-14 z-2">
     <button
