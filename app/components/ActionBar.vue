@@ -135,7 +135,7 @@ const handleSubItemClick = (parentIndex: number, subIndex: number, subItem: Acti
 const containerAnimate = computed(() => {
   if (activeDetail.value !== null) {
     return {
-      width: 442,
+      width: measuredDimensions.value.width,
       height: measuredDimensions.value.height + 16,
       y: 17,
       borderRadius: 24,
@@ -154,7 +154,7 @@ const handleItemHover = (index: number) => {
   activeIndex.value = index
   const el = detailRefs.value[index]
   if (el) {
-    const w = Math.max(el.scrollWidth, 410)
+    const w = Math.max(navSize.value + 64, el.scrollWidth)
     const h = Math.min(el.scrollHeight + 64, 320)
 
     measuredDimensions.value = { width: w, height: h }
@@ -218,10 +218,10 @@ onMounted(() => {
       @click="handleClick(index)"
       @mouseenter="handleItemHover(index)"
       @mouseleave="handleItemLeave"
-      class="item flex items-center justify-center gap-2 hover:bg-default hover:invert active:scale-95 duration-300 transition-all py-3 px-4 rounded-2xl"
+      class="item flex items-center justify-center gap-2 hover:bg-default hover:invert active:scale-95 duration-300 transition-all py-2 sm:py-3 px-2 sm:px-4 rounded-xl sm:rounded-2xl"
     >
-      <Icon :name="item.icon" class="size-6" />
-      <span class="font-bold">{{ item.title }}</span>
+      <Icon :name="item.icon" class="size-4 sm:size-6" />
+      <span class="font-bold text-sm">{{ item.title }}</span>
     </button>
   </div>
 
@@ -235,7 +235,7 @@ onMounted(() => {
       damping: 26,
       mass: 1
     }"
-    class="absolute bg-black/5 dark:bg-white/5 backdrop-blur-xl -translate-x-1/2 left-1/2 bottom-14 overflow-hidden"
+    class="absolute bg-black/5 dark:bg-white/5 backdrop-blur-xl -translate-x-1/2 left-1/2 bottom-13 sm:bottom-14 overflow-hidden"
     >
     <Motion
       v-for="(item, index) in items"
@@ -248,11 +248,11 @@ onMounted(() => {
         zIndex: activeDetail === index ? 2 : 1
       }"
       :transition="{ duration: 0.3 }"
-      :class="['p-4 flex flex-col items-center absolute min-w-110.5 w-max gap-1 overflow-y-scroll max-h-64', { mask: hasOverflow && !isScrolledToBottom }]"
+      :class="['p-3 sm:p-4 flex flex-col items-center absolute min-w-85 sm:min-w-110.5 w-max gap-1 overflow-y-scroll max-h-64', { mask: hasOverflow && !isScrolledToBottom }]"
       @scroll="handleScroll"
       :style="{ pointerEvents: activeDetail === index ? 'auto' : 'none' }"
     >
-      <button @click="handleSubItemClick(index, subItemIndex, subItem)" v-for="(subItem, subItemIndex) in item.items" :key="subItem.title" class="w-full group transition-transform duration-75 active:scale-95" >
+      <button @click="handleSubItemClick(index, subItemIndex, subItem)" v-for="(subItem, subItemIndex) in item.items" :key="subItem.title" class="w-full group text-sm sm:text-base transition-transform duration-75 active:scale-95" >
         <div class="flex items-center gap-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 rounded-2xl py-3 hover:px-3 duration-300 w-full mx-auto px-2">
           <!-- Icon or Gradient Box -->
           <div
@@ -262,7 +262,7 @@ onMounted(() => {
           <Icon
             v-else-if="subItem.icon"
             :name="subItem.icon"
-            class="size-6 shrink-0 opacity-75"
+            class="size-4 sm:size-6 shrink-0 opacity-75"
           />
 
           <!-- Content -->
