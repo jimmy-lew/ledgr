@@ -81,8 +81,13 @@ const containerAnimate = computed(() => {
 
 // Handle item hover
 const handleItemHover = (index: number) => {
+  const item = props.items[index]
+  if (!item || !item.items || item.items.length === 0) return
+
+  const subItemIndex = itemsWithSubItems.value.findIndex(i => i === item)
+  
   activeIndex.value = index
-  const el = detailRefs.value[index]
+  const el = detailRefs.value[subItemIndex]
   if (el) {
     const w = Math.max(navSize.value + 64, el.scrollWidth)
     const h = Math.min(el.scrollHeight + 64, 320)
@@ -92,7 +97,7 @@ const handleItemHover = (index: number) => {
     isScrolledToBottom.value = false
   }
 
-  activeDetail.value = index
+  activeDetail.value = subItemIndex
 }
 
 const handleItemLeave = () => {
@@ -151,7 +156,7 @@ onMounted(() => {
       class="item flex items-center justify-center gap-2 hover:bg-default hover:invert active:scale-95 duration-300 transition-all py-2 sm:py-3 px-2 sm:px-4 rounded-xl sm:rounded-2xl"
     >
       <Icon :name="item.icon" class="size-4 sm:size-6" />
-      <span class="font-bold text-sm">{{ item.title }}</span>
+      <span v-if="item.title" class="font-bold text-sm">{{ item.title }}</span>
     </button>
   </div>
 
@@ -168,7 +173,7 @@ onMounted(() => {
     class="absolute bg-black/5 dark:bg-white/5 backdrop-blur-xl -translate-x-1/2 left-1/2 bottom-13 sm:bottom-14 overflow-hidden"
     >
     <Motion
-      v-for="(item, index) in items"
+      v-for="(item, index) in itemsWithSubItems"
       :key="item.title"
       :ref="(el) => setDetailRef(el, index)"
       @mouseleave="handleDetailLeave"
