@@ -11,88 +11,18 @@ interface ActionBarSubItem {
 }
 
 interface ActionBarItem {
-  title: string
+  title?: string
   icon: string
-  items: ActionBarSubItem[]
+  items?: ActionBarSubItem[]
 }
 
-const props = withDefaults(defineProps<{
-  items?: ActionBarItem[]
-}>(), {
-  items: () => [
-    {
-      title: "Apps",
-      icon: "lucide:layout-grid",
-      items: [
-        {
-          title: "Gather",
-          description: "Virtual Office",
-          subtrailing: "Mac",
-          iconClass: "bg-gradient-to-br from-purple-400 to-purple-600",
-          action: () => { console.log('test') }
-        },
-        {
-          title: "Slack",
-          description: "Communication App",
-          subtrailing: "Windows",
-          iconClass: "bg-gradient-to-br from-blue-400 to-blue-600"
-        },
-        {
-          title: "Discord",
-          description: "Community",
-          subtrailing: "Windows",
-          iconClass: "bg-gradient-to-br from-red-400 to-orange-600"
-        },
-        {
-          title: "Telegram",
-          description: "Community",
-          subtrailing: "Linux",
-          iconClass: "bg-gradient-to-br from-green-400 to-emerald-600"
-        },
-      ]
-    },
-    {
-      title: "Components",
-      icon: "lucide:blocks",
-      items: [
-        {
-          title: "Action Bar",
-          subtrailing: "Dynamic",
-          trailing: "06 - 12",
-          icon: "lucide:component"
-        },
-        {
-          title: "Image Expand",
-          subtrailing: "Overlay",
-          trailing: "05 - 12",
-          icon: "lucide:maximize"
-        },
-        {
-          title: "Read Time",
-          subtrailing: "Scroll",
-          trailing: "04 - 12",
-          icon: "lucide:clock"
-        }
-      ]
-    },
-    {
-      title: "Notes",
-      icon: "lucide:clipboard-list",
-      items: [
-        {
-          title: "Changelog using GitHub",
-          trailing: "Jun, 24",
-          icon: "lucide:github"
-        },
-        {
-          title: "Feedback in Slack",
-          trailing: "May, 24",
-          icon: "lucide:message-circle"
-        }
-      ]
-    }
-  ]
-})
+const props = defineProps<{
+  items: ActionBarItem[]
+}>()
+
+const itemsWithSubItems = computed(() => 
+  props.items.filter(item => item.items && item.items.length > 0)
+)
 
 // Refs for DOM elements
 const navRef = ref<HTMLElement | null>(null)
