@@ -1,4 +1,10 @@
 <script setup lang="ts">
+const colorMode = useColorMode()
+const title = 'Ledgr'
+const description = ''
+
+colorMode.value = "dark"
+
 useHead({
   meta: [
     { charset: 'utf-8' },
@@ -7,12 +13,10 @@ useHead({
   link: [{ rel: 'icon', href: '/favicon.png' }],
   htmlAttrs: {
     lang: 'en',
+    class: ''
   },
   bodyAttrs: { },
 })
-
-const title = 'Ledgr'
-const description = ''
 
 useSeoMeta({
   title,
