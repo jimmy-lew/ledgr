@@ -18,13 +18,16 @@
     "@vueuse/core": "^14.2.1",
     "@vueuse/math": "^14.2.1",
     "@vueuse/nuxt": "^14.2.1",
+    "effect": "^3.19.18",
     "motion-v": "2.0.0-beta.4",
     "nuxt": "^4.3.1",
     "tailwindcss": "^4.1.18",
+    "unpdf": "^1.4.0",
     "vue": "^3.5.28",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
+    "@types/node": "^25.2.3",
     "typescript": "^5.9.3"
   }
 }

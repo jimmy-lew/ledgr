@@ -1,0 +1,463 @@
+{
+  "accountNumber": "120-781893-0",
+  "openingBalance": 0,
+  "closingBalance": 0,
+  "transactions": [
+    {
+      "date": "30/11/2025",
+      "type": "ADVICE_FAST_PAYMENT_RECEIPT",
+      "description": "INCOMING PAYNOW REF 6081134 FROM: TAY SHIN EN PAYNOW TRANSFER OTHER",
+      "withdrawal": null,
+      "deposit": 13,
+      "balance": 18423.26
+    },
+    {
+      "date": "30/11/2025",
+      "type": "ADVICE_FAST_PAYMENT_RECEIPT",
+      "description": "INCOMING PAYNOW REF 7306128 FROM: ESTELLE OEI (HUANG WEIXUAN) PAYNOW TRANSFER OTHER",
+      "withdrawal": null,
+      "deposit": 15,
+      "balance": 18438.26
+    },
+    {
+      "date": "01/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "GRAB* A-8LQRF6MWWGQAAV SI SGP 28NOV 4628-4500-4881-6970",
+      "withdrawal": 8.6,
+      "deposit": null,
+      "balance": 18429.66
+    },
+    {
+      "date": "02/12/2025",
+      "type": "ADVICE_FAST_PAYMENT_RECEIPT",
+      "description": "PAYNOW TRANSFER 7844964 TO: YOU TECHNOLOGIES GROUP (SG) PL 1293705754448416 OTHER",
+      "withdrawal": 100,
+      "deposit": null,
+      "balance": 18329.66
+    },
+    {
+      "date": "02/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "DISCORD* NITROMONTHLY DI USA 29NOV 4628-4500-4881-6970 USD9.99",
+      "withdrawal": 13.4,
+      "deposit": null,
+      "balance": 18316.26
+    },
+    {
+      "date": "02/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "ATLAS VENDING SINGAPORE SGP 30NOV 4628-4500-4881-6970",
+      "withdrawal": 1.5,
+      "deposit": null,
+      "balance": 18314.76
+    },
+    {
+      "date": "03/12/2025",
+      "type": "GIRO_PAYMENTS_COLLECTIONS_VIA_GIRO",
+      "description": "GOV GOV OTHER",
+      "withdrawal": null,
+      "deposit": 600,
+      "balance": 18914.76
+    },
+    {
+      "date": "04/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "BATA - JEM SINGAPORE SGP 30NOV 4628-4500-4881-6970",
+      "withdrawal": 99.95,
+      "deposit": null,
+      "balance": 18814.81
+    },
+    {
+      "date": "04/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "BUS MRT 753754045 SI SGP 28NOV 4628-4500-4881-6970",
+      "withdrawal": 3.96,
+      "deposit": null,
+      "balance": 18810.85
+    },
+    {
+      "date": "04/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "DYNASTY @ WESTGATE SI SGP 30NOV 4628-4500-4881-6970",
+      "withdrawal": 54.19,
+      "deposit": null,
+      "balance": 18756.66
+    },
+    {
+      "date": "04/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "DYNASTY @ WESTGATE SI SGP 30NOV 4628-4500-4881-6970",
+      "withdrawal": 31.65,
+      "deposit": null,
+      "balance": 18725.01
+    },
+    {
+      "date": "05/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "BUS MRT 754744224 SI SGP 30NOV 4628-4500-4881-6970",
+      "withdrawal": 2.4,
+      "deposit": null,
+      "balance": 18722.61
+    },
+    {
+      "date": "05/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "BUS MRT 754656539 SI SGP 30NOV 4628-4500-4881-6970",
+      "withdrawal": 5.36,
+      "deposit": null,
+      "balance": 18717.25
+    },
+    {
+      "date": "05/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "MCDONALDS 930085 SI SGP 02DEC 4628-4500-4881-6970",
+      "withdrawal": 18.4,
+      "deposit": null,
+      "balance": 18698.85
+    },
+    {
+      "date": "06/12/2025",
+      "type": "ADVICE_FAST_PAYMENT_RECEIPT",
+      "description": "PAYNOW TRANSFER 5701270 TO: YOU TECHNOLOGIES GROUP (SG) PL 1163216445185188 OTHER",
+      "withdrawal": 57.87,
+      "deposit": null,
+      "balance": 18640.98
+    },
+    {
+      "date": "06/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "FAIRPRICE FINEST - YEW SI SGP 02DEC 4628-4500-4881-6970",
+      "withdrawal": 5.45,
+      "deposit": null,
+      "balance": 18635.53
+    },
+    {
+      "date": "08/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "BUS MRT 756103705 SI SGP 02DEC 4628-4500-4881-6970",
+      "withdrawal": 1.19,
+      "deposit": null,
+      "balance": 18634.34
+    },
+    {
+      "date": "09/12/2025",
+      "type": "GIRO_SALARY",
+      "description": "MINDEF SAF 12049022",
+      "withdrawal": null,
+      "deposit": 1126.73,
+      "balance": 19761.07
+    },
+    {
+      "date": "09/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "ATLAS VENDING SINGAPORE SGP 07DEC 4628-4500-4881-6970",
+      "withdrawal": 1.5,
+      "deposit": null,
+      "balance": 19759.57
+    },
+    {
+      "date": "09/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "TS TONGUE TIP LANZHOU SI SGP 06DEC 4628-4500-4881-6970",
+      "withdrawal": 14.75,
+      "deposit": null,
+      "balance": 19744.82
+    },
+    {
+      "date": "09/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "MCDONALDS 930085 SI SGP 05DEC 4628-4500-4881-6970",
+      "withdrawal": 18.4,
+      "deposit": null,
+      "balance": 19726.42
+    },
+    {
+      "date": "10/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "BUS MRT 757671690 SI SGP 05DEC 4628-4500-4881-6970",
+      "withdrawal": 1.19,
+      "deposit": null,
+      "balance": 19725.23
+    },
+    {
+      "date": "13/12/2025",
+      "type": "ADVICE_FUNDS_TRANSFER",
+      "description": "TOP-UP TO PAYLAH! : 98307228",
+      "withdrawal": 20,
+      "deposit": null,
+      "balance": 19705.23
+    },
+    {
+      "date": "16/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "STEAMGAMES.COM 4259522 91 USA 14DEC 4628-4500-4881-6970",
+      "withdrawal": 5.4,
+      "deposit": null,
+      "balance": 19699.83
+    },
+    {
+      "date": "16/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "MCDONALDS 930085 SI SGP 12DEC 4628-4500-4881-6970",
+      "withdrawal": 18.4,
+      "deposit": null,
+      "balance": 19681.43
+    },
+    {
+      "date": "17/12/2025",
+      "type": "ADVICE_FAST_PAYMENT_RECEIPT",
+      "description": "PAYNOW TRANSFER 8662914 TO: YOU TECHNOLOGIES GROUP (SG) PL 4786171157293300 OTHER",
+      "withdrawal": 100,
+      "deposit": null,
+      "balance": 19581.43
+    },
+    {
+      "date": "17/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "TOAST BOX - MBS SINGAPORE SGP 15DEC 4628-4500-4881-6970",
+      "withdrawal": 12.6,
+      "deposit": null,
+      "balance": 19568.83
+    },
+    {
+      "date": "17/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "FOUR LEAVES-HILLION MA SI SGP 15DEC 4628-4500-4881-6970",
+      "withdrawal": 4.8,
+      "deposit": null,
+      "balance": 19564.03
+    },
+    {
+      "date": "17/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "BUS MRT 761887498 SI SGP 12DEC 4628-4500-4881-6970",
+      "withdrawal": 1.19,
+      "deposit": null,
+      "balance": 19562.84
+    },
+    {
+      "date": "17/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "ESSO-CHEERS BY FP SI SGP 15DEC 4628-4500-4881-6970",
+      "withdrawal": 3.4,
+      "deposit": null,
+      "balance": 19559.44
+    },
+    {
+      "date": "17/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "GOOGLE STRAVA RUN BIK SI SGP 15DEC 4628-4500-4881-6970",
+      "withdrawal": 69.98,
+      "deposit": null,
+      "balance": 19489.46
+    },
+    {
+      "date": "17/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "GOOGLE SPOTIFY MUSIC SI SGP 14DEC 4628-4500-4881-6970",
+      "withdrawal": 11.98,
+      "deposit": null,
+      "balance": 19477.48
+    },
+    {
+      "date": "17/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "MCDONALDS 930230 SI SGP 14DEC 4628-4500-4881-6970",
+      "withdrawal": 35.4,
+      "deposit": null,
+      "balance": 19442.08
+    },
+    {
+      "date": "18/12/2025",
+      "type": "ADVICE_FUNDS_TRANSFER",
+      "description": "TOP-UP TO PAYLAH! : JIMMY",
+      "withdrawal": 3.2,
+      "deposit": null,
+      "balance": 19438.88
+    },
+    {
+      "date": "18/12/2025",
+      "type": "ADVICE_FAST_PAYMENT_RECEIPT",
+      "description": "INCOMING PAYNOW REF 5721290 FROM: CHIN QI'EN, ISAAC OTHR OTHER",
+      "withdrawal": null,
+      "deposit": 1.6,
+      "balance": 19440.48
+    },
+    {
+      "date": "18/12/2025",
+      "type": "ADVICE_FUNDS_TRANSFER",
+      "description": "TOP-UP TO PAYLAH! : JIMMY",
+      "withdrawal": 6.5,
+      "deposit": null,
+      "balance": 19433.98
+    },
+    {
+      "date": "19/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "BUS MRT 762762279 SI SGP 14DEC 4628-4500-4881-6970",
+      "withdrawal": 1.59,
+      "deposit": null,
+      "balance": 19432.39
+    },
+    {
+      "date": "20/12/2025",
+      "type": "ADVICE_FAST_PAYMENT_RECEIPT",
+      "description": "PAYNOW TRANSFER 7958593 TO: TAZAPAY PTE. LTD.- PATD533UQ1LN6LP2HLQD4D0 OTHER",
+      "withdrawal": 72.24,
+      "deposit": null,
+      "balance": 19360.15
+    },
+    {
+      "date": "20/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "BUS MRT 763485580 SI SGP 15DEC 4628-4500-4881-6970",
+      "withdrawal": 2.1,
+      "deposit": null,
+      "balance": 19358.05
+    },
+    {
+      "date": "20/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "DBS VISA DEBIT CASHBACK OCT 19DEC 4628-4500-4881-6970",
+      "withdrawal": null,
+      "deposit": 6.16,
+      "balance": 19364.21
+    },
+    {
+      "date": "23/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "GITHUB, INC. GITHUB.COM USA 21DEC 4628-4500-4881-6970 USD48.00",
+      "withdrawal": 64.15,
+      "deposit": null,
+      "balance": 19300.06
+    },
+    {
+      "date": "26/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "BUS MRT 766220029 SI SGP 20DEC 4628-4500-4881-6970",
+      "withdrawal": 4.13,
+      "deposit": null,
+      "balance": 19295.93
+    },
+    {
+      "date": "27/12/2025",
+      "type": "ADVICE_FAST_PAYMENT_RECEIPT",
+      "description": "PAYNOW TRANSFER 7209228 TO: SHOPEEPAY PRIVATE LIMITED MP4932717451657408058 OTHER",
+      "withdrawal": 69.17,
+      "deposit": null,
+      "balance": 19226.76
+    },
+    {
+      "date": "27/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "ATLAS VENDING SINGAPORE SGP 25DEC 4628-4500-4881-6970",
+      "withdrawal": 1.5,
+      "deposit": null,
+      "balance": 19225.26
+    },
+    {
+      "date": "27/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "ATLAS VENDING SINGAPORE SGP 25DEC 4628-4500-4881-6970",
+      "withdrawal": 1.5,
+      "deposit": null,
+      "balance": 19223.76
+    },
+    {
+      "date": "27/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "ATLAS VENDING SINGAPORE SGP 25DEC 4628-4500-4881-6970",
+      "withdrawal": 2,
+      "deposit": null,
+      "balance": 19221.76
+    },
+    {
+      "date": "27/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "MCDONALDS 930085 SI SGP 23DEC 4628-4500-4881-6970",
+      "withdrawal": 18,
+      "deposit": null,
+      "balance": 19203.76
+    },
+    {
+      "date": "28/12/2025",
+      "type": "NA",
+      "description": "",
+      "withdrawal": 1.5,
+      "deposit": null,
+      "balance": 19202.26
+    },
+    {
+      "date": "29/12/2025",
+      "type": "ADVICE_FAST_PAYMENT_RECEIPT",
+      "description": "INCOMING PAYNOW REF 6388137 FROM: TAY SHIN EN PAYNOW TRANSFER OTHER",
+      "withdrawal": null,
+      "deposit": 22,
+      "balance": 19224.26
+    },
+    {
+      "date": "29/12/2025",
+      "type": "ADVICE_FAST_PAYMENT_RECEIPT",
+      "description": "PAYNOW TRANSFER 8697930 TO: ESTELLE PAYNOW TRANSFER OTHER",
+      "withdrawal": 40,
+      "deposit": null,
+      "balance": 19184.26
+    },
+    {
+      "date": "29/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "FOUR LEAVES-HILLION MA SI SGP 25DEC 4628-4500-4881-6970",
+      "withdrawal": 7.2,
+      "deposit": null,
+      "balance": 19177.06
+    },
+    {
+      "date": "29/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "MCDONALDS 930203 SI SGP 25DEC 4628-4500-4881-6970",
+      "withdrawal": 8.3,
+      "deposit": null,
+      "balance": 19168.76
+    },
+    {
+      "date": "29/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "MCDONALDS 930230 SI SGP 25DEC 4628-4500-4881-6970",
+      "withdrawal": 12.25,
+      "deposit": null,
+      "balance": 19156.51
+    },
+    {
+      "date": "30/12/2025",
+      "type": "ADVICE_FAST_PAYMENT_RECEIPT",
+      "description": "INCOMING PAYNOW REF 9872513 FROM: JUNE SNG SIEW LAY MONCHICHI OTHER",
+      "withdrawal": null,
+      "deposit": 35,
+      "balance": 19191.51
+    },
+    {
+      "date": "31/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "DISCORD* NITROMONTHLY DI USA 29DEC 4628-4500-4881-6970 USD9.99",
+      "withdrawal": 13.27,
+      "deposit": null,
+      "balance": 19178.24
+    },
+    {
+      "date": "31/12/2025",
+      "type": "DEBIT_CARD_TRANSACTION",
+      "description": "YAKINIKU LIKE-JC8 SI SGP 28DEC 4628-4500-4881-6970",
+      "withdrawal": 50.84,
+      "deposit": null,
+      "balance": 19127.4
+    },
+    {
+      "date": "31/12/2025",
+      "type": "INTEREST_EARNED",
+      "description": "",
+      "withdrawal": null,
+      "deposit": 0.93,
+      "balance": 19128.33
+    }
+  ]
+}
