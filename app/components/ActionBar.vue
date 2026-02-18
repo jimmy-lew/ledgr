@@ -20,7 +20,7 @@ const props = defineProps<{
   items: ActionBarItem[]
 }>()
 
-const itemsWithSubItems = computed(() => 
+const itemsWithSubItems = computed(() =>
   props.items.filter(item => item.items && item.items.length > 0)
 )
 
@@ -85,7 +85,7 @@ const handleItemHover = (index: number) => {
   if (!item || !item.items || item.items.length === 0) return
 
   const subItemIndex = itemsWithSubItems.value.findIndex(i => i === item)
-  
+
   activeIndex.value = index
   const el = detailRefs.value[subItemIndex]
   if (el) {
@@ -146,7 +146,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="navRef" class="flex items-center justify-center rounded-2xl bg-transparent absolute -translate-x-1/2 left-1/2 bottom-14 z-2">
+  <div ref="navRef" class="flex items-center justify-center rounded-2xl bg-transparent fixed -translate-x-1/2 left-1/2 bottom-14 z-2">
     <button
       v-for="(item, index) in items"
       :key="item.title"
@@ -170,7 +170,7 @@ onMounted(() => {
       damping: 26,
       mass: 1
     }"
-    class="absolute bg-black/5 dark:bg-white/5 backdrop-blur-xl -translate-x-1/2 left-1/2 bottom-13 sm:bottom-14 overflow-hidden"
+    class="fixed bg-elevated dark:bg-black backdrop-blur-xl -translate-x-1/2 left-1/2 bottom-13 sm:bottom-14 overflow-hidden"
     >
     <Motion
       v-for="(item, index) in itemsWithSubItems"
