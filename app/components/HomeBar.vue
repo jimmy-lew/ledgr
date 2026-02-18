@@ -1,18 +1,38 @@
 <script setup lang="ts">
-const tabs = ['lucide:home', 'lucide:chart-line', 'lucide:scan-line', 'lucide:square', 'lucide:user-round']
+interface SubItem {
+  icon: string
+  title: string
+}
+
+interface Item {
+  icon: string
+  items?: SubItem[]
+}
+
+const props = defineProps<{ items: Item[] }>()
+
 const activeTab = ref<string>('lucide:home')
+const isPressed = ref(false)
 const hoverActive = ref<string | null>(null)
-const tabRefs = ref<Record<string, HTMLElement>>({})
-const indicatorPos = computed(() => {
-  if (hoverActive.value) {
-    return tabRefs.value[hoverActive.value]?.offsetLeft ?? 0
-  }
-  return tabRefs.value[activeTab.value]?.offsetLeft ?? 0
+
+const navRef = ref<HTMLElement|null>(null)
+const navSize = ref(192)
+const tabRefs = shallowRef<Record<string, HTMLElement>>({})
+const subItemRefs = shallowRef<Record<string, HTMLElement>>({})
+const subItems = computed(() => props.items.filter(i => i.items && i.items.length > 0))
+
+const containerInitState = computed(() => ({ width: navSize.value, height: 48, borderRadius: 999 }))
+const containerState = ref({ width: 192, height: 48, borderRadius: 999 })
+const containerAnimation = computed(() => {
+  const hasSubItems = Boolean(subItemRefs.value[hoverActive.value ?? ''])
+  if (hasSubItems) return containerState.value
+  return containerInitState.value
 })
 
-const setTabRef = (el: any, tab: string) => {
-  if (el) tabRefs.value[tab] = el
-}
+const indicatorPos = computed(() => tabRefs.value[hoverActive.value ?? activeTab.value]?.offsetLeft ?? 8)
+
+const setTabRef = (el: any, tab: string) => { if (el) tabRefs.value[tab] = el }
+const setSubItemRef = (el: any, tab: string) => { if (el) subItemRefs.value[tab] = el.$el || el }
 
 const selectTab = (tab: string) => {
   isPressed.value = true
@@ -22,20 +42,30 @@ const selectTab = (tab: string) => {
 
 const handleHover = (tab: string) => {
   hoverActive.value = tab
+  const el = subItemRefs.value[tab]
+  if (!el) return
+  const { width, height } = el.getBoundingClientRect()
+  containerState.value = {
+    width: Math.max(width, navSize.value + 64),
+    height: height + 48,
+    borderRadius: 18,
+  }
 }
 
 const handleHoverEnd = () => {
-  hoverActive.value = null
+  setTimeout(() => {
+    const isHoveringSubItem = Object.values(subItemRefs.value).some(el => el?.matches?.(':hover'))
+    const isHoveringItem = Object.values(tabRefs.value).some(el => el?.matches?.(':hover'))
+    if (!isHoveringItem && !isHoveringSubItem) hoverActive.value = null
+  }, 250)
 }
-
-const isPressed = ref(false)
 </script>
 
 <template>
-  <div class="fixed bottom-8 -translate-x-1/2 left-1/2 bg-zinc-850 rounded-full p-2">
+  <div ref="navRef" class="fixed bottom-8 -translate-x-1/2 left-1/2 p-2 z-2">
     <div class="flex items-center gap-1">
       <button
-        v-for="tab in tabs"
+        v-for="{ icon: tab } in items"
         :key="tab"
         :ref="(el) => setTabRef(el, tab)"
         @mouseenter="handleHover(tab)"
@@ -66,6 +96,34 @@ const isPressed = ref(false)
       />
     </div>
   </div>
+
+  <Motion
+    :initial="containerInitState"
+    :animate="containerAnimation"
+    :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
+    class="fixed bottom-8 bg-zinc-850/80 backdrop-blur-xl -translate-x-1/2 left-1/2"
+  >
+    <Motion
+      v-for="{ icon: tab, items } in subItems"
+      :key="tab"
+      :ref="(el) => setSubItemRef(el, tab)"
+      :initial="{ opacity: 0, zIndex: 1 }"
+      :animate="{
+        opacity: hoverActive === tab ? 1 : 0,
+        zIndex: hoverActive === tab ? 2 : 1
+      }"
+      :transition="{ duration: 0.3 }"
+      :class="['p-3 flex flex-col items-center absolute overflow-y-scroll w-full']"
+      @mouseleave="handleHoverEnd"
+    >
+      <button v-for="{icon: name, title} in items" class="w-full text-sm transition-all duration-75 active:scale-90">
+        <div class="flex items-center gap-3 rounded-lg p-2 mx-auto w-full duration-300 hover:bg-white/5 hover:px-3">
+          <Icon :name/>
+          {{ title }}
+        </div>
+      </button>
+    </Motion>
+  </Motion>
 </template>
 
 <style scoped>
