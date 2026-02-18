@@ -74,7 +74,7 @@ const handleHoverEnd = () => {
         class="relative flex items-center justify-center size-8 text-sm font-medium transition-all duration-200 active:scale-90 rounded-full z-10"
         :class="[
           hoverActive === tab ? 'text-black!' : '',
-          activeTab === tab && !hoverActive ? 'text-black' : 'text-lime-200',
+          activeTab === tab && !hoverActive ? 'text-black' : 'text-emerald-200',
         ]"
       >
         <UIcon :name="tab" />
@@ -82,7 +82,7 @@ const handleHoverEnd = () => {
 
       <Motion
         tag="div"
-        class="absolute size-8 bg-lime-200 rounded-full origin-center"
+        class="absolute size-8 bg-emerald-200 rounded-full origin-center"
         :initial="false"
         :animate="{
           left: `${indicatorPos}px`,
