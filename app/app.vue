@@ -3,7 +3,7 @@ const colorMode = useColorMode()
 const title = 'Ledgr'
 const description = ''
 
-colorMode.value = ""
+colorMode.value = "light"
 
 useHead({
   meta: [
