@@ -6,10 +6,13 @@ interface SubItem {
 
 interface Item {
   icon: string
+  to?: string
   items?: SubItem[]
 }
 
 const props = defineProps<{ items: Item[] }>()
+
+const router = useRouter()
 
 const activeTab = ref<string>('lucide:home')
 const isPressed = ref(false)
@@ -34,9 +37,10 @@ const indicatorPos = computed(() => tabRefs.value[hoverActive.value ?? activeTab
 const setTabRef = (el: any, tab: string) => { if (el) tabRefs.value[tab] = el }
 const setSubItemRef = (el: any, tab: string) => { if (el) subItemRefs.value[tab] = el.$el || el }
 
-const selectTab = (tab: string) => {
+const selectTab = (tab: string, to?: string) => {
   isPressed.value = true
   activeTab.value = tab
+  if (to) router.push(to)
   setTimeout(() => { isPressed.value = false }, 200)
 }
 
@@ -65,12 +69,12 @@ const handleHoverEnd = () => {
   <div ref="navRef" class="fixed bottom-8 -translate-x-1/2 left-1/2 p-2 z-2">
     <div class="flex items-center gap-1">
       <button
-        v-for="{ icon: tab } in items"
+        v-for="{ icon: tab, to } in items"
         :key="tab"
         :ref="(el) => setTabRef(el, tab)"
         @mouseenter="handleHover(tab)"
         @mouseleave="handleHoverEnd"
-        @click="selectTab(tab)"
+        @click="selectTab(tab, to)"
         class="relative flex items-center justify-center size-8 text-sm font-medium transition-all duration-200 active:scale-90 rounded-full z-10"
         :class="[
           hoverActive === tab ? 'text-white!' : '',

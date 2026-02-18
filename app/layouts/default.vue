@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const items = [
-  { icon: 'lucide:home' },
-  { icon: 'lucide:chart-line' },
+  { icon: 'lucide:home', to: '/' },
+  { icon: 'lucide:chart-line', to: '/insights' },
   {
     icon: 'lucide:plus',
     items: [
@@ -10,8 +10,8 @@ const items = [
       { icon: 'lucide:refresh-cw', title: 'Add subscription' },
     ],
   },
-  { icon: 'lucide:chart-pie' },
-  { icon: 'lucide:user-round' }
+  { icon: 'lucide:chart-pie', to: '/budget' },
+  { icon: 'lucide:user-round', to: '/user' }
 ]
 </script>
 
@@ -20,7 +20,7 @@ const items = [
   <div class="min-h-screen flex flex-col bg-[#edf0ea] dark:bg-[oklch(15%_0_0)]">
     <slot />
   </div>
-   <HomeBar :items/>
+    <HomeBar :items/>
 </div>
 </template>
 
