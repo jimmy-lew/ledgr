@@ -116,8 +116,8 @@ const handleHoverEnd = () => {
       :class="['p-3 flex flex-col items-center absolute overflow-y-scroll w-full']"
       @mouseleave="handleHoverEnd"
     >
-      <button v-for="{icon: name, title} in items" class="w-full text-sm transition-all duration-75 active:scale-90">
-        <div class="flex items-center gap-3 rounded-lg p-2 mx-auto w-full duration-300 hover:bg-white/5 hover:px-3">
+      <button v-for="{icon: name, title} in items" class="w-full group text-sm transition-all duration-75 active:scale-90">
+        <div class="flex items-center gap-3 rounded-lg p-2 mx-auto w-full duration-300 group-active:bg-white/5 group-hover:bg-white/5 group-active:px-3 group-hover:px-3">
           <Icon :name/>
           {{ title }}
         </div>
