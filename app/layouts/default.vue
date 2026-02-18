@@ -10,14 +10,14 @@ const items = [
       { icon: 'lucide:refresh-cw', title: 'Add subscription' },
     ],
   },
-  { icon: 'lucide:square' },
+  { icon: 'lucide:chart-pie' },
   { icon: 'lucide:user-round' }
 ]
 </script>
 
 <template>
 <div class="relative">
-  <div class="min-h-screen flex flex-col bg-[#edf0ea] dark:bg-default">
+  <div class="min-h-screen flex flex-col bg-[#edf0ea] dark:bg-[oklch(15%_0_0)]">
     <slot />
   </div>
    <HomeBar :items/>
