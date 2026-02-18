@@ -12,6 +12,7 @@
 @theme static {
   --color-zinc-950: oklch(0% 0 0);
   --color-zinc-900: oklch(0% 0 0);
+  --color-zinc-850: oklch(18% 0 0);
   --color-zinc-800: oklch(26% 0 0);
   --color-zinc-700: oklch(35% 0 0);
   --color-zinc-600: oklch(45% 0 0);
