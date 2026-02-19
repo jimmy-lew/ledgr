@@ -24,13 +24,18 @@ const navSize = ref(192)
 const tabRefs = shallowRef<Record<string, HTMLElement>>({})
 const subItemRefs = shallowRef<Record<string, HTMLElement>>({})
 const subItems = computed(() => props.items.filter(i => i.items && i.items.length > 0))
+const hasSubItems = computed(() => Boolean(subItemRefs.value[hoverActive.value ?? '']))
 
 const containerInitState = computed(() => ({ width: navSize.value, height: 48, borderRadius: 999 }))
 const containerState = ref({ width: 192, height: 48, borderRadius: 999 })
 const containerAnimation = computed(() => {
-  const hasSubItems = Boolean(subItemRefs.value[hoverActive.value ?? ''])
-  if (hasSubItems) return containerState.value
+  if (hasSubItems.value) return containerState.value
   return containerInitState.value
+})
+
+const subContainerAnimation = computed(() => {
+  if (hasSubItems.value) return { width: containerState.value.width - 2, height: containerState.value.height - 2, borderRadius: containerState.value.borderRadius - 2 }
+  return { width: containerInitState.value.width - 2, height: containerInitState.value.height - 2, borderRadius: containerInitState.value.borderRadius - 2 }
 })
 
 const indicatorPos = computed(() => tabRefs.value[hoverActive.value ?? activeTab.value]?.offsetLeft ?? 8)
@@ -107,8 +112,21 @@ const handleHoverEnd = () => {
     :initial="containerInitState"
     :animate="containerAnimation"
     :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
-    class="fixed bottom-8 shadow-xl bg-[oklch(0_0_0/0.05)] dark:bg-[oklch(1_0_0/0.005)] dark:ring-1 dark:ring-[oklch(1_0_0/0.02)] backdrop-blur-xl -translate-x-1/2 left-1/2"
+    class="
+      fixed bottom-8 -translate-x-1/2 left-1/2
+      p-px shadow-xl
+      bg-linear-to-b from-black/10 via-white/30 to-black/5
+      dark:from-white/20 dark:via-black/30 dark:to-white/5
+      backdrop-blur-[2px]
+      "
   >
+     <Motion
+      as="div"
+      :initial="containerInitState"
+      :animate="subContainerAnimation"
+      :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
+      class="fixed bg-white/70 dark:bg-black/70"
+    />
     <Motion
       v-for="{ icon: tab, items } in subItems"
       :key="tab"
