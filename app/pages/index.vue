@@ -18,7 +18,10 @@
     </div>
   </div>
   <HomeGlanceInsights />
-  <HomeWidgets />
+  <HomeWidgets>
+    <template #widget-1><WidgetGoal /></template>
+
+  </HomeWidgets>
   <HomeGlanceTransactions />
 </div>
 </template>
