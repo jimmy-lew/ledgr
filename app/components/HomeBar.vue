@@ -2,6 +2,7 @@
 interface SubItem {
   icon: string
   title: string
+  click?: () => void
 }
 
 interface Item {
@@ -121,7 +122,11 @@ const handleHoverEnd = () => {
       :class="['p-3 flex flex-col items-center absolute overflow-y-scroll w-full']"
       @mouseleave="handleHoverEnd"
     >
-      <button v-for="{icon: name, title} in items" class="w-full group text-sm transition-all duration-75 active:scale-90">
+      <button
+        v-for="{icon: name, title, click} in items"
+        @click="click?.()"
+        class="w-full group text-sm transition-all duration-75 active:scale-90"
+      >
         <div class="flex items-center gap-3 rounded-lg p-2 mx-auto w-full duration-300 group-active:bg-black/5 group-hover:bg-black/5 group-active:px-3 group-hover:px-3">
           <Icon :name/>
           {{ title }}

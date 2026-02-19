@@ -5,7 +5,7 @@ const items = [
   {
     icon: 'lucide:plus',
     items: [
-      { icon: 'lucide:scan-line', title: 'Add statement' },
+      { icon: 'lucide:scan-line', title: 'Add statement', click: () => { console.log('statement clicked') } },
       { icon: 'lucide:flag', title: 'Add goal' },
       { icon: 'lucide:refresh-cw', title: 'Add subscription' },
     ],
