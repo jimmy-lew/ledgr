@@ -1,6 +1,10 @@
 <script setup lang="ts">
+interface Widget {
+  id: string | number
+}
+
 const props = withDefaults(defineProps<{
-  items?: { id: number | string; [key: string]: any }[]
+  items?: Widget[]
 }>(), {
   items: () => [
     { id: 1 },
@@ -87,7 +91,7 @@ function onScroll() {
       :while-hover="{ scale: 1.02 }"
       :while-press="{ scale: 0.97 }"
       class="
-        flex flex-col shrink-0 rounded-xl p-2
+        flex flex-col shrink-0 rounded-xl p-3 text-sm
         bg-default dark:bg-zinc-850 backdrop-blur-sm
         w-40 h-48
         cursor-pointer
@@ -96,7 +100,7 @@ function onScroll() {
       :class="{ 'shadow-md': activeIndex === i }"
       @click="activeIndex = i; emit('select', i)"
     >
-      <slot :item="item" :index="i" :active="activeIndex === i" />
+      <slot :name="`widget-${item.id}`" :item="item" :index="i" :active="activeIndex === i" />
     </Motion>
   </div>
 </div>
