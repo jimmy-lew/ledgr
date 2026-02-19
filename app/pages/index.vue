@@ -49,30 +49,7 @@
       </div>
     </div>
   </div>
-  <div class="px-6 w-full mt-6 overflow-y-auto py-2">
-    <div class="flex min-w-fit gap-2 overflow-x-scroll">
-      <div class="
-        flex items-center justify-center
-        rounded-lg p-2
-        border-2 border-dashed border-default
-        hover:bg-white/20
-        active:scale-95
-        transition-all duration-300
-        w-12 h-48
-      ">
-        <UIcon name="lucide:plus" />
-      </div>
-      <div class="flex flex-col rounded-xl p-2 bg-default w-40 h-48">
-      </div>
-      <div class="flex flex-col rounded-xl p-2 bg-default w-40 h-48">
-      </div>
-    </div>
-  </div>
-  <div class="px-6 w-full flex items-center gap-1 mt-1">
-    <div class="h-1 w-6 rounded-full bg-white"></div>
-    <div class="h-1 w-2 rounded-full bg-black/10"></div>
-    <div class="h-1 w-2 rounded-full bg-black/10"></div>
-  </div>
+  <HomeWidgets />
   <div class="px-6 w-full flex flex-col mt-3 gap-2">
     <h3 class="text-muted">Recent transactions</h3>
     <div class="flex flex-col gap-1">
