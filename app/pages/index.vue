@@ -2,7 +2,7 @@
 </script>
 
 <template>
-<div class="relative flex flex-col items-center min-h-screen w-full bg-[oklch(96%_0_0)] dark:bg-[oklch(10%_0_0)] overflow-hidden">
+<div class="relative flex flex-col items-center min-h-screen w-full bg-[oklch(96%_0_0)] dark:bg-[oklch(0%_0_0)] overflow-hidden">
   <!-- <div class="relative flex flex-col items-center min-h-screen w-full bg-default overflow-hidden"> -->
    <!-- <div class="absolute -top-20 -left-25 w-72 h-72 bg-blue-600/40 rounded-full blur-[90px]"></div>
   <div class="absolute -top-10 -left-5 w-64 h-52 bg-emerald-500 rounded-full blur-[100px]"></div> -->

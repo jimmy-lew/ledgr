@@ -88,7 +88,7 @@ function onScroll() {
       :while-press="{ scale: 0.97 }"
       class="
         flex flex-col shrink-0 rounded-xl p-2
-        bg-default backdrop-blur-sm
+        bg-default dark:bg-zinc-850 backdrop-blur-sm
         w-40 h-48
         cursor-pointer
         transition-shadow duration-300

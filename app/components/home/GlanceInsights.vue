@@ -2,7 +2,7 @@
 
 <template>
 <div class="relative px-6 w-full mt-64">
-  <div class="flex items-center justify-between rounded-2xl bg-default p-2">
+  <div class="flex items-center justify-between rounded-2xl bg-default dark:bg-zinc-850 p-2">
     <div class="flex flex-col gap-1 p-3 w-1/2">
       <span class="text-xs text-muted">
         Last month
