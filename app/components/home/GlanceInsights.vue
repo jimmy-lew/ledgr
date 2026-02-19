@@ -8,8 +8,8 @@
         Last month
       </span>
       <div class="flex items-start justify-start gap-1">
-        <span class="text-xl font-bold">
-          - 1,000
+        <span class="text-lg font-bold">
+          -1000
         </span>
         <span class="text-xs text-green-400">
           <UIcon name="lucide:chevron-down"/>
@@ -22,10 +22,10 @@
         Weekly
       </span>
       <div class="flex items-start justify-start gap-1">
-        <span class="text-xl font-bold">
-          - 52
+        <span class="text-lg font-bold">
+          -52
         </span>
-        <span class="text-xs text-green-400">
+        <span class="text-xs text-green-400 flex items-center gap-0 justify-start">
           <UIcon name="lucide:chevron-down"/>
           150.2%
         </span>

@@ -107,7 +107,7 @@ const handleHoverEnd = () => {
     :initial="containerInitState"
     :animate="containerAnimation"
     :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
-    class="fixed bottom-8 shadow-xl backdrop-blur-xl -translate-x-1/2 left-1/2"
+    class="fixed bottom-8 shadow-xl bg-[oklch(0_0_0/0.05)] dark:bg-[oklch(1_0_0/0.005)] dark:ring-1 dark:ring-[oklch(1_0_0/0.02)] backdrop-blur-xl -translate-x-1/2 left-1/2"
   >
     <Motion
       v-for="{ icon: tab, items } in subItems"
