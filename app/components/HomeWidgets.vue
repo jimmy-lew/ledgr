@@ -18,9 +18,6 @@ const emit = defineEmits<{
 const colorMode = useColorMode()
 
 const activeIndex = ref(0)
-const isDragging = ref(false)
-const dragStartX = ref(0)
-const dragOffset = ref(0)
 const scrollRef = ref<HTMLElement | null>(null)
 
 const widgetRefs = ref<HTMLElement[]>([])
@@ -31,7 +28,7 @@ const addWidgetRef = (e: any) => { if (e) widgetRefs.value.push(e.$el || e) }
 
 const dotAnimation = (index: number) => {
   const isActive = activeIndex.value === index
-  const activeColor =  isDark.value ? 'rgba(0,0,0,1)' : 'rgba(255,255,255,1)'
+  const activeColor =  'rgba(255,255,255,1)'
   const inactiveColor = isDark.value ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.15)'
   return {
     width: isActive ? '24px': '8px',
@@ -39,49 +36,9 @@ const dotAnimation = (index: number) => {
   }
 }
 
-function onDotClick(index: number) {
-  activeIndex.value = index
-  scrollToCard(index)
-}
-
-function scrollToCard(index: number) {
-  const container = scrollRef.value
-  if (!container) return
-  const card = container.children[index + 1] as HTMLElement // +1 to skip the add button
-  if (card) {
-    card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-  }
-}
-
-function onPointerDown(e: PointerEvent) {
-  isDragging.value = true
-  dragStartX.value = e.clientX
-  dragOffset.value = 0
-  ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
-}
-
-function onPointerMove(e: PointerEvent) {
-  if (!isDragging.value) return
-  dragOffset.value = e.clientX - dragStartX.value
-}
-
-function onPointerUp(e: PointerEvent) {
-  if (!isDragging.value) return
-  isDragging.value = false
-  const threshold = 60
-  if (dragOffset.value < -threshold && activeIndex.value < props.items.length - 1) {
-    activeIndex.value++
-    scrollToCard(activeIndex.value)
-  } else if (dragOffset.value > threshold && activeIndex.value > 0) {
-    activeIndex.value--
-    scrollToCard(activeIndex.value)
-  }
-  dragOffset.value = 0
-}
-
 function onScroll() {
   const container = scrollRef.value
-  if (!container || isDragging.value) return
+  if (!container) return
   let closest = 0
   let minDist = Infinity
   widgetRefs.value.forEach((card, i) => {
@@ -97,10 +54,6 @@ function onScroll() {
   ref="scrollRef"
   class="px-6 w-full mt-6 overflow-x-scroll overflow-y-auto"
   @scroll="onScroll"
-  @pointerdown="onPointerDown"
-  @pointermove="onPointerMove"
-  @pointerup="onPointerUp"
-  @pointercancel="onPointerUp"
 >
   <div
     class="flex min-w-fit gap-2 py-2"
@@ -156,7 +109,6 @@ function onScroll() {
     :animate="dotAnimation(i)"
     :transition="{ duration: 0.25, ease: 'easeOut' }"
     class="h-1 rounded-full cursor-pointer min-w-2"
-    @click="onDotClick(i)"
   />
 </div>
 </template>
