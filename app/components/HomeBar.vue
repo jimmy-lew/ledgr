@@ -78,8 +78,8 @@ const handleHoverEnd = () => {
         @click="selectTab(tab, to)"
         class="relative flex items-center justify-center size-8 text-sm font-medium transition-all duration-200 active:scale-90 rounded-full z-10"
         :class="[
-          hoverActive === tab ? 'text-white!' : '',
-          activeTab === tab && !hoverActive ? 'text-white' : 'text-black',
+          hoverActive === tab ? 'text-white! dark:text-black!' : '',
+          activeTab === tab && !hoverActive ? 'text-white dark:text-black' : 'text-black dark:text-white',
         ]"
       >
 
@@ -88,7 +88,7 @@ const handleHoverEnd = () => {
 
       <Motion
         tag="div"
-        class="absolute size-8 bg-black rounded-full origin-center"
+        class="absolute size-8 bg-black dark:bg-white rounded-full origin-center"
         :initial="false"
         :animate="{
           left: `${indicatorPos}px`,
@@ -107,7 +107,7 @@ const handleHoverEnd = () => {
     :initial="containerInitState"
     :animate="containerAnimation"
     :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
-    class="fixed bottom-8 bg-default/10 shadow-xl backdrop-blur-xl -translate-x-1/2 left-1/2"
+    class="fixed bottom-8 shadow-xl backdrop-blur-xl -translate-x-1/2 left-1/2"
   >
     <Motion
       v-for="{ icon: tab, items } in subItems"
@@ -127,7 +127,16 @@ const handleHoverEnd = () => {
         @click="click?.()"
         class="w-full group text-sm transition-all duration-75 active:scale-90"
       >
-        <div class="flex items-center gap-3 rounded-lg p-2 mx-auto w-full duration-300 group-active:bg-black/5 group-hover:bg-black/5 group-active:px-3 group-hover:px-3">
+        <div
+          class="
+          flex items-center gap-3
+          rounded-lg p-2 mx-auto w-full
+          duration-300
+          group-active:bg-black/5 group-hover:bg-black/5
+          dark:group-active:bg-white/5 dark:group-hover:bg-white/5
+          group-active:px-3 group-hover:px-3
+          "
+        >
           <Icon :name/>
           {{ title }}
         </div>

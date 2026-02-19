@@ -15,6 +15,8 @@ const emit = defineEmits<{
   select: [index: number]
 }>()
 
+const colorMode = useColorMode()
+
 const activeIndex = ref(0)
 const isDragging = ref(false)
 const dragStartX = ref(0)
@@ -23,8 +25,19 @@ const scrollRef = ref<HTMLElement | null>(null)
 
 const widgetRefs = ref<HTMLElement[]>([])
 const totalDots = computed(() => props.items.length)
+const isDark = computed(() => colorMode.value === 'dark')
 
 const addWidgetRef = (e: any) => { if (e) widgetRefs.value.push(e.$el || e) }
+
+const dotAnimation = (index: number) => {
+  const isActive = activeIndex.value === index
+  const activeColor =  isDark.value ? 'rgba(0,0,0,1)' : 'rgba(255,255,255,1)'
+  const inactiveColor = isDark.value ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.15)'
+  return {
+    width: isActive ? '24px': '8px',
+    backgroundColor: isActive ? activeColor : inactiveColor
+  }
+}
 
 function onDotClick(index: number) {
   activeIndex.value = index
@@ -94,7 +107,7 @@ function onScroll() {
   >
     <Motion
       as="div"
-      :while-hover="{ backgroundColor: 'rgba(255,255,255,0.2)' }"
+      :while-hover="{ backgroundColor: `rgba(255,255,255,${isDark ? '0.04' : '0.2'})` }"
       :while-press="{ scale: 0.94 }"
       :transition="{ duration: 0.2 }"
       class="
@@ -127,7 +140,7 @@ function onScroll() {
         cursor-pointer
         transition-shadow duration-300
       "
-      :class="{ 'ring-white/60 shadow-lg shadow-white/10': activeIndex === i }"
+      :class="{ 'shadow-md': activeIndex === i }"
       @click="activeIndex = i; emit('select', i)"
     >
       <slot :item="item" :index="i" :active="activeIndex === i" />
@@ -140,10 +153,7 @@ function onScroll() {
     v-for="(item, i) in items"
     :key="item.id"
     as="div"
-    :animate="{
-      width: activeIndex === i ? '24px' : '8px',
-      backgroundColor: activeIndex === i ? 'rgba(255,255,255,1)' : 'rgba(0,0,0,0.15)'
-    }"
+    :animate="dotAnimation(i)"
     :transition="{ duration: 0.25, ease: 'easeOut' }"
     class="h-1 rounded-full cursor-pointer min-w-2"
     @click="onDotClick(i)"

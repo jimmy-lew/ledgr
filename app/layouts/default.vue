@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const colorMode = useColorMode()
+
+colorMode.preference = 'light'
+
 const items = [
   { icon: 'lucide:home', to: '/' },
   { icon: 'lucide:chart-line', to: '/insights' },
@@ -13,6 +17,10 @@ const items = [
   { icon: 'lucide:chart-pie', to: '/budget' },
   { icon: 'lucide:user-round', to: '/user' }
 ]
+
+definePageMeta({
+  colorMode: 'light'
+})
 </script>
 
 <template>
@@ -20,7 +28,7 @@ const items = [
   <div class="min-h-screen flex flex-col bg-[#edf0ea] dark:bg-[oklch(15%_0_0)]">
     <slot />
   </div>
-    <HomeBar :items/>
+  <HomeBar :items/>
 </div>
 </template>
 

@@ -1,9 +1,6 @@
 <script setup lang="ts">
-const colorMode = useColorMode()
 const title = 'Ledgr'
 const description = ''
-
-colorMode.value = "light"
 
 useHead({
   meta: [
