@@ -21,7 +21,10 @@ const dragStartX = ref(0)
 const dragOffset = ref(0)
 const scrollRef = ref<HTMLElement | null>(null)
 
+const widgetRefs = ref<HTMLElement[]>([])
 const totalDots = computed(() => props.items.length)
+
+const addWidgetRef = (e: any) => { if (e) widgetRefs.value.push(e.$el || e) }
 
 function onDotClick(index: number) {
   activeIndex.value = index
@@ -64,36 +67,30 @@ function onPointerUp(e: PointerEvent) {
 }
 
 function onScroll() {
-  console.log('scrolling')
   const container = scrollRef.value
   if (!container || isDragging.value) return
-  const cards = Array.from(container.children).slice(1) as HTMLElement[]
   let closest = 0
   let minDist = Infinity
-  cards.forEach((card, i) => {
-    const rect = card.getBoundingClientRect()
-    const containerRect = container.getBoundingClientRect()
-    const dist = Math.abs(rect.left + rect.width / 2 - (containerRect.left + containerRect.width / 2))
-    console.log(dist)
-    if (dist < minDist) {
-      minDist = dist
-      closest = i
-    }
+  widgetRefs.value.forEach((card, i) => {
+    const dist = Math.abs(card.offsetLeft - container.scrollLeft - container.clientWidth / 2 + card.offsetWidth / 2)
+    if (dist < minDist) { minDist = dist; closest = i }
   })
   activeIndex.value = closest
 }
 </script>
 
 <template>
-<div class="px-6 w-full mt-6 overflow-y-auto">
+<div
+  ref="scrollRef"
+  class="px-6 w-full mt-6 overflow-x-scroll overflow-y-auto"
+  @scroll="onScroll"
+  @pointerdown="onPointerDown"
+  @pointermove="onPointerMove"
+  @pointerup="onPointerUp"
+  @pointercancel="onPointerUp"
+>
   <div
-    ref="scrollRef"
-    class="flex min-w-fit gap-2 overflow-x-scroll py-2 scrollbar-hide"
-    @scroll="onScroll"
-    @pointerdown="onPointerDown"
-    @pointermove="onPointerMove"
-    @pointerup="onPointerUp"
-    @pointercancel="onPointerUp"
+    class="flex min-w-fit gap-2 py-2"
   >
     <Motion
       as="div"
@@ -117,11 +114,12 @@ function onScroll() {
       v-for="(item, i) in items"
       :key="item.id"
       as="div"
+      :ref="addWidgetRef"
       :initial="{ opacity: 0, y: 16 }"
       :animate="{ opacity: 1, y: 0 }"
       :transition="{ delay: i * 0.06, duration: 0.35, ease: 'easeOut' }"
       :while-hover="{ scale: 1.02 }"
-      :while-tap="{ scale: 0.97 }"
+      :while-press="{ scale: 0.97 }"
       class="
         flex flex-col shrink-0 rounded-xl p-2
         bg-default backdrop-blur-sm
