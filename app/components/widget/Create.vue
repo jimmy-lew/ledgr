@@ -1,4 +1,5 @@
  <script setup lang="ts">
+import { WidgetBudget, WidgetGoal } from '#components';
 import type { FormField } from '~/types';
 
 type WidgetType = 'goal' | 'expenses' | 'budget' | 'test'
@@ -19,17 +20,19 @@ const WIDGET_CONFIG = {
       { key: 'current', label: 'Saved', type: 'number', props: { min: 0, placeholder: '0' } },
       { key: 'final', label: 'Target', type: 'number', props: { min: 1, placeholder: '1000' } },
       { key: 'due', label: 'Due Date', type: 'date', fieldClass: 'col-span-2'},
-    ]
-  },
-  expenses: {
-    label: 'Expenses',
-    icon: 'i-lucide-credit-card',
-    description: 'Automatic expense tracking',
+    ],
+    component: WidgetGoal,
   },
   budget: {
     label: 'Budget',
     icon: 'i-lucide-pie-chart',
     description: 'Monthly limit tracking',
+    component: WidgetBudget
+  },
+  expenses: {
+    label: 'Expenses',
+    icon: 'i-lucide-credit-card',
+    description: 'Automatic expense tracking',
   },
   test: {
     label: 'Test',
@@ -39,7 +42,12 @@ const WIDGET_CONFIG = {
 }
 
 const state = ref({})
-const activeWidget = computed(() => WIDGET_CONFIG[selectedType.value ?? 'goal'])
+const missingWidgetState = { label: '', icon: 'lucide:triangle-alert', description: 'Widget not yet implemented...' }
+const activeWidget = computed(() => {
+  const active = WIDGET_CONFIG[selectedType.value ?? 'goal']
+  const notImplemented = Boolean(!active.component)
+  return notImplemented ? missingWidgetState : active
+})
 const fields = computed<FormField[]>(() => activeWidget.value.fields ?? [])
 
 function submit() {
@@ -90,17 +98,15 @@ watch(selectedType, (n, o) => {
           :animate="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.24 }"
         >
-          <div class="px-4 pt-4 space-y-3 max-h-[72vh] overflow-y-auto">
+          <div class="px-4 pt-4 space-y-3 max-h-[60vh] overflow-y-auto">
             <div class="flex gap-2 p-1 max-w-full overflow-x-auto">
               <button
                 v-for="(config, key) in WIDGET_CONFIG"
                 :key="key"
                 @click="selectedType = key"
                 :class="[
-                  'min-w-20 flex flex-col items-center py-2 px-1 rounded-lg transition-all gap-1.5 dark:hover:bg-white/15',
-                  selectedType === key
-                    ? 'shadow-sm ring-1 bg-black/5 dark:bg-black/40 dark:ring-white/5'
-                    : 'ring-1 ring-black/5 dark:ring-white/5'
+                  'min-w-20 flex flex-col items-center py-2 px-1 ring-1 ring-black/5 dark:ring-white/5 rounded-lg transition-all gap-1.5 dark:hover:bg-white/15',
+                  selectedType === key ? 'shadow-sm bg-black/5 dark:bg-black/40' : ''
                 ]"
               >
                 <UIcon :name="config.icon" :class="['w-5 h-5', selectedType === key ? 'text-primary' : '']" />
@@ -120,7 +126,7 @@ watch(selectedType, (n, o) => {
                 <p class="text-xs text-zinc-400 mt-1">No additional configuration required.</p>
               </div>
             </Motion>
-            <div class="flex flex-col items-center rounded-xl p-4 space-y-2 bg-black/5 dark:bg-black">
+            <div v-if="activeWidget.component" class="flex flex-col items-center rounded-xl p-4 space-y-2 bg-black/5 dark:bg-black">
               <p class="flex items-center text-xs font-medium gap-1">
                 <span class="relative flex size-1.5 justify-center items-center">
                   <span class="absolute -translate-x-1/2 left-1/2 size-1.5 rounded-full animate-ping bg-green-400 opacity-75"></span>
@@ -128,7 +134,7 @@ watch(selectedType, (n, o) => {
                 </span>
                 Live Preview</p>
               <div class="flex flex-col shrink-0 rounded-xl p-3 text-sm bg-default dark:bg-zinc-850 w-40 h-48">
-                <WidgetGoal name="Emergency fund" :current="0" :final="1000" due="10/1/2026" />
+                <component :is="activeWidget.component" v-bind="state"/>
               </div>
             </div>
           </div>
