@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
+import { CalendarDate } from '@internationalized/date'
 
-const df = new DateFormatter('en-US', {
-  dateStyle: 'medium'
-})
-
+const inputDate = useTemplateRef('inputDate')
 type WidgetType = 'goal' | 'expenses' | 'budget'
 
 const emit = defineEmits<{
@@ -142,7 +139,25 @@ watch(isOpen, (v) => { if (!v) reset() })
               </div>
 
               <UFormField label="Due date">
-                <UPopover>
+                <UInputDate ref="inputDate" v-model="modelValue">
+                  <template #trailing>
+                    <UPopover :reference="inputDate?.inputsRef[3]?.$el">
+                      <UButton
+                        color="neutral"
+                        variant="link"
+                        size="sm"
+                        icon="i-lucide-calendar"
+                        aria-label="Select a date"
+                        class="px-0"
+                      />
+
+                      <template #content>
+                        <UCalendar v-model="modelValue" class="p-2" />
+                      </template>
+                    </UPopover>
+                  </template>
+                </UInputDate>
+                <!-- <UPopover>
                   <UButton color="neutral" variant="subtle" icon="i-lucide-calendar" class="bg-transparent">
                     {{ modelValue ? df.format(modelValue.toDate(getLocalTimeZone())) : 'Select a date' }}
                   </UButton>
@@ -150,7 +165,7 @@ watch(isOpen, (v) => { if (!v) reset() })
                   <template #content>
                     <UCalendar v-model="modelValue" class="p-2" />
                   </template>
-                </UPopover>
+                </UPopover> -->
               </UFormField>
 
               <!-- Live preview -->
