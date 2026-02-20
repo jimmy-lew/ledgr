@@ -20,3 +20,12 @@ export interface BudgetWidget {
 }
 
 export type Widget = GoalWidget | ExpensesWidget | BudgetWidget
+
+export interface FormField {
+  key: string
+  label: string
+  type: 'date' | 'boolean' | 'number' | 'input'
+  props?: any
+  class?: string
+  ui?: any
+}
