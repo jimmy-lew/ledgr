@@ -74,13 +74,13 @@ watch(isOpen, (v) => { if (!v) reset() })
     v-model:open="isOpen"
     closeIcon=" "
     :ui="{
-      content: 'ring-0 bg-transparent bg-linear-to-b from-black/12 via-white/30 to-black/5 backdrop-blur-[2px] p-px',
-      overlay: 'bg-black/20 backdrop-blur-sm',
+      content: 'ring-0 bg-transparent bg-linear-to-b from-black/12 via-white/30 to-black/5 dark:from-white/20 dark:via-black/30 dark:to-white/5 backdrop-blur-[2px] p-px',
+      overlay: 'backdrop-blur-[2px]',
     }"
   >
     <template #content>
-      <div class="bg-white/60 inset-px rounded-[7px] overflow-hidden font-mono">
-        <div class="px-6 pt-6 pb-4 border-b border-black/5 flex items-center gap-3">
+      <div class="bg-white/60 dark:bg-black/70 inset-px rounded-[7px] overflow-hidden font-mono">
+        <div class="px-6 pt-6 pb-4 border-b border-black/5 dark:border-white/20 flex items-center gap-3">
           <div class="flex-1 min-w-0">
             <Motion
               :initial="{ opacity: 0, y: 4 }"
@@ -154,7 +154,7 @@ watch(isOpen, (v) => { if (!v) reset() })
               </UFormField>
 
               <!-- Live preview -->
-              <div class="flex flex-col items-center rounded-xl p-4 space-y-2 bg-black/5">
+              <div class="flex flex-col items-center rounded-xl p-4 space-y-2 bg-black/5 dark:bg-black">
                 <p class="flex items-center text-xs font-medium gap-1">
                   <span class="relative flex size-1.5 justify-center items-center">
                     <span class="absolute -translate-x-1/2 left-1/2 size-1.5 rounded-full animate-ping bg-green-400 opacity-75"></span>
