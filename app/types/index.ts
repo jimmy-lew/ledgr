@@ -26,6 +26,7 @@ export interface FormField {
   label: string
   type: 'date' | 'boolean' | 'number' | 'input'
   props?: any
+  fieldClass?: string
   class?: string
   ui?: any
 }

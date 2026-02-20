@@ -6,7 +6,8 @@ const props = defineProps<{fields: FormField[]}>()
 const emit = defineEmits<{
   submit: []
 }>()
-const state = defineModel<any>()
+
+const state = defineModel<any>({ default: {} })
 
 function getFieldComponent(field: FormField) {
   switch (field.type) {
@@ -23,14 +24,14 @@ function getFieldComponent(field: FormField) {
 
 function santizeField(field: FormField) {
   const { label, ui, props, class: _class } = field
-  return { label, ui: { base: 'bg-transparent', ...ui }, ...props, class: _class }
+  return { label, ui: { base: 'bg-transparent', ...ui }, ...props, class: `${_class} w-full` }
 }
 </script>
 
 <template>
 <UForm :state>
   <template v-for="field in fields" :key="field.key">
-    <UFormField :name="field.key" :label="field.label">
+    <UFormField :name="field.key" :label="field.label" :class="field.fieldClass">
       <component
         :is="getFieldComponent(field)"
         v-model="state[field.key]"
