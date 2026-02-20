@@ -11,7 +11,7 @@
         <span class="text-lg font-bold">
           -1000
         </span>
-        <span class="text-xs text-green-400">
+        <span class="text-xs text-green-400 flex items-center gap-0 justify-start">
           <UIcon name="lucide:chevron-down"/>
           1.5%
         </span>
