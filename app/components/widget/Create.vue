@@ -122,20 +122,18 @@ watch(isOpen, (v) => { if (!v) reset() })
 
               <div class="grid grid-cols-2 gap-3">
                 <UFormField label="Current amount">
-                  <UInput
-                    v-model.number="goalCurrent"
-                    type="number"
-                    min="0"
+                  <UInputNumber
+                    v-model="goalCurrent"
+                    :min="0"
                     placeholder="0"
                     :ui="{base: 'bg-transparent'}"
                     class="w-full"
                   />
                 </UFormField>
                 <UFormField label="Target amount" required>
-                  <UInput
-                    v-model.number="goalFinal"
-                    type="number"
-                    min="1"
+                  <UInputNumber
+                    v-model="goalFinal"
+                    :min="1"
                     placeholder="1000"
                     :ui="{base: 'bg-transparent'}"
                     class="w-full"
