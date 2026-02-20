@@ -64,7 +64,7 @@ const chartSegments = computed(() => {
 
      <div class="w-full space-y-1.5 mt-1">
       <div v-for="category in categories" :key="category.name" class="flex items-center gap-2">
-        <div class="size-5 rounded-full bg-black/10 flex items-center justify-center">
+        <div class="size-5 rounded-full bg-black/10 dark:bg-white/5 flex items-center justify-center">
           <UIcon :name="category.icon" :class="`w-2.5 h-2.5 ${category.textColor}`" />
         </div>
         <div class="flex-1 min-w-0">
@@ -74,7 +74,7 @@ const chartSegments = computed(() => {
           </div>
           <div class="flex justify-between gap-0.5">
             <div v-for="i in 20" :key="i" class="h-2 w-0.5 flex-1 rounded-sm transition-colors duration-700"
-              :class="i <= Math.round((category.amount / totalAmount) * 20) ? category.bgColor : 'bg-black/10'">
+              :class="i <= Math.round((category.amount / totalAmount) * 20) ? category.bgColor : 'bg-black/10 dark:bg-white/5'">
             </div>
           </div>
         </div>
