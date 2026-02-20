@@ -77,7 +77,7 @@ watch(isOpen, (v) => { if (!v) reset() })
   >
     <template #content>
       <div class="bg-white/60 dark:bg-black/70 inset-px rounded-[7px] overflow-hidden font-mono">
-        <div class="px-6 pt-6 pb-4 border-b border-black/5 dark:border-white/20 flex items-center gap-3">
+        <div class="px-4 pt-4 pb-2 border-b border-black/5 dark:border-white/20 flex items-center gap-3">
           <div class="flex-1 min-w-0">
             <Motion
               :initial="{ opacity: 0, y: 4 }"
@@ -106,7 +106,7 @@ watch(isOpen, (v) => { if (!v) reset() })
           :animate="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.24 }"
         >
-          <div class="p-6 space-y-4">
+          <div class="p-4 space-y-3">
             <template v-if="selectedType === 'goal'">
               <UFormField label="Goal name" required>
                 <UInput
@@ -183,7 +183,7 @@ watch(isOpen, (v) => { if (!v) reset() })
             </template>
           </div>
 
-          <div class="px-6 pb-6 flex gap-2 justify-end">
+          <div class="px-4 pb-4 flex gap-2 justify-end">
             <UButton variant="ghost" color="neutral" @click="emit('close')">Cancel</UButton>
             <UButton
               :disabled="selectedType === 'goal' && !goalName"
