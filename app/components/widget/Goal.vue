@@ -17,11 +17,11 @@ const targetDashArray = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-2 text-xs">
+  <div class="flex flex-col items-center gap-2 text-xs h-full">
     <div class="flex justify-between w-full">
       Goal
     </div>
-    <div class="relative w-full flex items-center justify-center">
+    <div class="relative h-full w-full flex items-center justify-center">
       <span class="absolute -translate-x-1/2 left-1/2 font-bold text-lg">{{percentage}}</span>
       <svg width="96" height="96" viewBox="0 0 96 96">
         <circle
