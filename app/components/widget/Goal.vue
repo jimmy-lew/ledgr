@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { GoalWidget } from '~/types'
-const props = defineProps<GoalWidget>()
+const props = defineProps<Omit<GoalWidget, 'type'| 'id'>>()
 
 const STROKE_WIDTH = 8
 const RADIUS = 40
