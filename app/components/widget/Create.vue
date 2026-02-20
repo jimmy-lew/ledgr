@@ -1,74 +1,58 @@
-<script setup lang="ts">
-import { CalendarDate } from '@internationalized/date'
+ <script setup lang="ts">
+import type { FormField } from '~/types';
 
-const inputDate = useTemplateRef('inputDate')
-type WidgetType = 'goal' | 'expenses' | 'budget'
+type WidgetType = 'goal' | 'expenses' | 'budget' | 'test'
 
 const emit = defineEmits<{
   close: [],
   created: [widget: GoalWidget | ExpensesWidget | BudgetWidget]
 }>()
 
-const isOpen = defineModel<boolean>({ default: false })
-
 const selectedType = ref<WidgetType | null>('goal')
-
-// Goal form
-const goalName = ref('')
-const goalCurrent = ref(0)
-const goalFinal = ref(1000)
-const goalDue = ref('')
-const modelValue = shallowRef(new CalendarDate(2026, 1, 10))
-
-function selectType(type: WidgetType) {
-  selectedType.value = type
+const WIDGET_CONFIG = {
+  goal: {
+    label: 'Goal',
+    icon: 'i-lucide-target',
+    description: 'Track your savings progress',
+    fields: [
+      { key: 'name', label: 'Goal Name', type: 'input', props: { placeholder: 'New Car' }, fieldClass: 'col-span-2' },
+      { key: 'current', label: 'Saved', type: 'number', props: { min: 0, placeholder: '0' } },
+      { key: 'final', label: 'Target', type: 'number', props: { min: 1, placeholder: '1000' } },
+      { key: 'due', label: 'Due Date', type: 'date', fieldClass: 'col-span-2'},
+    ]
+  },
+  expenses: {
+    label: 'Expenses',
+    icon: 'i-lucide-credit-card',
+    description: 'Automatic expense tracking',
+  },
+  budget: {
+    label: 'Budget',
+    icon: 'i-lucide-pie-chart',
+    description: 'Monthly limit tracking',
+  },
+  test: {
+    label: 'Test',
+    icon: 'i-lucide-flask-conical',
+    description: 'Monthly limit tracking',
+  },
 }
 
-function back() {
-  selectedType.value = null
-}
-
-function reset() {
-  selectedType.value = null
-  goalName.value = ''
-  goalCurrent.value = 0
-  goalFinal.value = 1000
-  goalDue.value = ''
-}
+const state = ref({})
+const activeWidget = computed(() => WIDGET_CONFIG[selectedType.value ?? 'goal'])
+const fields = computed<FormField[]>(() => activeWidget.value.fields ?? [])
 
 function submit() {
   if (!selectedType.value) return
-
-  let widget: Widget
-
-  const id = crypto.randomUUID()
-
-  if (selectedType.value === 'goal') {
-    widget = {
-      id,
-      type: 'goal',
-      name: goalName.value,
-      current: goalCurrent.value,
-      final: goalFinal.value,
-      due: goalDue.value,
-    }
-  } else if (selectedType.value === 'expenses') {
-    widget = { id, type: 'expenses', categories: [] }
-  } else {
-    widget = { id, type: 'budget' }
-  }
-
-  emit('created', widget)
-  isOpen.value = false
-  reset()
 }
 
-watch(isOpen, (v) => { if (!v) reset() })
+watch(selectedType, (n, o) => {
+  if (n !== o) { state.value = {} }
+})
 </script>
 
 <template>
   <UModal
-    v-model:open="isOpen"
     closeIcon=" "
     :ui="{
       content: 'ring-0 bg-transparent bg-linear-to-b from-black/12 via-white/30 to-black/5 dark:from-white/20 dark:via-black/30 dark:to-white/5 backdrop-blur-[2px] p-px',
@@ -106,89 +90,52 @@ watch(isOpen, (v) => { if (!v) reset() })
           :animate="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.24 }"
         >
-          <div class="p-4 space-y-3">
-            <template v-if="selectedType === 'goal'">
-              <UFormField label="Goal name" required>
-                <UInput
-                  v-model="goalName"
-                  placeholder="e.g. Emergency fund"
-                  :ui="{base: 'bg-transparent'}"
-                  class="w-full"
-                />
-              </UFormField>
+          <div class="px-4 pt-4 space-y-3 max-h-[72vh] overflow-y-auto">
+            <div class="flex gap-2 p-1 max-w-full overflow-x-auto">
+              <button
+                v-for="(config, key) in WIDGET_CONFIG"
+                :key="key"
+                @click="selectedType = key"
+                :class="[
+                  'min-w-20 flex flex-col items-center py-2 px-1 rounded-lg transition-all gap-1.5 dark:hover:bg-white/15',
+                  selectedType === key
+                    ? 'shadow-sm ring-1 bg-black/5 dark:bg-black/40 dark:ring-white/5'
+                    : 'ring-1 ring-black/5 dark:ring-white/5'
+                ]"
+              >
+                <UIcon :name="config.icon" :class="['w-5 h-5', selectedType === key ? 'text-primary' : '']" />
+                <span class="text-[10px] font-bold uppercase tracking-widest">{{ config.label }}</span>
+              </button>
+            </div>
 
-              <div class="grid grid-cols-2 gap-3">
-                <UFormField label="Current amount">
-                  <UInputNumber
-                    v-model="goalCurrent"
-                    :min="0"
-                    placeholder="0"
-                    :ui="{base: 'bg-transparent'}"
-                    class="w-full"
-                  />
-                </UFormField>
-                <UFormField label="Target amount" required>
-                  <UInputNumber
-                    v-model="goalFinal"
-                    :min="1"
-                    placeholder="1000"
-                    :ui="{base: 'bg-transparent'}"
-                    class="w-full"
-                  />
-                </UFormField>
+            <Motion
+              :initial="{ opacity: 0, scale: 0.98 }"
+              :animate="{ opacity: 1, scale: 1 }"
+            >
+              <FormBuilder v-if="fields.length > 0" v-model="state" :fields class="grid grid-cols-2 gap-x-4 gap-y-2"/>
+
+              <div v-else class="flex flex-col items-center justify-center py-12 text-center border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl">
+                <UIcon :name="activeWidget.icon" class="w-10 h-10 text-zinc-300 mb-2" />
+                <p class="text-sm font-medium text-zinc-600">{{ activeWidget.description }}</p>
+                <p class="text-xs text-zinc-400 mt-1">No additional configuration required.</p>
               </div>
-
-              <UFormField label="Due date">
-                <UInputDate ref="inputDate" v-model="modelValue">
-                  <template #trailing>
-                    <UPopover :reference="inputDate?.inputsRef[3]?.$el">
-                      <UButton
-                        color="neutral"
-                        variant="link"
-                        size="sm"
-                        icon="i-lucide-calendar"
-                        aria-label="Select a date"
-                        class="px-0"
-                      />
-
-                      <template #content>
-                        <UCalendar v-model="modelValue" class="p-2" />
-                      </template>
-                    </UPopover>
-                  </template>
-                </UInputDate>
-                <!-- <UPopover>
-                  <UButton color="neutral" variant="subtle" icon="i-lucide-calendar" class="bg-transparent">
-                    {{ modelValue ? df.format(modelValue.toDate(getLocalTimeZone())) : 'Select a date' }}
-                  </UButton>
-
-                  <template #content>
-                    <UCalendar v-model="modelValue" class="p-2" />
-                  </template>
-                </UPopover> -->
-              </UFormField>
-
-              <!-- Live preview -->
-              <div class="flex flex-col items-center rounded-xl p-4 space-y-2 bg-black/5 dark:bg-black">
-                <p class="flex items-center text-xs font-medium gap-1">
-                  <span class="relative flex size-1.5 justify-center items-center">
-                    <span class="absolute -translate-x-1/2 left-1/2 size-1.5 rounded-full animate-ping bg-green-400 opacity-75"></span>
-                    <span class="relative size-1 rounded-full bg-green-500"></span>
-                  </span>
-                  Live Preview</p>
-                <div class="flex flex-col shrink-0 rounded-xl p-3 text-sm bg-default dark:bg-zinc-850 w-40 h-48">
-                  <WidgetGoal name="Emergency fund" :current="0" :final="1000" due="10/1/2026" />
-                </div>
+            </Motion>
+            <div class="flex flex-col items-center rounded-xl p-4 space-y-2 bg-black/5 dark:bg-black">
+              <p class="flex items-center text-xs font-medium gap-1">
+                <span class="relative flex size-1.5 justify-center items-center">
+                  <span class="absolute -translate-x-1/2 left-1/2 size-1.5 rounded-full animate-ping bg-green-400 opacity-75"></span>
+                  <span class="relative size-1 rounded-full bg-green-500"></span>
+                </span>
+                Live Preview</p>
+              <div class="flex flex-col shrink-0 rounded-xl p-3 text-sm bg-default dark:bg-zinc-850 w-40 h-48">
+                <WidgetGoal name="Emergency fund" :current="0" :final="1000" due="10/1/2026" />
               </div>
-            </template>
+            </div>
           </div>
 
-          <div class="px-4 pb-4 flex gap-2 justify-end">
+          <div class="p-4 flex gap-2 justify-end">
             <UButton variant="ghost" color="neutral" @click="emit('close')">Cancel</UButton>
-            <UButton
-              :disabled="selectedType === 'goal' && !goalName"
-              @click="submit"
-            >
+            <UButton @click="submit">
               Add widget
             </UButton>
           </div>
