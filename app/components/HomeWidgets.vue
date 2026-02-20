@@ -1,17 +1,17 @@
 <script setup lang="ts">
-interface Widget {
-  id: string | number
+import type { Widget } from '~/types';
+import GoalWidget from './widget/Goal.vue';
+import BudgetWidget from './widget/Budget.vue';
+
+const props = defineProps<{ items: Widget[] }>()
+
+const components: Record<string, any> = {
+  goal: GoalWidget,
+  budget: BudgetWidget,
 }
 
-const props = withDefaults(defineProps<{
-  items?: Widget[]
-}>(), {
-  items: () => [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-  ]
+const widgets = computed(() => {
+  return props.items.map(i => ({...i, component: components[i.type] || null})).filter(i => i.component)
 })
 
 const emit = defineEmits<{
@@ -25,7 +25,7 @@ const activeIndex = ref(0)
 const scrollRef = ref<HTMLElement | null>(null)
 
 const widgetRefs = ref<HTMLElement[]>([])
-const totalDots = computed(() => props.items.length)
+const totalDots = computed(() => widgets.value.length)
 const isDark = computed(() => colorMode.value === 'dark')
 
 const addWidgetRef = (e: any) => { if (e) widgetRefs.value.push(e.$el || e) }
@@ -81,7 +81,7 @@ function onScroll() {
     </Motion>
 
     <Motion
-      v-for="(item, i) in items"
+      v-for="(item, i) in widgets"
       :key="item.id"
       as="div"
       :ref="addWidgetRef"
@@ -100,14 +100,17 @@ function onScroll() {
       :class="{ 'shadow-md': activeIndex === i }"
       @click="activeIndex = i; emit('select', i)"
     >
-      <slot :name="`widget-${item.id}`" :item="item" :index="i" :active="activeIndex === i" />
+      <component
+        :is="item.component"
+        v-bind="item"
+      />
     </Motion>
   </div>
 </div>
 
 <div class="px-6 w-full flex items-center gap-1 mt-2">
   <Motion
-    v-for="(item, i) in items"
+    v-for="(item, i) in widgets"
     :key="item.id"
     as="div"
     :animate="dotAnimation(i)"
