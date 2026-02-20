@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import type { Widget } from '~/types';
-import GoalWidget from './widget/Goal.vue';
-import BudgetWidget from './widget/Budget.vue';
+import { WidgetGoal, LazyWidgetCreate, WidgetBudget } from '#components'
 
 const props = defineProps<{ items: Widget[] }>()
 
 const components: Record<string, any> = {
-  goal: GoalWidget,
-  budget: BudgetWidget,
+  goal: WidgetGoal,
+  budget: WidgetBudget,
 }
 
 const widgets = computed(() => {
@@ -20,9 +19,11 @@ const emit = defineEmits<{
 }>()
 
 const colorMode = useColorMode()
+const overlay = useOverlay()
 
 const activeIndex = ref(0)
 const scrollRef = ref<HTMLElement | null>(null)
+const widgetCreateModal = overlay.create(LazyWidgetCreate)
 
 const widgetRefs = ref<HTMLElement[]>([])
 const totalDots = computed(() => widgets.value.length)
@@ -38,6 +39,11 @@ const dotAnimation = (index: number) => {
     width: isActive ? '24px': '8px',
     backgroundColor: isActive ? activeColor : inactiveColor
   }
+}
+
+function onCreate() {
+  widgetCreateModal.open()
+  emit('add')
 }
 
 function onScroll() {
@@ -75,7 +81,7 @@ function onScroll() {
         transition-colors
         w-12 h-48
       "
-      @click="emit('add')"
+      @click="onCreate"
     >
       <UIcon name="lucide:plus" />
     </Motion>
