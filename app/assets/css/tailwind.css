@@ -1,6 +1,15 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 @theme {
   --font-sans: "Geist", sans-serif;
   --font-header: "Outfit", var(--font-sans);
