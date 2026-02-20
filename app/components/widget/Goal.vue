@@ -1,11 +1,6 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
-  percentage?: number
-  label?: string
-}>(), {
-  percentage: 28,
-  label: 'Goals',
-})
+import type { GoalWidget } from '~/types'
+const props = defineProps<GoalWidget>()
 
 const STROKE_WIDTH = 8
 const RADIUS = 40
@@ -13,8 +8,10 @@ const CX = RADIUS + STROKE_WIDTH
 const CY = RADIUS + STROKE_WIDTH
 const circumference = 2 * Math.PI * RADIUS // ≈ 251.33
 
+const percentage = computed(() => props.current / props.final)
+
 const targetDashArray = computed(() => {
-  const filled = (Math.min(Math.max(props.percentage, 0), 100) / 100) * circumference
+  const filled = percentage.value * circumference
   return `${filled} ${circumference}`
 })
 </script>
@@ -22,10 +19,10 @@ const targetDashArray = computed(() => {
 <template>
   <div class="flex flex-col items-center gap-2 text-xs">
     <div class="flex justify-between w-full">
-      {{ label }}
+      Goal
     </div>
     <div class="relative w-full flex items-center justify-center">
-      <span class="absolute -translate-x-1/2 left-1/2 font-bold text-lg">{{percentage}}%</span>
+      <span class="absolute -translate-x-1/2 left-1/2 font-bold text-lg">{{percentage}}</span>
       <svg width="96" height="96" viewBox="0 0 96 96">
         <circle
           :cx="CX" :cy="CY" :r="RADIUS"
@@ -47,8 +44,8 @@ const targetDashArray = computed(() => {
       </svg>
     </div>
     <div class="flex flex-col items-center gap-1">
-      New Bicycle
-      <span class="text-muted">1 Dec 2026</span>
+      {{ name }}
+      <span class="text-muted">{{ due }}</span>
     </div>
   </div>
 </template>
