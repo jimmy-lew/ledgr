@@ -1,17 +1,7 @@
 <script setup lang="ts">
-import type { Widget } from '~/types';
-import { WidgetGoal, LazyWidgetCreate, WidgetBudget } from '#components'
+import { LazyWidgetCreate } from '#components'
 
-const props = defineProps<{ items: Widget[] }>()
-
-const components: Record<string, any> = {
-  goal: WidgetGoal,
-  budget: WidgetBudget,
-}
-
-const widgets = computed(() => {
-  return props.items.map(i => ({...i, component: components[i.type] || null})).filter(i => i.component)
-})
+const { widgets, meta } = await useWidget()
 
 const emit = defineEmits<{
   add: []
@@ -26,7 +16,6 @@ const scrollRef = ref<HTMLElement | null>(null)
 const widgetCreateModal = overlay.create(LazyWidgetCreate)
 
 const widgetRefs = ref<HTMLElement[]>([])
-const totalDots = computed(() => widgets.value.length)
 const isDark = computed(() => colorMode.value === 'dark')
 
 const addWidgetRef = (e: any) => { if (e) widgetRefs.value.push(e.$el || e) }
@@ -107,7 +96,7 @@ function onScroll() {
       @click="activeIndex = i; emit('select', i)"
     >
       <component
-        :is="item.component"
+        :is="meta[item.type].component"
         v-bind="item"
       />
     </Motion>

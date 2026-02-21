@@ -1,26 +1,4 @@
 <script setup lang="ts">
-const widgets: Widget[] = [{
-  id: 1,
-  type: 'goal',
-  current: 28,
-  final: 100,
-  name: 'New Bicycle',
-  due: '1 Dec 2026'
-}, {
-  id: 2,
-  type: 'goal',
-  current: 50,
-  final: 100,
-  name: 'Ram',
-  due: '1 Dec 2026'
-  }, {
-  id: 3,
-  type: 'expenses',
-  categories: []
-  }, {
-  id: 4,
-  type: 'budget'
-}]
 </script>
 
 <template>
@@ -40,7 +18,7 @@ const widgets: Widget[] = [{
     </div>
   </div>
   <HomeGlanceInsights />
-  <HomeWidgets :items="widgets" />
+  <HomeWidgets />
   <HomeGlanceTransactions />
 </div>
 </template>

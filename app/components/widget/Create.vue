@@ -1,52 +1,23 @@
  <script setup lang="ts">
-import { WidgetBudget, WidgetGoal } from '#components';
-
 const emit = defineEmits<{
   close: [],
   created: [widget: Widget]
 }>()
 
-const config: Record<WidgetType, WidgetConfig> = {
-  goal: {
-    label: 'Goal',
-    icon: 'i-lucide-target',
-    description: 'Track your savings progress',
-    fields: [
-      { key: 'name', label: 'Goal Name', type: 'input', props: { placeholder: 'New Car' }, fieldClass: 'col-span-2' },
-      { key: 'current', label: 'Saved', type: 'number', props: { min: 0, placeholder: '0' } },
-      { key: 'final', label: 'Target', type: 'number', props: { min: 1, placeholder: '1000' } },
-      { key: 'due', label: 'Due Date', type: 'date', fieldClass: 'col-span-2'},
-    ],
-    component: WidgetGoal,
-  },
-  budget: {
-    label: 'Budget',
-    icon: 'i-lucide-pie-chart',
-    description: 'Monthly limit tracking',
-    component: WidgetBudget
-  },
-  expenses: {
-    label: 'Expenses',
-    icon: 'i-lucide-credit-card',
-    description: 'Automatic expense tracking',
-  },
-  test: {
-    label: 'Test',
-    icon: 'i-lucide-flask-conical',
-    description: 'Monthly limit tracking',
-  },
-}
+const { meta, addWidget } = await useWidget()
 
 const state = ref({})
-const active = ref(config.goal)
+const active = ref(meta.goal)
 const fields = computed<FormField[]>(() => active.value.fields ?? [])
 
 const handleSelect = (widget: WidgetConfig) => {
-  active.value = widget.component ? widget : { label: widget.label, icon: 'lucide:triangle-alert', description: 'Widget not yet implemented...' }
+  active.value = widget.component ? widget : { label: widget.label, type: widget.type, icon: 'lucide:triangle-alert', description: 'Widget not yet implemented...' }
 }
 
 function submit() {
-  if (!active.value) return
+  if (!active.value || !state.value) return
+  addWidget({...state, type: active.value.type})
+  emit('close')
 }
 
 watch(active, (n, o) => { if (n !== o) { state.value = {} } })
@@ -94,7 +65,7 @@ watch(active, (n, o) => { if (n !== o) { state.value = {} } })
           <div class="px-4 pt-4 space-y-3 max-h-[60vh] overflow-y-auto">
             <div class="flex gap-2 p-1 max-w-full overflow-x-auto">
               <button
-                v-for="widget in config"
+                v-for="widget in meta"
                 :key="widget.label"
                 @click="handleSelect(widget)"
                 :class="[
