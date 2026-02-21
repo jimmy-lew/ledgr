@@ -93,7 +93,7 @@ const parsePage = (lines: readonly string[], index: number): readonly Transactio
 
 export const DBSParser: BankParser = {
   bank: "DBS",
-  detect: (firstPage) => firstPage.toUpperCase().includes("DBS BANK"),
+  detect: (firstPage) => firstPage.toUpperCase().includes("DBS"),
   parse: (pages) => {
     const bank = "DBS"
     return Effect.gen(function* () {
