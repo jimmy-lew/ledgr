@@ -9,6 +9,7 @@ const CY = RADIUS + STROKE_WIDTH
 const circumference = 2 * Math.PI * RADIUS // ≈ 251.33
 
 const percentage = computed(() => props.current / props.final)
+const displayPercentage = computed(() => (percentage.value * 100).toFixed(1))
 
 const targetDashArray = computed(() => {
   const filled = percentage.value * circumference
@@ -22,7 +23,7 @@ const targetDashArray = computed(() => {
       Goal
     </div>
     <div class="relative h-full w-full flex items-center justify-center">
-      <span class="absolute -translate-x-1/2 left-1/2 font-bold text-lg">{{percentage}}</span>
+      <span class="absolute -translate-x-1/2 left-1/2 font-bold text-lg">{{displayPercentage}}</span>
       <svg width="96" height="96" viewBox="0 0 96 96">
         <circle
           :cx="CX" :cy="CY" :r="RADIUS"
