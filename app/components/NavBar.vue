@@ -51,6 +51,11 @@ const selectTab = (tab: string, to?: string) => {
   setTimeout(() => { isPressed.value = false }, 200)
 }
 
+const handleSubItemSelect = (tab: string, cb?: () => void) => {
+  selectTab(tab)
+  cb?.()
+}
+
 const handleHover = (tab: string) => {
   hoverActive.value = tab
   const el = subItemRefs.value[tab]
@@ -143,7 +148,7 @@ const handleHoverEnd = () => {
     >
       <button
         v-for="{type, icon: name, title, click} in items"
-        @click="click?.()"
+        @click="handleSubItemSelect(tab, click)"
         class="w-full group text-sm transition-all duration-75 active:scale-90"
       >
         <USeparator v-if="type === 'divider'" class="px-2 py-0.5" :ui="{ border: 'bg-black/5 dark:bg-white/5' }"/>
