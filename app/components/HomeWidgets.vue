@@ -50,6 +50,7 @@ function onScroll() {
 
 <template>
 <div
+  v-if="widgets.length > 0"
   ref="scrollRef"
   class="px-6 w-full mt-6 overflow-x-scroll overflow-y-auto"
   @scroll="onScroll"
