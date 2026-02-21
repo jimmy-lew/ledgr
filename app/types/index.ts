@@ -28,6 +28,7 @@ export interface WidgetConfig {
   label: string
   icon: string
   description: string
+  type: WidgetType
   fields?: FormField[]
   component?: Component
 }
