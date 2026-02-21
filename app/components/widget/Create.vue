@@ -42,7 +42,7 @@ const active = ref(config.goal)
 const fields = computed<FormField[]>(() => active.value.fields ?? [])
 
 const handleSelect = (widget: WidgetConfig) => {
-  active.value = widget.component ? widget : { label: '', icon: 'lucide:triangle-alert', description: 'Widget not yet implemented...' }
+  active.value = widget.component ? widget : { label: widget.label, icon: 'lucide:triangle-alert', description: 'Widget not yet implemented...' }
 }
 
 function submit() {
