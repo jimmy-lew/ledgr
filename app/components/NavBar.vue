@@ -1,7 +1,8 @@
 <script setup lang="ts">
 interface SubItem {
+  type?: 'divider' | undefined
   icon?: string
-  title: string
+  title?: string
   click?: () => void
 }
 
@@ -137,15 +138,17 @@ const handleHoverEnd = () => {
         zIndex: hoverActive === tab ? 2 : 1
       }"
       :transition="{ duration: 0.3 }"
-      :class="['p-3 flex flex-col items-center absolute overflow-y-scroll w-full']"
+      :class="['pt-3 px-3 flex flex-col items-center absolute overflow-y-scroll w-full']"
       @mouseleave="handleHoverEnd"
     >
       <button
-        v-for="{icon: name, title, click} in items"
+        v-for="{type, icon: name, title, click} in items"
         @click="click?.()"
         class="w-full group text-sm transition-all duration-75 active:scale-90"
       >
+        <USeparator v-if="type === 'divider'" class="px-2 py-0.5" :ui="{ border: 'bg-black/5 dark:bg-white/5' }"/>
         <div
+          v-else
           class="
           flex items-center gap-3
           rounded-lg p-2 mx-auto w-full
