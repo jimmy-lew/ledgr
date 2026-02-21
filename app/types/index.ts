@@ -1,3 +1,4 @@
+import type { Component } from 'vue'
 
 export interface GoalWidget {
   id: string | number
@@ -20,6 +21,16 @@ export interface BudgetWidget {
 }
 
 export type Widget = GoalWidget | ExpensesWidget | BudgetWidget
+
+export type WidgetType = (Widget extends { type: infer T } ? T : never) | 'test'
+
+export interface WidgetConfig {
+  label: string
+  icon: string
+  description: string
+  fields?: FormField[]
+  component?: Component
+}
 
 export interface FormField {
   key: string
