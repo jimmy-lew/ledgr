@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface SubItem {
-  icon: string
+  icon?: string
   title: string
   click?: () => void
 }
@@ -155,7 +155,7 @@ const handleHoverEnd = () => {
           group-active:px-3 group-hover:px-3
           "
         >
-          <Icon :name/>
+          <Icon v-if="name" :name/>
           {{ title }}
         </div>
       </button>
