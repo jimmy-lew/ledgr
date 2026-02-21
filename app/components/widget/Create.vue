@@ -1,16 +1,12 @@
  <script setup lang="ts">
 import { WidgetBudget, WidgetGoal } from '#components';
-import type { FormField } from '~/types';
-
-type WidgetType = 'goal' | 'expenses' | 'budget' | 'test'
 
 const emit = defineEmits<{
   close: [],
-  created: [widget: GoalWidget | ExpensesWidget | BudgetWidget]
+  created: [widget: Widget]
 }>()
 
-const selectedType = ref<WidgetType | null>('goal')
-const WIDGET_CONFIG = {
+const config: Record<WidgetType, WidgetConfig> = {
   goal: {
     label: 'Goal',
     icon: 'i-lucide-target',
@@ -42,21 +38,18 @@ const WIDGET_CONFIG = {
 }
 
 const state = ref({})
-const missingWidgetState = { label: '', icon: 'lucide:triangle-alert', description: 'Widget not yet implemented...' }
-const activeWidget = computed(() => {
-  const active = WIDGET_CONFIG[selectedType.value ?? 'goal']
-  const notImplemented = Boolean(!active.component)
-  return notImplemented ? missingWidgetState : active
-})
-const fields = computed<FormField[]>(() => activeWidget.value.fields ?? [])
+const active = ref(config.goal)
+const fields = computed<FormField[]>(() => active.value.fields ?? [])
 
-function submit() {
-  if (!selectedType.value) return
+const handleSelect = (widget: WidgetConfig) => {
+  active.value = widget.component ? widget : { label: '', icon: 'lucide:triangle-alert', description: 'Widget not yet implemented...' }
 }
 
-watch(selectedType, (n, o) => {
-  if (n !== o) { state.value = {} }
-})
+function submit() {
+  if (!active.value) return
+}
+
+watch(active, (n, o) => { if (n !== o) { state.value = {} } })
 </script>
 
 <template>
@@ -101,16 +94,16 @@ watch(selectedType, (n, o) => {
           <div class="px-4 pt-4 space-y-3 max-h-[60vh] overflow-y-auto">
             <div class="flex gap-2 p-1 max-w-full overflow-x-auto">
               <button
-                v-for="(config, key) in WIDGET_CONFIG"
-                :key="key"
-                @click="selectedType = key"
+                v-for="widget in config"
+                :key="widget.label"
+                @click="handleSelect(widget)"
                 :class="[
                   'min-w-20 flex flex-col items-center py-2 px-1 ring-1 ring-black/5 dark:ring-white/5 rounded-lg transition-all gap-1.5 dark:hover:bg-white/15',
-                  selectedType === key ? 'shadow-sm bg-black/5 dark:bg-black/40' : ''
+                  active.label === widget.label ? 'shadow-sm bg-black/5 dark:bg-black/40' : ''
                 ]"
               >
-                <UIcon :name="config.icon" :class="['w-5 h-5', selectedType === key ? 'text-primary' : '']" />
-                <span class="text-[10px] font-bold uppercase tracking-widest">{{ config.label }}</span>
+                <UIcon :name="widget.icon" :class="['w-5 h-5', active.label === widget.label ? 'text-primary' : '']" />
+                <span class="text-[10px] font-bold uppercase tracking-widest">{{ widget.label }}</span>
               </button>
             </div>
 
@@ -121,12 +114,12 @@ watch(selectedType, (n, o) => {
               <FormBuilder v-if="fields.length > 0" v-model="state" :fields class="grid grid-cols-2 gap-x-4 gap-y-2"/>
 
               <div v-else class="flex flex-col items-center justify-center py-12 text-center border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl">
-                <UIcon :name="activeWidget.icon" class="w-10 h-10 text-zinc-300 mb-2" />
-                <p class="text-sm font-medium text-zinc-600">{{ activeWidget.description }}</p>
+                <UIcon :name="active.icon" class="w-10 h-10 text-zinc-300 mb-2" />
+                <p class="text-sm font-medium text-zinc-600">{{ active.description }}</p>
                 <p class="text-xs text-zinc-400 mt-1">No additional configuration required.</p>
               </div>
             </Motion>
-            <div v-if="activeWidget.component" class="flex flex-col items-center rounded-xl p-4 space-y-2 bg-black/5 dark:bg-black">
+            <div v-if="active.component" class="flex flex-col items-center rounded-xl p-4 space-y-2 bg-black/5 dark:bg-black">
               <p class="flex items-center text-xs font-medium gap-1">
                 <span class="relative flex size-1.5 justify-center items-center">
                   <span class="absolute -translate-x-1/2 left-1/2 size-1.5 rounded-full animate-ping bg-green-400 opacity-75"></span>
@@ -134,7 +127,7 @@ watch(selectedType, (n, o) => {
                 </span>
                 Live Preview</p>
               <div class="flex flex-col shrink-0 rounded-xl p-3 text-sm bg-default dark:bg-zinc-850 w-40 h-48">
-                <component :is="activeWidget.component" v-bind="state"/>
+                <component :is="active.component" v-bind="state"/>
               </div>
             </div>
           </div>
