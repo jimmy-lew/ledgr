@@ -16,7 +16,7 @@ const handleSelect = (widget: WidgetConfig) => {
 
 function submit() {
   if (!active.value || !state.value) return
-  addWidget({...state, type: active.value.type})
+  addWidget({...state.value, type: active.value.type})
   emit('close')
 }
 
