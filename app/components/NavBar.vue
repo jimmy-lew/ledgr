@@ -55,6 +55,7 @@ const selectTab = (tab: string, to?: string) => {
 const handleSubItemSelect = (tab: string, index: number, cb?: () => void) => {
   selectTab(tab)
   activeSubItem.value = index
+  hoverActive.value = null
   cb?.()
 }
 
