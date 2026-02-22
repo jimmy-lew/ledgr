@@ -3,25 +3,24 @@ import { LazyWidgetCreate } from '#components'
 
 const { widgets, meta } = await useWidget()
 
-const emit = defineEmits<{
-  add: []
-  select: [index: number]
-}>()
+const emit = defineEmits<{ add: [], select: [widget: Widget] }>()
 
 const colorMode = useColorMode()
 const overlay = useOverlay()
 
-const activeIndex = ref(0)
-const scrollRef = ref<HTMLElement | null>(null)
+const activeIndex = ref<string>(widgets.value[0]?.id || '')
 const widgetCreateModal = overlay.create(LazyWidgetCreate)
 
 const widgetRefs = ref<HTMLElement[]>([])
 const isDark = computed(() => colorMode.value === 'dark')
 
-const addWidgetRef = (e: any) => { if (e) widgetRefs.value.push(e.$el || e) }
+const setWidgetRef = (index: number, el: Element | ComponentPublicInstance | null) => {
+  // @ts-expect-error Type mismatch
+  if (el) widgetRefs.value[index] = el.$el || el
+}
 
-const dotAnimation = (index: number) => {
-  const isActive = activeIndex.value === index
+const dotAnimation = (key: any) => {
+  const isActive = activeIndex.value === key
   const activeColor =  'rgba(255,255,255,1)'
   const inactiveColor = isDark.value ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.15)'
   return {
@@ -35,42 +34,38 @@ function onCreate() {
   emit('add')
 }
 
-function onScroll() {
-  const container = scrollRef.value
-  if (!container) return
+function onScroll(event: Event) {
+  if (!event.target) return
   let closest = 0
   let minDist = Infinity
-  widgetRefs.value.forEach((card, i) => {
-    const dist = Math.abs(card.offsetLeft - container.scrollLeft - container.clientWidth / 2 + card.offsetWidth / 2)
-    if (dist < minDist) { minDist = dist; closest = i }
+  const { scrollLeft, scrollWidth, clientWidth } = event.target as HTMLElement
+  const scrollLeftMax = scrollWidth - clientWidth
+  if (scrollLeft >= scrollLeftMax) {
+    activeIndex.value = widgets.value[widgets.value.length - 1]?.id || ''
+    return
+  }
+  widgetRefs.value.forEach((widget, i) => {
+    const { offsetLeft } = widget
+    const dist = offsetLeft - scrollLeft
+    if (dist > 0 && dist < minDist) { minDist = dist; closest = i }
   })
-  activeIndex.value = closest
+  activeIndex.value = widgets.value[closest]?.id || ''
 }
 </script>
 
 <template>
 <div
   v-if="widgets.length > 0"
-  ref="scrollRef"
   class="px-6 w-full mt-6 overflow-x-scroll overflow-y-auto"
   @scroll="onScroll"
 >
-  <div
-    class="flex min-w-fit gap-2 py-2"
-  >
+  <div class="flex min-w-fit gap-2 py-2" >
     <Motion
       as="div"
       :while-hover="{ backgroundColor: `rgba(255,255,255,${isDark ? '0.04' : '0.2'})` }"
       :while-press="{ scale: 0.94 }"
       :transition="{ duration: 0.2 }"
-      class="
-        flex items-center justify-center shrink-0
-        rounded-lg p-2
-        border-2 border-dashed border-default
-        cursor-pointer
-        transition-colors
-        w-12 h-48
-      "
+      class="flex items-center justify-center shrink-0 rounded-lg p-2 border-2 border-dashed border-default cursor-pointer transition-colors w-12 h-48"
       @click="onCreate"
     >
       <UIcon name="lucide:plus" />
@@ -80,12 +75,10 @@ function onScroll() {
       v-for="(item, i) in widgets"
       :key="item.id"
       as="div"
-      :ref="addWidgetRef"
+      :ref="el => setWidgetRef(i, el)"
       :initial="{ opacity: 0, y: 16 }"
       :animate="{ opacity: 1, y: 0 }"
       :transition="{ delay: i * 0.06, duration: 0.35, ease: 'easeOut' }"
-      :while-hover="{ scale: 1.02 }"
-      :while-press="{ scale: 0.97 }"
       class="
         flex flex-col shrink-0 rounded-xl p-3 text-sm
         bg-default dark:bg-zinc-850 backdrop-blur-sm
@@ -93,8 +86,8 @@ function onScroll() {
         cursor-pointer
         transition-shadow duration-300
       "
-      :class="{ 'shadow-md': activeIndex === i }"
-      @click="activeIndex = i; emit('select', i)"
+      :class="{ 'shadow-md': activeIndex === item.id }"
+      @click="activeIndex = item.id; emit('select', item)"
     >
       <component
         :is="meta[item.type].component"
@@ -109,7 +102,7 @@ function onScroll() {
     v-for="(item, i) in widgets"
     :key="item.id"
     as="div"
-    :animate="dotAnimation(i)"
+    :animate="dotAnimation(item.id)"
     :transition="{ duration: 0.25, ease: 'easeOut' }"
     class="h-1 rounded-full cursor-pointer min-w-2"
   />
