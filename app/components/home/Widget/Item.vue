@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import type { Widget } from '~/types'
 const props = defineProps<{ item: Widget, index: number }>()
-const model = defineModel<string>()
+const model = defineModel<number>({ default: 0 })
 
 const { meta } = await useWidget()
 
 const component = computed(() => meta[props.item.type].component)
-const isSelected = computed(() => model.value === props.item.id)
+const isSelected = computed(() => model.value === props.index )
 
 const handleSelect = () => {
-  model.value = props.item.id
+  model.value = props.index
 }
 </script>
 
