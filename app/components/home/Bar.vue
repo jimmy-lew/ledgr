@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { LazyStatementUpload, LazyWidgetCreate } from '#components';
+import { LazyCustomiseDrawer, LazyStatementUpload, LazyWidgetCreate } from '#components';
 
 const overlay = useOverlay()
+const router = useRouter()
 
 const statementUploadModal = overlay.create(LazyStatementUpload)
 const createWidgetModal = overlay.create(LazyWidgetCreate)
+const customiseDrawer = overlay.create(LazyCustomiseDrawer)
 
 const handleAddStatement = () => {
   statementUploadModal.open()
@@ -16,7 +18,13 @@ const handleAddWidget = () => {
 
 const items = [
   { icon: 'lucide:home', to: '/' },
-  { icon: 'lucide:chart-line', to: '/insights' },
+  {
+    icon: 'lucide:chart-pie',
+    items: [
+      { icon: 'lucide:chart-line', title: 'Insights', click: () => router.push('/insights') },
+      { icon: 'lucide:chart-pie', title: 'Budget', click: () => router.push('/budget') },
+    ]
+  },
   {
     icon: 'lucide:plus',
     items: [
@@ -25,8 +33,16 @@ const items = [
       { icon: 'lucide:refresh-cw', title: 'Add subscription' },
     ],
   },
-  { icon: 'lucide:chart-pie', to: '/budget' },
-  { icon: 'lucide:user-round', to: '/user' }
+  {
+    icon: 'lucide:chevrons-up-down',
+    items: [
+      { icon: 'lucide:home', title: 'Home', click: () => router.push('/')},
+      { icon: 'lucide:settings', title: 'Settings', click: () => router.push('/settings')},
+      { type: 'divider' } as const,
+      { icon: 'lucide:arrow-up-down', title: 'Customize', click: () => customiseDrawer.open()},
+    ]
+  },
+  { icon: 'lucide:search', to: '/user' }
 ]
 </script>
 
