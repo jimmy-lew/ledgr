@@ -38,16 +38,17 @@ const meta: Record<WidgetType, WidgetConfig> = {
 const getWidgets = async () => {
   // Mock getting widgets from db
   return [
-    { type: 'goal', current: 28, final: 100, name: 'New Bicycle', due: '1 Dec 2026' },
-    { type: 'goal', current: 50, final: 100, name: 'Ram', due: '1 Dec 2026' },
-    { type: 'expenses', categories: [] },
+    { id: 0, type: 'goal', current: 28, final: 100, name: 'New Bicycle', due: '1 Dec 2026' },
+    { id: 1, type: 'goal', current: 50, final: 100, name: 'Ram', due: '1 Dec 2026' },
+    { id: 3, type: 'budget' },
   ] as Widget[]
 }
 
 export const useWidget = createSharedComposable(async () => {
   const widgets = useState<Widget[]>('widgets', () => [])
+  const { data } = await useAsyncData(getWidgets)
+  if (data.value) widgets.value = data.value
   let id = 0
-  const storedWidgets = await getWidgets()
   const addWidget = (widget: Widget) => {
     const isImplemented = Boolean(meta[widget.type]?.component)
     if (!isImplemented)
@@ -57,8 +58,6 @@ export const useWidget = createSharedComposable(async () => {
     id += 1
     return widget
   }
-
-  storedWidgets.forEach(addWidget)
 
   return { widgets, addWidget, meta }
 })
