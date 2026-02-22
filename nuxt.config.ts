@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   ssr: false,
   css: ['~/assets/css/tailwind.css'],
   imports: { dirs: ['types/**'] },
+  colorMode: { preference: 'system' },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true }
 })
