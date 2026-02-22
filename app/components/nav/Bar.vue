@@ -3,13 +3,23 @@ import type { NavItem } from '~/types';
 
 const props = defineProps<{ items: NavItem[] }>()
 
-const { activeItemRef, containerState, subContainerState } = useNavBar()
+const { activeItemRef, containerState, subContainerState, selectedItem, select } = useNavBar()
 
 const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 8, 8))
+
+const handleKeydown = (e: KeyboardEvent) => {
+  const current = selectedItem.value
+  if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    e.preventDefault()
+    const dir = e.key === 'ArrowRight' ? 1 : -1
+    const next = (current + dir + props.items.length) % props.items.length
+    select(next, props.items[next]?.to)
+  }
+}
 </script>
 
 <template>
-  <div ref="navRef" class="fixed bottom-8 -translate-x-1/2 left-1/2 p-2 z-2">
+  <div ref="navRef" class="fixed bottom-8 -translate-x-1/2 left-1/2 p-2 z-2" @keydown="handleKeydown" tabindex="0" role="tablist">
     <div class="flex items-center gap-1 group">
       <NavItem v-for="item, index in items" :item :index />
       <Motion
