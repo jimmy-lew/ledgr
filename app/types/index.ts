@@ -42,3 +42,16 @@ export interface FormField {
   class?: string
   ui?: any
 }
+
+export interface NavSubItem {
+  type?: 'divider' | undefined
+  icon?: string
+  title?: string
+  click?: () => void
+}
+
+export interface NavItem {
+  icon: string
+  to?: string
+  items?: NavSubItem[]
+}
