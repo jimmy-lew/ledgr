@@ -1,7 +1,7 @@
 import type { Component } from 'vue'
 
 export interface GoalWidget {
-  id: string | number
+  id: string
   type: 'goal'
   current: number
   final: number
@@ -10,13 +10,13 @@ export interface GoalWidget {
 }
 
 export interface ExpensesWidget {
-  id: string | number
+  id: string
   type: 'expenses'
   categories: any[]
 }
 
 export interface BudgetWidget {
-  id: string | number
+  id: string
   type: 'budget'
 }
 

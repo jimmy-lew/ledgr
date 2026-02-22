@@ -1,4 +1,5 @@
 import { WidgetBudget, WidgetGoal } from "#components"
+import { ulid } from 'ulid'
 
 const meta: Record<WidgetType, WidgetConfig> = {
   goal: {
@@ -38,9 +39,9 @@ const meta: Record<WidgetType, WidgetConfig> = {
 const getWidgets = async () => {
   // Mock getting widgets from db
   return [
-    { id: 0, type: 'goal', current: 28, final: 100, name: 'New Bicycle', due: '1 Dec 2026' },
-    { id: 1, type: 'goal', current: 50, final: 100, name: 'Ram', due: '1 Dec 2026' },
-    { id: 3, type: 'budget' },
+    { id: ulid(), type: 'goal', current: 28, final: 100, name: 'New Bicycle', due: '1 Dec 2026' },
+    { id: ulid(), type: 'goal', current: 50, final: 100, name: 'Ram', due: '1 Dec 2026' },
+    { id: ulid(), type: 'budget' },
   ] as Widget[]
 }
 
@@ -48,14 +49,12 @@ export const useWidget = createSharedComposable(async () => {
   const widgets = useState<Widget[]>('widgets', () => [])
   const { data } = await useAsyncData(getWidgets)
   if (data.value) widgets.value = data.value
-  let id = 0
   const addWidget = (widget: Widget) => {
     const isImplemented = Boolean(meta[widget.type]?.component)
     if (!isImplemented)
       return
-    widget.id = id
+    widget.id = ulid()
     widgets.value.unshift(widget)
-    id += 1
     return widget
   }
 
