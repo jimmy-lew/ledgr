@@ -39,8 +39,6 @@ const meta: Record<WidgetType, WidgetConfig> = {
 const getWidgets = async () => {
   // Mock getting widgets from db
   return [
-    { id: ulid(), type: 'goal', current: 28, final: 100, name: 'New Bicycle', due: '1 Dec 2026' },
-    { id: ulid(), type: 'goal', current: 50, final: 100, name: 'Ram', due: '1 Dec 2026' },
     { id: ulid(), type: 'budget' },
   ] as Widget[]
 }
