@@ -36,6 +36,8 @@ const handleCreate = async () => {
   emit('add')
 }
 
+const debounce = (f: any, d: number) => { clearTimeout(f._tId); f._tId = setTimeout(() => f(), d) }
+
 function onScroll(event: Event) {
   if (!event.target) return
   let closest = 0
@@ -60,7 +62,7 @@ function onScroll(event: Event) {
 <div
   v-if="widgets.length > 0"
   class="px-6 w-full mt-6 overflow-x-scroll overflow-y-auto"
-  @scroll="onScroll"
+  @scroll="e => debounce(() => {onScroll(e)}, 100)"
 >
   <div class="flex min-w-fit gap-2 py-2" >
     <Motion
