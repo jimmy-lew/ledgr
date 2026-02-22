@@ -25,13 +25,8 @@ const handleKeydown = (e: KeyboardEvent) => {
       <Motion
         tag="div"
         class="absolute size-8 bg-black dark:bg-white rounded-full origin-center group-active:scale-95"
-        :initial="false"
         :animate="{ left: `${indicatorPos}px`, }"
-        :transition="{
-          type: 'spring',
-          stiffness: 400,
-          damping: 30
-        }"
+        :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
       />
     </div>
   </div>
@@ -48,17 +43,12 @@ const handleKeydown = (e: KeyboardEvent) => {
       "
   >
      <Motion
-      as="div"
-      :initial="subContainerState" :animate="subContainerState"
-      :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
+       as="div"
+       :initial="subContainerState" :animate="subContainerState"
+       :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
       class="fixed bg-white/70 dark:bg-black/70"
     />
-    <NavDropdown
-      v-for="item, index in items"
-      :key="index"
-      :item
-      :index
-    />
+    <NavDropdown v-for="item, index in items" :key="index" :item :index />
   </Motion>
 </template>
 

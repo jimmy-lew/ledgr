@@ -3,12 +3,6 @@ const DEFAULT_WIDTH = 192
 const DEFAULT_HEIGHT = 48
 const BORDER_RADIUS = 999
 
-interface ContainerState {
-  width: number
-  height: number
-  borderRadius: number
-}
-
 function objectMap<T extends object, K extends keyof T>(obj: T, f: (k: K, v: T[K]) => [K, T[K]]): T {
   const entries = Object.entries(obj) as [K, T[K]][]
   const mappedObject = entries.map(([k, v]) => f(k, v))
@@ -28,7 +22,7 @@ export const useNavBar = createSharedComposable(() => {
   const hoveredItem = ref<number>(-1)
   const activeItem = computed(() => hoveredItem.value >= 0 ? hoveredItem.value : selectedItem.value )
 
-  const containerState = computed<ContainerState>(() => {
+  const containerState = computed(() => {
     const el = subItemRefs.value[hoveredItem.value]
     if (!el) return { width: width.value, height: DEFAULT_HEIGHT, borderRadius: BORDER_RADIUS }
     const rect = el.getBoundingClientRect()
@@ -57,7 +51,7 @@ export const useNavBar = createSharedComposable(() => {
     setItemRef, setSubItemRef,
     selectedItem, selectedSubItem, hoveredItem, activeItem,
     handleHover, handleHoverEnd, select, subItemSelect,
-    itemRefs, subItemRefs, activeItemRef,
+    activeItemRef,
     containerState, subContainerState
   }
 })
