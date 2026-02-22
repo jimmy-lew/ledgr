@@ -21,11 +21,11 @@ export const useNavBar = createSharedComposable(() => {
   const selectedSubItem = ref<number>(-1)
   const hoveredItem = ref<number>(-1)
   const activeItem = computed(() => hoveredItem.value >= 0 ? hoveredItem.value : selectedItem.value )
+  const activeGroup = computed(() => subItemRefs.value[hoveredItem.value])
 
   const containerState = computed(() => {
-    const el = subItemRefs.value[hoveredItem.value]
-    if (!el) return { width: width.value, height: DEFAULT_HEIGHT, borderRadius: BORDER_RADIUS }
-    const rect = el.getBoundingClientRect()
+    if (!activeGroup.value) return { width: width.value, height: DEFAULT_HEIGHT, borderRadius: BORDER_RADIUS }
+    const rect = activeGroup.value.getBoundingClientRect()
     return { width: Math.max(rect.width, width.value + 64), height: rect.height + 48, borderRadius: 18 }
   })
   const subContainerState = computed(() => objectMap(containerState.value, (k,v) => [k, v-2]))

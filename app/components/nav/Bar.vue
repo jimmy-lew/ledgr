@@ -19,17 +19,15 @@ const handleKeydown = (e: KeyboardEvent) => {
 </script>
 
 <template>
-  <div ref="navRef" class="fixed bottom-8 -translate-x-1/2 left-1/2 p-2 z-2" @keydown="handleKeydown" tabindex="0" role="tablist">
-    <div class="flex items-center gap-1 group">
-      <NavItem v-for="item, index in items" :item :index />
-      <Motion
-        tag="div"
-        class="absolute size-8 bg-black dark:bg-white rounded-full origin-center group-active:scale-95"
-        :animate="{ left: `${indicatorPos}px`, }"
-        :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
-      />
-    </div>
-  </div>
+  <Motion as="div" class="fixed bottom-8 -translate-x-1/2 left-1/2 z-2 p-2 flex items-center gap-1 group" @keydown="handleKeydown" tabindex="0" role="tablist">
+    <NavItem v-for="item, index in items" :item :index />
+    <Motion
+      tag="div"
+      class="absolute size-8 bg-black dark:bg-white rounded-full origin-center group-active:scale-95"
+      :animate="{ left: `${indicatorPos}px`, }"
+      :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
+    />
+  </Motion>
 
   <Motion
     :initial="containerState" :animate="containerState"
