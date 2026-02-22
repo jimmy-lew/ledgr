@@ -18,7 +18,7 @@
     </div>
   </div>
   <HomeGlanceInsights />
-  <HomeWidgets />
+   <HomeWidget />
   <HomeGlanceTransactions />
 </div>
 </template>
