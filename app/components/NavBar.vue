@@ -17,6 +17,7 @@ const props = defineProps<{ items: Item[] }>()
 const router = useRouter()
 
 const activeTab = ref<string>('lucide:home')
+const activeSubItem = ref<number>(-1)
 const isPressed = ref(false)
 const hoverActive = ref<string | null>(null)
 
@@ -51,8 +52,9 @@ const selectTab = (tab: string, to?: string) => {
   setTimeout(() => { isPressed.value = false }, 200)
 }
 
-const handleSubItemSelect = (tab: string, cb?: () => void) => {
+const handleSubItemSelect = (tab: string, index: number, cb?: () => void) => {
   selectTab(tab)
+  activeSubItem.value = index
   cb?.()
 }
 
@@ -73,7 +75,7 @@ const handleHoverEnd = () => {
     const isHoveringSubItem = Object.values(subItemRefs.value).some(el => el?.matches?.(':hover'))
     const isHoveringItem = Object.values(tabRefs.value).some(el => el?.matches?.(':hover'))
     if (!isHoveringItem && !isHoveringSubItem) hoverActive.value = null
-  }, 250)
+  }, 400)
 }
 </script>
 
@@ -147,8 +149,9 @@ const handleHoverEnd = () => {
       @mouseleave="handleHoverEnd"
     >
       <button
-        v-for="{type, icon: name, title, click} in items"
-        @click="handleSubItemSelect(tab, click)"
+        v-for="({type, icon: name, title, click}, i) in items"
+        :key="i"
+        @click="handleSubItemSelect(tab, i, click)"
         class="w-full group text-sm transition-all duration-75 active:scale-90"
       >
         <USeparator v-if="type === 'divider'" class="px-2 py-0.5" :ui="{ border: 'bg-black/5 dark:bg-white/5' }"/>
@@ -162,6 +165,7 @@ const handleHoverEnd = () => {
           dark:group-active:bg-white/5 dark:group-hover:bg-white/5
           group-active:px-3 group-hover:px-3
           "
+          :class="activeTab === tab && activeSubItem === i ? 'bg-black/10 dark:bg-white/5' : ''"
         >
           <Icon v-if="name" :name/>
           {{ title }}
