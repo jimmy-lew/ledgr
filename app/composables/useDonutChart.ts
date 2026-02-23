@@ -17,3 +17,19 @@ interface Segment {
   vl: number
   offset: number
 }
+
+export const useDonutSegments = (circumference: number, percentages: number[]) => {
+  const n = percentages.length
+  const gap = (8 * n - 1) / n
+  let offset = 0
+
+  const toSegment = (p: number, i: number) => {
+    const l = p * circumference // True space taken up
+    const vl = l - gap // Visual space shown
+    offset -= gap / (n + 1)
+    const segment =  {l , vl, 'stroke-dashoffset': offset}
+    offset -= l
+    return segment
+  }
+  const segments = percentages.map(toSegment)
+}
