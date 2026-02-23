@@ -1,4 +1,4 @@
-import { WidgetBudget, WidgetGoal } from "#components"
+import { WidgetBudget, WidgetGoal, WidgetExpenseChart } from "#components"
 import { ulid } from 'ulid'
 
 const meta: Record<WidgetType, WidgetConfig> = {
@@ -15,18 +15,19 @@ const meta: Record<WidgetType, WidgetConfig> = {
     ],
     component: WidgetGoal,
   },
-  budget: {
-    label: 'Budget',
-    type: 'budget',
-    icon: 'i-lucide-pie-chart',
-    description: 'Monthly limit tracking',
-    component: WidgetBudget
-  },
   expenses: {
     label: 'Expenses',
     type: 'expenses',
-    icon: 'i-lucide-credit-card',
-    description: 'Automatic expense tracking',
+    icon: 'i-lucide-pie-chart',
+    description: 'Expense breakdown by category',
+    fields: [],
+    component: WidgetExpenseChart
+  },
+  budget: {
+    label: 'Budget',
+    type: 'budget',
+    icon: 'lucide:credit-card',
+    description: ''
   },
   test: {
     label: 'Test',
@@ -39,7 +40,14 @@ const meta: Record<WidgetType, WidgetConfig> = {
 const getWidgets = async () => {
   // Mock getting widgets from db
   return [
-    { id: ulid(), type: 'budget' },
+    {
+      id: ulid(), type: 'expenses', categories: [
+        { name: 'Transfers', amount: 450, color: 'oklch(58.5% 0.233 277.117)', icon: 'i-lucide-refresh-ccw' },
+        { name: 'Shopping', amount: 250, color: 'oklch(74% 0.238 322.16)', icon: 'i-lucide-shopping-cart' },
+        { name: 'Food', amount: 100, color: 'oklch(76.5% 0.177 163.223)', icon: 'i-lucide-utensils' },
+        { name: 'Bills', amount: 85, color: 'oklch(74.6% 0.16 232.661)',  icon: 'i-lucide-receipt' }
+      ]
+    },
   ] as Widget[]
 }
 
