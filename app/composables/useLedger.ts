@@ -1,4 +1,4 @@
-import { Effect, Layer, Schema, pipe } from "effect"
+import { Effect, Layer, pipe } from "effect"
 import { Option } from "effect"
 import {
   Account,
@@ -7,7 +7,10 @@ import {
   Ledger,
   Bookkeeping,
   FileExporter,
-  storage,
+  LedgerRepository,
+  makeAccountId,
+  makeTransactionId,
+  makeMoney,
   parseLedger,
   detectConflicts,
   filterNewTransactions,
@@ -17,10 +20,6 @@ import {
   computeBankTransactions,
 } from "~/lib/ledger"
 import type { LedgerMetadata } from "~/lib/ledger"
-
-const AccountId = Schema.String.pipe(Schema.brand("AccountId"))
-const TransactionId = Schema.String.pipe(Schema.brand("TransactionId"))
-const Money = Schema.Number.pipe(Schema.brand("Money"))
 
 export interface ParsedStatementTransaction {
   date: string
@@ -51,22 +50,22 @@ const parseDate = (dateStr: string): Date => {
 }
 
 const createBankAccount = (id: string, accountNumber: string) =>
-  Account.make({ id: AccountId.make(id), name: "Bank Account", type: "asset", description: Option.some(`Account: ${accountNumber}`) })
+  Account.make({ id: makeAccountId(id), name: "Bank Account", type: "asset", description: Option.some(`Account: ${accountNumber}`) })
 
 const createIncomeAccount = (id: string) =>
-  Account.make({ id: AccountId.make(id), name: "Income", type: "revenue", description: Option.some("Income and deposits") })
+  Account.make({ id: makeAccountId(id), name: "Income", type: "revenue", description: Option.some("Income and deposits") })
 
 const createExpenseAccount = (id: string) =>
-  Account.make({ id: AccountId.make(id), name: "Expenses", type: "expense", description: Option.some("Withdrawals and expenses") })
+  Account.make({ id: makeAccountId(id), name: "Expenses", type: "expense", description: Option.some("Withdrawals and expenses") })
 
 const createDepositEntries = (bankId: string, incomeId: string, amount: number) => amount > 0 ? [
-  Entry.make({ accountId: AccountId.make(bankId), type: "debit", amount: Money.make(amount) }),
-  Entry.make({ accountId: AccountId.make(incomeId), type: "credit", amount: Money.make(amount) }),
+  Entry.make({ accountId: makeAccountId(bankId), type: "debit", amount: makeMoney(amount) }),
+  Entry.make({ accountId: makeAccountId(incomeId), type: "credit", amount: makeMoney(amount) }),
 ] : []
 
 const createWithdrawalEntries = (bankId: string, expenseId: string, amount: number) => amount > 0 ? [
-  Entry.make({ accountId: AccountId.make(expenseId), type: "debit", amount: Money.make(amount) }),
-  Entry.make({ accountId: AccountId.make(bankId), type: "credit", amount: Money.make(amount) }),
+  Entry.make({ accountId: makeAccountId(expenseId), type: "debit", amount: makeMoney(amount) }),
+  Entry.make({ accountId: makeAccountId(bankId), type: "credit", amount: makeMoney(amount) }),
 ] : []
 
 const processTransaction = (bankId: string, incomeId: string, expenseId: string) => (t: ParsedStatementTransaction, i: number) => {
@@ -79,7 +78,7 @@ const processTransaction = (bankId: string, incomeId: string, expenseId: string)
   
   return {
     transaction: Transaction.make({
-      id: TransactionId.make(`txn-${String(i + 1).padStart(4, "0")}`),
+      id: makeTransactionId(`txn-${String(i + 1).padStart(4, "0")}`),
       description: `[${t.type}] ${t.description || ""}`,
       date: parseDate(t.date),
       entries,
@@ -93,10 +92,12 @@ export function useLedger() {
   const ledger = ref<Ledger | null>(null)
   const metadata = ref<LedgerMetadata | null>(null)
   const isLoading = ref(false)
+  const isInitialized = ref(false)
   const error = ref<string | null>(null)
 
   const appLayer = Bookkeeping.layer.pipe(
     Layer.provideMerge(FileExporter.layer),
+    Layer.provideMerge(LedgerRepository.layer),
   )
 
   const processStatement = (
@@ -122,96 +123,83 @@ export function useLedger() {
     }
   }
 
-  const loadLedger = async () => {
+  const initialize = async () => {
+    if (isInitialized.value) return
+    
     isLoading.value = true
     error.value = null
 
-    const result = await pipe(
+    await pipe(
       Effect.gen(function* () {
-        const ledgerData = yield* storage.getLedger()
-        const meta = yield* storage.getMetadata()
-        
-        if (!ledgerData) {
-          return null
-        }
-        
-        const content = new TextDecoder().decode(ledgerData)
-        const parsed = yield* parseLedger(content)
-        
-        const accounts = parsed.accounts.map(a => 
-          Account.make({
-            id: AccountId.make(a.id),
-            name: a.name,
-            type: a.type,
-            description: a.description ? Option.some(a.description) : Option.none(),
-          })
-        )
-        
-        const transactions = parsed.transactions.map(t =>
-          Transaction.make({
-            id: TransactionId.make(t.id),
-            date: parseDate(t.date),
-            description: t.description,
-            entries: t.entries.map(e => 
-              Entry.make({
-                accountId: AccountId.make(e.accountId),
-                type: e.type,
-                amount: Money.make(e.amount),
-              })
-            ),
-          })
-        )
-        
-        return {
-          ledger: Ledger.make({ accounts, transactions }),
-          metadata: meta,
-        }
+        const repo = yield* LedgerRepository
+        yield* repo.initialize()
+        isInitialized.value = true
       }),
       Effect.provide(appLayer),
       Effect.match({
-        onSuccess: (data) => {
-          if (data) {
-            ledger.value = data.ledger
-            metadata.value = data.metadata
-          }
-          return data
-        },
+        onSuccess: () => {},
         onFailure: (err) => {
           error.value = String(err)
-          return null
         },
       }),
       Effect.runPromise
     )
 
     isLoading.value = false
-    return result
   }
 
-  const importStatement = async (statement: ParsedStatement) => {
+  const loadLedger = async () => {
+    if (!isInitialized.value) {
+      await initialize()
+    }
+    
     isLoading.value = true
     error.value = null
 
-    const result = await pipe(
+    await pipe(
+      Effect.gen(function* () {
+        const repo = yield* LedgerRepository
+        const loadedLedger = yield* repo.getLedger()
+        const loadedMetadata = yield* repo.getMetadata()
+        
+        ledger.value = loadedLedger
+        metadata.value = loadedMetadata
+      }),
+      Effect.provide(appLayer),
+      Effect.match({
+        onSuccess: () => {},
+        onFailure: (err) => {
+          error.value = String(err)
+        },
+      }),
+      Effect.runPromise
+    )
+
+    isLoading.value = false
+    return ledger.value
+  }
+
+  const importStatement = async (statement: ParsedStatement) => {
+    if (!isInitialized.value) {
+      await initialize()
+    }
+    
+    isLoading.value = true
+    error.value = null
+
+    await pipe(
       Effect.gen(function* () {
         const bookkeeping = yield* Bookkeeping
         const exporter = yield* FileExporter
+        const repo = yield* LedgerRepository
 
-        const { ledger: newLedger, totalDeposits, totalWithdrawals } = processStatement(statement)
+        const { ledger: newLedger, totalAdditions, totalDeductions } = processStatement(statement)
         const validated = yield* bookkeeping.validateLedger(newLedger)
         
         let mergedLedger: Ledger
-        let openingBalance = statement.openingBalance
         
-        if (ledger.value) {
-          const existingParsed = {
-            id: "existing",
-            date: "",
-            description: "",
-            entries: [],
-          }
-          
-          const incomingTransactions = ledger.value.transactions.map(t => ({
+        if (ledger.value && ledger.value.transactions.length > 0) {
+          const existingTransactions = ledger.value.transactions.map(t => ({
             id: t.id,
             date: t.date.toISOString().split("T")[0]!,
             description: t.description,
@@ -225,28 +213,28 @@ export function useLedger() {
             entries: t.entries.map(e => ({ type: e.type, accountId: e.accountId, amount: e.amount })),
           }))
           
-          const conflicts = detectConflicts(incomingTransactions, currentTransactions)
+          const conflicts = detectConflicts(existingTransactions, currentTransactions)
           
           let mergedTransactions
           if (conflicts.length > 0) {
-            const newOnly = filterNewTransactions(incomingTransactions, currentTransactions)
-            mergedTransactions = renumberTransactions([...incomingTransactions, ...newOnly])
+            const newOnly = filterNewTransactions(existingTransactions, currentTransactions)
+            mergedTransactions = renumberTransactions([...existingTransactions, ...newOnly])
           } else {
-            mergedTransactions = renumberTransactions([...incomingTransactions, ...currentTransactions])
+            mergedTransactions = renumberTransactions([...existingTransactions, ...currentTransactions])
           }
           
           mergedLedger = Ledger.make({
             accounts: validated.accounts,
             transactions: mergedTransactions.map(t =>
               Transaction.make({
-                id: TransactionId.make(t.id),
+                id: makeTransactionId(t.id),
                 date: parseDate(t.date),
                 description: t.description,
                 entries: t.entries.map(e =>
                   Entry.make({
-                    accountId: AccountId.make(e.accountId),
+                    accountId: makeAccountId(e.accountId),
                     type: e.type,
-                    amount: Money.make(e.amount),
+                    amount: makeMoney(e.amount),
                   })
                 ),
               })
@@ -264,31 +252,53 @@ export function useLedger() {
             isAddition: e.type === "debit",
           }))
         )
-        const totalAdditions = bankTxns.filter(t => t.isAddition).reduce((s, t) => s + t.amount, 0)
-        const totalDeductions = bankTxns.filter(t => !t.isAddition).reduce((s, t) => s + t.amount, 0)
-        const closingBalance = openingBalance + totalAdditions - totalDeductions
+        const additions = bankTxns.filter(t => t.isAddition).reduce((s, t) => s + t.amount, 0)
+        const deductions = bankTxns.filter(t => !t.isAddition).reduce((s, t) => s + t.amount, 0)
         
         const exportResult = yield* exporter.exportLedger(validatedMerged, {
           source: "import",
           accountNumber: statement.accountNumber,
-          openingBalance,
+          openingBalance: statement.openingBalance,
         })
         
-        yield* storage.setLedger(exportResult.compressed)
-        yield* storage.setMetadata(exportResult.metadata)
+        yield* repo.saveLedger(validatedMerged)
+        yield* repo.saveMetadata(exportResult.metadata)
         
-        return {
-          ledger: validatedMerged,
-          metadata: exportResult.metadata,
-        }
+        ledger.value = validatedMerged
+        metadata.value = exportResult.metadata
       }),
       Effect.provide(appLayer),
       Effect.match({
-        onSuccess: (data) => {
-          ledger.value = data?.ledger ?? null
-          metadata.value = data?.metadata ?? null
-          return data
+        onSuccess: () => {},
+        onFailure: (err) => {
+          error.value = String(err)
         },
+      }),
+      Effect.runPromise
+    )
+
+    isLoading.value = false
+    return ledger.value
+  }
+
+  const exportToLedgerFile = async (): Promise<string | null> => {
+    if (!ledger.value) return null
+
+    return pipe(
+      Effect.gen(function* () {
+        const exporter = yield* FileExporter
+        
+        const result = yield* exporter.exportLedger(ledger.value!, {
+          source: metadata.value?.source ?? "export",
+          accountNumber: metadata.value?.accountNumber ?? "",
+          openingBalance: metadata.value?.openingBalance ?? 0,
+        })
+        
+        return result.content
+      }),
+      Effect.provide(appLayer),
+      Effect.match({
+        onSuccess: (data) => data,
         onFailure: (err) => {
           error.value = String(err)
           return null
@@ -296,34 +306,42 @@ export function useLedger() {
       }),
       Effect.runPromise
     )
-
-    isLoading.value = false
-    return result
   }
 
-  const exportLedger = async (format: "txt" | "gzip" | "json" = "json") => {
+  const exportToJson = async (): Promise<string | null> => {
     if (!ledger.value) return null
 
-    const currentLedger = ledger.value
-    const currentMetadata = metadata.value
+    return pipe(
+      Effect.gen(function* () {
+        const exporter = yield* FileExporter
+        return exporter.exportToJson(ledger.value!)
+      }),
+      Effect.provide(appLayer),
+      Effect.match({
+        onSuccess: (data) => data,
+        onFailure: (err) => {
+          error.value = String(err)
+          return null
+        },
+      }),
+      Effect.runPromise
+    )
+  }
+
+  const exportToGzip = async (): Promise<Blob | null> => {
+    if (!ledger.value) return null
 
     return pipe(
       Effect.gen(function* () {
         const exporter = yield* FileExporter
         
-        if (format === "json") {
-          return exporter.exportToJson(currentLedger)
-        }
-        
-        const result = yield* exporter.exportLedger(currentLedger, {
-          source: currentMetadata?.source ?? "export",
-          accountNumber: currentMetadata?.accountNumber ?? "",
-          openingBalance: currentMetadata?.openingBalance ?? 0,
+        const result = yield* exporter.exportLedger(ledger.value, {
+          source: metadata.value?.source ?? "export",
+          accountNumber: metadata.value?.accountNumber ?? "",
+          openingBalance: metadata.value?.openingBalance ?? 0,
         })
         
-        return format === "gzip" 
-          ? new Blob([result.compressed as unknown as BlobPart], { type: "application/gzip" })
-          : result.content
+        return new Blob([result.compressed as unknown as BlobPart], { type: "application/gzip" })
       }),
       Effect.provide(appLayer),
       Effect.match({
@@ -354,7 +372,16 @@ export function useLedger() {
 
   const clearLedger = async () => {
     isLoading.value = true
-    await Effect.runPromise(storage.deleteLedger())
+    
+    await pipe(
+      Effect.gen(function* () {
+        const repo = yield* LedgerRepository
+        yield* repo.clearAll()
+      }),
+      Effect.provide(appLayer),
+      Effect.runPromise
+    )
+    
     ledger.value = null
     metadata.value = null
     isLoading.value = false
@@ -364,10 +391,14 @@ export function useLedger() {
     ledger,
     metadata,
     isLoading,
+    isInitialized,
     error,
+    initialize,
     loadLedger,
     importStatement,
-    exportLedger,
+    exportToLedgerFile,
+    exportToJson,
+    exportToGzip,
     getBreakdown,
     getAccountBalances,
     getBankTransactions,

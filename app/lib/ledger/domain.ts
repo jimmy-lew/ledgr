@@ -1,13 +1,16 @@
 import { Schema } from "effect"
 
 const AccountId = Schema.String.pipe(Schema.brand("AccountId"))
-type AccountId = typeof AccountId.Type
+export type AccountId = typeof AccountId.Type
+export const makeAccountId = AccountId.make
 
 const TransactionId = Schema.String.pipe(Schema.brand("TransactionId"))
-type TransactionId = typeof TransactionId.Type
+export type TransactionId = typeof TransactionId.Type
+export const makeTransactionId = TransactionId.make
 
 const Money = Schema.Number.pipe(Schema.brand("Money"))
-type Money = typeof Money.Type
+export type Money = typeof Money.Type
+export const makeMoney = Money.make
 
 export const AccountType = Schema.Literal("asset", "liability", "equity", "revenue", "expense")
 export type AccountType = typeof AccountType.Type
