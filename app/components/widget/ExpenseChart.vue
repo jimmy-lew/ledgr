@@ -10,32 +10,16 @@ interface Category {
   color: string
 }
 
-const props = defineProps<{categories: Category[]}>()
+const props = defineProps<{categories?: Category[]}>()
 
-const totalAmount = props.categories.reduce((sum, item) => sum + item.amount, 0)
-
+const total = computed(() => props.categories?.reduce((p, i) => p + i.amount, 0) ?? 0)
 const { circumference, circleProps, svgProps } = useDonutChart(SIZE, STROKE_WIDTH, -180, HEIGHT)
 
 const segments = computed(() => {
+  const data = props.categories?.map(i => i.amount / total.value) ?? []
   const arcLength = circumference / 2
-  const gap = (STROKE_WIDTH * props.categories.length - 1) / props.categories.length
-  let offset = 0
-
-  const categoryToSegment = (cat: Category) => {
-    const rawLength = (cat.amount / totalAmount) * arcLength
-    const visualLength = rawLength - gap
-    offset -= gap / (props.categories.length + 1)
-    const segment = {
-      ...cat,
-      visualLength,
-      offset
-    }
-
-    offset -= rawLength
-    return segment
-  }
-
-  return props.categories.map(categoryToSegment)
+  const segments = useDonutSegments(circumference, data, { arcLength, circleProps })
+  return segments.map((o, i) => ({ ...o, ...props.categories?.at(i) }))
 })
 </script>
 
@@ -44,18 +28,16 @@ const segments = computed(() => {
     <div class="relative w-full flex items-center justify-center">
       <svg v-bind="svgProps" class="overflow-visible">
         <circle
-          v-for="{ name, color: stroke, visualLength, offset } in segments"
-          v-bind="circleProps"
+          v-for="{ name, color: stroke, ...segmentProps } in segments"
+          v-bind="segmentProps"
           :key="name"
-          :stroke-dasharray="`${visualLength}, ${circumference}`"
-          :stroke-dashoffset="offset"
           class="transition-all duration-1000 ease-out fill-none stroke"
           :style="{ stroke }"
         />
       </svg>
        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 text-center">
         <div class="text-[12px] font-semibold tracking-tight leading-none">
-          ${{ totalAmount }}
+          ${{ total }}
         </div>
         <div class="text-[8px] text-gray-400 font-bold">Total</div>
       </div>
@@ -76,7 +58,7 @@ const segments = computed(() => {
               v-for="i in 20"
               :key="i"
               class="h-2 w-0.5 flex-1 rounded-sm transition-colors duration-700 bg-black/10 dark:bg-white/5"
-              :style="{backgroundColor: i <= Math.round((amount / totalAmount) * 20) ? color: ''}"
+              :style="{backgroundColor: i <= Math.round((amount / total) * 20) ? color: ''}"
             >
             </div>
           </div>

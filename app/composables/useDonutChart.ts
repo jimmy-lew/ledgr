@@ -1,3 +1,18 @@
+interface CircleProps {
+  cx?: number
+  cy?: number
+  r?: number
+  'stroke-width'?: number
+  'stroke-linecap'?: 'round'
+  transform?: string
+}
+
+interface DonutSegmentsOptions {
+  arcLength?: number
+  gap?: number
+  circleProps?: CircleProps
+}
+
 export const useDonutChart = (width: number = 96, strokeWidth: number = 8, rotation: number = -90, _height?: number) => {
   const r = (width - (2 * strokeWidth)) / 2
   const cx = r + strokeWidth
@@ -12,24 +27,29 @@ export const useDonutChart = (width: number = 96, strokeWidth: number = 8, rotat
   return { circumference, circleProps, svgProps }
 }
 
-interface Segment {
-  l: number
-  vl: number
-  offset: number
-}
-
-export const useDonutSegments = (circumference: number, percentages: number[]) => {
+export const useDonutSegments = (
+  circumference: number,
+  percentages: number[],
+  options?: DonutSegmentsOptions
+) => {
+  const arcLength = options?.arcLength ?? circumference
   const n = percentages.length
-  const gap = (8 * n - 1) / n
+  const gap = options?.gap ?? (8 * n - 1) / n
   let offset = 0
 
-  const toSegment = (p: number, i: number) => {
-    const l = p * circumference // True space taken up
-    const vl = l - gap // Visual space shown
+  const toSegment = (p: number) => {
+    const l = p * arcLength // True space
+    const vl = l - gap // Visual space
     offset -= gap / (n + 1)
-    const segment =  {l , vl, 'stroke-dashoffset': offset}
+    const segment = {
+      ...options?.circleProps,
+      'stroke-dasharray': `${vl}, ${circumference}`,
+      'stroke-dashoffset': offset
+    }
     offset -= l
     return segment
   }
+
   const segments = percentages.map(toSegment)
+  return segments
 }
