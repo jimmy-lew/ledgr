@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { LazyCustomiseDrawer, LazyStatementUpload, LazyWidgetCreate } from '#components';
+import { CustomiseDrawer, StatementUpload, WidgetCreate } from '#components';
 
 const overlay = useOverlay()
 const router = useRouter()
 
-const statementUploadModal = overlay.create(LazyStatementUpload)
-const createWidgetModal = overlay.create(LazyWidgetCreate)
-const customiseDrawer = overlay.create(LazyCustomiseDrawer)
+const statementUploadModal = overlay.create(StatementUpload)
+const createWidgetModal = overlay.create(WidgetCreate)
+const customiseDrawer = overlay.create(CustomiseDrawer)
 
 const handleAddStatement = () => {
   statementUploadModal.open()
