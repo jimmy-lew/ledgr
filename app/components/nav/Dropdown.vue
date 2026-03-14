@@ -20,7 +20,7 @@ const animate = computed(() => {
     :initial
     :animate
     :transition="{ duration: 0.3 }"
-    :class="['pt-3 px-3 flex flex-col items-center absolute overflow-y-scroll w-full']"
+    :class="['pt-3 px-2 flex flex-col items-center absolute overflow-y-scroll w-full']"
     @mouseleave="handleHoverEnd"
   >
     <button

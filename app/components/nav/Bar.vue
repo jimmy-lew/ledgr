@@ -3,7 +3,7 @@ import type { NavItem } from '~/types';
 
 const props = defineProps<{ items: NavItem[] }>()
 
-const { activeItemRef, containerState, subContainerState, selectedItem, select } = useNavBar()
+const { activeItemRef, containerState, subContainerState, selectedItem, select, activeGroup, hoveredItem } = useNavBar()
 
 const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 8, 8))
 

@@ -42,10 +42,11 @@ const items = [
       { icon: 'lucide:arrow-up-down', title: 'Customize', click: () => customiseDrawer.open()},
     ]
   },
-  { icon: 'lucide:search', to: '/user' }
 ]
 </script>
 
 <template>
-  <NavBar :items/>
+  <!-- <NavBar :items/> -->
+
+  <NavLinearAndroidBar :items/>
 </template>

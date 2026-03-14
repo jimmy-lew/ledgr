@@ -6,5 +6,5 @@ export default defineNuxtConfig({
   imports: { dirs: ['types/**'] },
   colorMode: { preference: 'system' },
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true }
+  devtools: { enabled: false }
 })

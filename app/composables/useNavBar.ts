@@ -1,5 +1,5 @@
 const HOVER_DELAY = 400
-const DEFAULT_WIDTH = 192
+const DEFAULT_WIDTH = 200
 const DEFAULT_HEIGHT = 48
 const BORDER_RADIUS = 999
 
@@ -26,7 +26,7 @@ export const useNavBar = createSharedComposable(() => {
   const containerState = computed(() => {
     if (!activeGroup.value) return { width: width.value, height: DEFAULT_HEIGHT, borderRadius: BORDER_RADIUS }
     const rect = activeGroup.value.getBoundingClientRect()
-    return { width: Math.max(rect.width, width.value + 64), height: rect.height + 48, borderRadius: 18 }
+    return { width: 200, height: rect.height + 8, borderRadius: 18 }
   })
   const subContainerState = computed(() => objectMap(containerState.value, (k,v) => [k, v-2]))
 
@@ -49,9 +49,9 @@ export const useNavBar = createSharedComposable(() => {
 
   return {
     setItemRef, setSubItemRef,
-    selectedItem, selectedSubItem, hoveredItem, activeItem,
+    selectedItem, selectedSubItem, hoveredItem,
     handleHover, handleHoverEnd, select, subItemSelect,
-    activeItemRef,
+    activeItemRef, activeItem, activeGroup,
     containerState, subContainerState
   }
 })
