@@ -20,26 +20,53 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
 
 <template>
 
- <div class="fixed bottom-8 -translate-x-1/2 left-1/2 w-full px-2 flex items-end justify-between">
+<div class="fixed bottom-8 -translate-x-1/2 left-1/2 w-full px-4 flex gap-2 items-end justify-between">
+  <Motion
+    as="div"
+    :initial="containerState" :animate="containerState"
+    :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
+    class="bg-white w-66 h-14 rounded-full shadow-lg shadow-black/10"
+  />
+  <Motion
+    as="div"
+    class="bg-white w-14 h-14 rounded-full shadow-lg shadow-black/10"
+  />
+</div>
+
+<div class="fixed bottom-4 -translate-x-1/2 left-1/2 w-full p-4 flex gap-2 items-center justify-between">
+  <div class="flex items-center justify-evenly w-66">
+    <NavItem v-for="item, index in items" :item :index />
+  </div>
+   <div class="flex items-center justify-center size-14 text-black font-medium">
+    <UIcon name="lucide:search" />
+  </div>
+  <Motion
+    tag="div"
+    class="absolute w-14 h-12 from-black/7 to-black/12 rounded-full origin-center group-active:scale-95"
+    :class="activeGroup ? 'bg-transparent' : 'bg-linear-to-b'"
+    :animate="{ left: `${indicatorPos}px`, }"
+    :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
+  />
+</div>
+
+ <!-- <div class="fixed bottom-8 -translate-x-1/2 left-1/2 w-full px-2 flex items-end justify-between">
   <Motion
     as="div"
     :initial="containerState"
     :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
-    class="left-2 relative bg-white rounded-full shadow-lg shadow-black/10"
-  >
-    <!-- <NavDropdown v-for="item, index in items" :key="index" :item :index /> -->
-  </Motion>
+    class="left-3 relative bg-white rounded-full shadow-lg shadow-black/10"
+  />
    <Motion
     as="div"
-    class="relative mx-4 bg-white size-12 rounded-full shadow-lg shadow-black/10"
+    class="relative mx-2 bg-white size-12 rounded-full shadow-lg shadow-black/10"
   />
-</div>
+</div> -->
 
-<div class="fixed bottom-6 -translate-x-1/2 left-1/2 w-full p-2 flex items-center justify-between">
+ <!-- <div class="fixed bottom-6 -translate-x-1/2 left-1/2 w-full p-2 flex items-center justify-between">
   <div class="grow flex items-center justify-evenly">
     <NavItem v-for="item, index in items" :item :index />
   </div>
-  <button class="relative grow-0 flex items-center justify-center mx-4 size-12 text-black font-medium transition-all duration-200 active:scale-90">
+  <button class="relative grow-0 flex items-center justify-center mx-2 size-12 text-black font-medium transition-all duration-200 active:scale-90">
     <UIcon name="lucide:search" class="font-black"/>
   </button>
   <Motion
@@ -49,7 +76,8 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
     :animate="{ left: `${indicatorPos}px`, }"
     :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
   />
-</div>
+</div> -->
+
 
 <!-- <div class="fixed bottom-0 w-screen h-20 bg-linear-to-b from-transparent to-white/90 z-0">
 </div> -->

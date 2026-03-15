@@ -1,6 +1,6 @@
 const HOVER_DELAY = 400
-const DEFAULT_WIDTH = 248
-const DEFAULT_HEIGHT = 48
+const DEFAULT_WIDTH = 264
+const DEFAULT_HEIGHT = 56
 const BORDER_RADIUS = 999
 
 function objectMap<T extends object, K extends keyof T>(obj: T, f: (k: K, v: T[K]) => [K, T[K]]): T {
