@@ -20,12 +20,12 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
 
 <template>
 
-<div class="fixed bottom-8 -translate-x-1/2 left-1/2 w-full px-4 flex gap-2 items-end justify-between">
+<div class="fixed bottom-8 -translate-x-1/2 left-1/2 w-full px-4 flex gap-3 items-end justify-between">
   <Motion
     as="div"
     :initial="containerState" :animate="containerState"
     :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
-    class="bg-white w-66 h-14 rounded-full shadow-lg shadow-black/10"
+    class="bg-white w-64 h-14 rounded-full shadow-lg shadow-black/10"
   />
   <Motion
     as="div"
@@ -33,11 +33,11 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
   />
 </div>
 
-<div class="fixed bottom-4 -translate-x-1/2 left-1/2 w-full p-4 flex gap-2 items-center justify-between">
-  <div class="flex items-center justify-evenly w-66">
+<div class="fixed bottom-4 -translate-x-1/2 left-1/2 w-full p-4 flex gap-3 items-center justify-between">
+  <div class="flex items-center justify-evenly w-64">
     <NavItem v-for="item, index in items" :item :index />
   </div>
-   <div class="flex items-center justify-center size-14 text-black font-medium">
+   <div class="flex items-center justify-center size-14 text-xl text-black font-medium">
     <UIcon name="lucide:search" />
   </div>
   <Motion
