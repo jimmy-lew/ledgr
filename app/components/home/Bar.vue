@@ -24,7 +24,7 @@ const items = [
     icon: 'lucide:chevrons-up-down',
     items: [
       { icon: 'lucide:home', title: 'Home', click: () => router.push('/')},
-      { icon: 'lucide:settings', title: 'Settings', click: () => router.push('/settings')},
+      // { icon: 'lucide:settings', title: 'Settings', click: () => router.push('/settings')},
       { icon: 'lucide:chart-line', title: 'Insights', click: () => router.push('/insights') },
       { icon: 'lucide:chart-pie', title: 'Budget', click: () => router.push('/budget') },
       { icon: 'lucide:scan-line', title: 'Add statement', click: handleAddStatement },

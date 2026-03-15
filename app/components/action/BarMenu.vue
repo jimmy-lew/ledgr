@@ -4,6 +4,7 @@ import type { NavItem } from '~/types';
 const props = defineProps<{item: NavItem, index: number}>()
 
 const { setSubItemRef, handleHoverEnd, hoveredItem, selectedItem, selectedSubItem, subItemSelect } = useActionBar()
+const router = useRouter()
 
 const isHovered = computed(() => hoveredItem.value === props.index)
 const isSelected = computed(() => selectedItem.value === props.index)
@@ -14,19 +15,30 @@ const animate = computed(() => {
 </script>
 
 <template>
+  <Motion
+    :initial :animate
+    class="absolute -top-10 flex items-center justify-between w-full px-2"
+  >
+    <div />
+    <button
+      class="flex items-center justify-center size-8 bg-white rounded-full font-medium text-lg transition-all duration-75 active:scale-90"
+      @click="() => router.push('/settings')"
+    >
+      <UIcon name="lucide:settings" />
+    </button>
+  </Motion>
 	<Motion
 	  v-if="item.items"
     :ref="setSubItemRef(index)"
-    :initial
-    :animate
+    :initial :animate
     :transition="{ duration: 0.3 }"
-    :class="['pt-3 px-2 flex flex-col items-center absolute overflow-y-scroll w-full']"
+    class="pt-3 px-2 flex flex-col items-center absolute overflow-y-scroll w-full"
     @mouseleave="handleHoverEnd"
   >
     <button
       v-for="({type, icon: name, title, click}, i) in item.items"
       :key="i"
-      class="w-full group text-sm transition-all duration-75 active:scale-90"
+      class="w-full group font-medium transition-all duration-75 active:scale-90"
       @click="subItemSelect(index, i, click)"
     >
       <USeparator v-if="type === 'divider'" class="px-2 py-0.5" :ui="{ border: 'bg-black/5 dark:bg-white/5' }"/>
