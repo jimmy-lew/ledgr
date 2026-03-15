@@ -15,9 +15,9 @@ const isSelected = computed(() => selectedItem.value === props.index)
     @mouseleave="handleHoverEnd"
     @click="select(index, item.to)"
     class="relative flex items-center justify-center w-14 h-12 text-black text-xl font-medium transition-all duration-200 active:scale-90 rounded-full z-10"
+    :class="[ activeGroup ? 'text-transparent' : 'text-black' ]"
   >
 
-    <!-- :class="[ activeGroup ? 'text-transparent' : 'text-black' ]" -->
     <!-- :class="[
       isHovered ? 'text-white! dark:text-black!' : '',
       (isSelected && hoveredItem < 0) ? 'text-white dark:text-black' : 'text-black dark:text-white'

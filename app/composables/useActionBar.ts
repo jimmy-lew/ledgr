@@ -24,9 +24,9 @@ export const useActionBar = createSharedComposable(() => {
   const activeGroup = computed(() => subItemRefs.value[hoveredItem.value])
 
   const containerState = computed(() => {
-    if (!activeGroup.value) return { width: width.value, height: DEFAULT_HEIGHT, borderRadius: BORDER_RADIUS }
+    if (!activeGroup.value) return { width: width.value, height: DEFAULT_HEIGHT, borderRadius: BORDER_RADIUS, zIndex: 1 }
     const rect = activeGroup.value.getBoundingClientRect()
-    return { width: 256, height: rect.height + 8, borderRadius: 24 }
+    return { width: 256, height: rect.height + 8, borderRadius: 24, zIndex: 20 }
   })
   const subContainerState = computed(() => objectMap(containerState.value, (k,v) => [k, v-2]))
 

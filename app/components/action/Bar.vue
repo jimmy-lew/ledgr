@@ -20,7 +20,7 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
 
 <template>
 
-<div class="fixed bottom-8 -translate-x-1/2 left-1/2 w-full px-4 flex gap-3 items-end justify-between">
+<!-- <div class="fixed bottom-8 -translate-x-1/2 left-1/2 w-full px-4 flex gap-3 items-end justify-between">
   <Motion
     as="div"
     :initial="containerState" :animate="containerState"
@@ -34,9 +34,21 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
     class="bg-white w-14 h-14 rounded-full shadow-lg shadow-black/10"
   />
 </div>
-
-<div class="fixed bottom-4 -translate-x-1/2 left-1/2 w-full p-4 flex gap-3 items-center justify-between">
-  <div class="flex items-center justify-evenly w-64">
+ -->
+<div class="fixed bottom-4 -translate-x-1/2 left-1/2 w-full p-4 flex gap-3 items-end justify-between">
+  <Motion
+    as="div"
+    :initial="containerState" :animate="containerState"
+    :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
+    class="absolute bg-white w-64 h-14 rounded-full shadow-lg shadow-black/10"
+  >
+    <ActionBarMenu v-for="item, index in items" :key="index" :item :index />
+  </Motion>
+  <Motion
+    as="div"
+    class="absolute right-4 bg-white w-14 h-14 rounded-full shadow-lg shadow-black/10"
+  />
+  <div class="flex items-center justify-evenly w-64 h-14">
     <ActionBarItem v-for="item, index in items" :item :index />
   </div>
    <div class="flex items-center justify-center size-14 text-xl text-black font-medium transition-all duration-200 active:scale-90">
@@ -44,7 +56,7 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
   </div>
   <Motion
     tag="div"
-    class="absolute w-14 h-12 from-black/7 to-black/12 rounded-full origin-center group-active:scale-95"
+    class="absolute bottom-5 w-14 h-12 from-black/7 to-black/12 rounded-full origin-center group-active:scale-95"
     :class="activeGroup ? 'bg-transparent' : 'bg-linear-to-b'"
     :animate="{ left: `${indicatorPos}px`, }"
     :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
