@@ -36,22 +36,28 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
 </div>
  -->
 <div class="fixed bottom-4 -translate-x-1/2 left-1/2 w-full p-4 flex gap-3 items-end justify-between">
+
+    <!-- bg-linear-to-b from-black/10 via-white/30 to-black/5
+    dark:from-white/20 dark:via-black/30 dark:to-white/5 -->
   <Motion
     as="div"
     :initial="containerState" :animate="containerState"
     :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }"
-    class="absolute bg-white w-64 h-14 rounded-full shadow-lg shadow-black/10"
+    class="absolute
+    bg-white/80 dark:bg-[oklch(25%_0_0/0.6)]
+    backdrop-blur-md
+    w-64 h-14 rounded-full shadow-lg shadow-black/10"
   >
     <ActionBarMenu v-for="item, index in items" :key="index" :item :index />
   </Motion>
-  <Motion
+   <Motion
     as="div"
-    class="absolute right-4 bg-white w-14 h-14 rounded-full shadow-lg shadow-black/10"
+    class="absolute right-4 bg-white dark:bg-[oklch(25%_0_0/0.6)] backdrop-blur-md w-14 h-14 rounded-full shadow-lg shadow-black/10"
   />
   <div class="flex items-center justify-evenly w-64 h-14">
     <ActionBarItem v-for="item, index in items" :item :index />
   </div>
-   <div class="flex items-center justify-center size-14 text-xl text-black font-medium transition-all duration-200 active:scale-90">
+   <div class="flex items-center justify-center size-14 text-xl text-black dark:text-white font-medium transition-all duration-200 active:scale-90">
     <UIcon name="lucide:search" />
   </div>
   <Motion

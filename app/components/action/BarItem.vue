@@ -14,8 +14,8 @@ const isSelected = computed(() => selectedItem.value === props.index)
     @mouseenter="handleHover(index)"
     @mouseleave="handleHoverEnd"
     @click="select(index, item.to)"
-    class="relative flex items-center justify-center w-14 h-12 text-black text-xl font-medium transition-all duration-200 active:scale-90 rounded-full z-10"
-    :class="[ activeGroup ? 'text-transparent' : 'text-black' ]"
+    class="relative flex items-center justify-center w-14 h-12 text-xl font-medium transition-all duration-200 active:scale-90 rounded-full z-10"
+    :class="[ activeGroup ? 'text-transparent' : 'text-black dark:text-white' ]"
   >
 
     <!-- :class="[

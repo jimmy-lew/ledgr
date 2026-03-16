@@ -21,7 +21,7 @@ const animate = computed(() => {
   >
     <div />
     <button
-      class="flex items-center justify-center size-8 bg-white rounded-full font-medium text-lg transition-all duration-75 active:scale-90"
+      class="flex items-center justify-center size-8 bg-white dark:bg-[oklch(25%_0_0/0.6)] backdrop-blur-md rounded-full font-medium text-lg transition-all duration-75 active:scale-90"
       @click="() => router.push('/settings')"
     >
       <UIcon name="lucide:settings" />
@@ -46,7 +46,7 @@ const animate = computed(() => {
         v-else
         class="
         flex items-center gap-3
-        rounded-lg p-2 mx-auto w-full
+        rounded-full p-2 mx-auto w-full
         duration-300
         group-active:bg-black/5 group-hover:bg-black/5
         dark:group-active:bg-white/5 dark:group-hover:bg-white/5
