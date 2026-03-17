@@ -21,7 +21,7 @@ const animate = computed(() => {
   >
     <div />
     <button
-      class="flex items-center justify-center size-8 bg-white dark:bg-[oklch(25%_0_0/0.6)] backdrop-blur-md rounded-full font-medium text-lg transition-all duration-75 active:scale-90"
+      class="flex items-center justify-center size-8 bg-white dark:bg-[oklch(25%_0_0/0.3)] backdrop-blur-md rounded-full font-medium text-lg transition-all duration-75 active:scale-90"
       @click="() => router.push('/settings')"
     >
       <UIcon name="lucide:settings" />
