@@ -17,7 +17,7 @@ const animate = computed(() => {
 <template>
   <Motion
     :initial :animate
-    class="absolute -top-10 flex items-center justify-between w-full px-2"
+    class="absolute -top-10 flex items-center justify-between w-full px-3"
   >
     <div />
     <button
@@ -43,8 +43,8 @@ const animate = computed(() => {
     >
       <div
         class="
-        flex items-center gap-4
-        rounded-full p-2.5 mx-auto w-full
+        flex items-center gap-3.5
+        rounded-full px-2 py-2.5 mx-auto w-full
         text-white font-medium
         duration-300
         group-active:bg-black/5 group-hover:bg-black/5
