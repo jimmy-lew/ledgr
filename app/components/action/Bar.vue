@@ -36,13 +36,13 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
 </div>
  -->
 <div class="fixed bottom-4 -translate-x-1/2 left-1/2 w-full px-8 py-4 flex gap-3 items-end justify-between">
-    <Motion
+    <!-- <Motion
       tag="div"
       class="absolute bottom-5 w-14 h-12 from-black/7 to-black/12 rounded-full origin-center group-active:scale-95 z-100"
       :class="activeGroup ? 'bg-transparent' : 'bg-linear-to-b'"
       :animate="{ left: `${indicatorPos}px`, }"
       :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
-    />
+    /> -->
     <!-- bg-linear-to-b from-black/10 via-white/30 to-black/5
     dark:from-white/20 dark:via-black/30 dark:to-white/5 -->
   <Motion
@@ -52,6 +52,7 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
     class="absolute
     bg-white/80 dark:bg-[oklch(25%_0_0/0.7)]
     backdrop-blur-md
+    border border-[oklch(35%_0.01_264.53/0.2)]
     w-64 h-14 rounded-full shadow-lg shadow-black/10"
   >
     <ActionBarMenu v-for="item, index in items" :key="index" :item :index />

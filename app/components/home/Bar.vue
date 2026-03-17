@@ -27,9 +27,9 @@ const items = [
       // { icon: 'lucide:settings', title: 'Settings', click: () => router.push('/settings')},
       { icon: 'lucide:chart-line', title: 'Insights', click: () => router.push('/insights') },
       { icon: 'lucide:chart-pie', title: 'Budget', click: () => router.push('/budget') },
-      { icon: 'lucide:scan-line', title: 'Add statement', click: handleAddStatement },
-      { icon: 'lucide:square-dashed', title: 'Add widget', click: handleAddWidget },
-      { icon: 'lucide:refresh-cw', title: 'Add subscription' },
+      { icon: 'lucide:scan-line', title: 'Statements', click: handleAddStatement },
+      { icon: 'lucide:square-dashed', title: 'Widgets', click: handleAddWidget },
+      { icon: 'lucide:refresh-cw', title: 'Subscriptions' },
       { type: 'divider' } as const,
       { icon: 'lucide:arrow-up-down', title: 'Customize', click: () => customiseDrawer.open()},
     ]
@@ -40,5 +40,5 @@ const items = [
 <template>
   <!-- <NavBar :items/> -->
 
-  <ActionBar :items/>
+  <ActionBar :items class="rounded-3xl"/>
 </template>

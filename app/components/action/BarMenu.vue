@@ -32,21 +32,22 @@ const animate = computed(() => {
     :ref="setSubItemRef(index)"
     :initial :animate
     :transition="{ duration: 0.3 }"
-    class="pt-3 px-2 flex flex-col items-center absolute overflow-y-scroll w-full"
+    class="p-3 flex flex-col items-center absolute overflow-y-scroll w-full"
     @mouseleave="handleHoverEnd"
   >
     <button
       v-for="({type, icon: name, title, click}, i) in item.items"
       :key="i"
-      class="w-full group font-medium transition-all duration-75 active:scale-90"
+      class="w-full group font-medium transition-all duration-75 active:scale-90 first:bg-white/5 first:rounded-full"
       @click="subItemSelect(index, i, click)"
     >
-      <USeparator v-if="type === 'divider'" class="px-2 py-0.5" :ui="{ border: 'bg-black/5 dark:bg-white/5' }"/>
+      <USeparator v-if="type === 'divider'" class="px-2 py-0.5" :ui="{ border: 'bg-black/5 dark:bg-white/10' }"/>
       <div
         v-else
         class="
-        flex items-center gap-3
-        rounded-full p-2 mx-auto w-full
+        flex items-center gap-4
+        rounded-full px-4 py-3 mx-auto w-full
+        text-lg text-white font-medium
         duration-300
         group-active:bg-black/5 group-hover:bg-black/5
         dark:group-active:bg-white/5 dark:group-hover:bg-white/5
@@ -54,7 +55,7 @@ const animate = computed(() => {
         "
         :class="isSelected && selectedSubItem === i ? 'bg-black/10 dark:bg-white/5' : ''"
       >
-        <Icon v-if="name" :name/>
+          <Icon v-if="name" :name class="size-5"/>
         {{ title }}
       </div>
     </button>
