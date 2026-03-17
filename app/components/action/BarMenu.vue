@@ -69,8 +69,6 @@ const animate = computed(() => {
         px-2.5 py-1.5
         text-white font-medium
         duration-300
-        group-active:bg-black/5 group-hover:bg-black/5
-        dark:group-active:bg-white/5 dark:group-hover:bg-white/5
         group-active:px-3 group-hover:px-3
         "
       >

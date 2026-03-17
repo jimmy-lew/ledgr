@@ -50,7 +50,7 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
     :initial="containerState" :animate="containerState"
     :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }"
     class="absolute
-    bg-white/80 dark:bg-[oklch(25%_0_0/0.7)]
+    bg-white/80 dark:bg-[oklch(0.261_0_0/0.7)]
     backdrop-blur-md
     border border-[oklch(35%_0.01_264.53/0.2)]
     w-64 h-14 rounded-full shadow-lg shadow-black/10"
@@ -59,7 +59,7 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
   </Motion>
    <Motion
     as="div"
-    class="absolute right-8 bg-white dark:bg-[oklch(25%_0_0/0.7)] backdrop-blur-md w-14 h-14 rounded-full shadow-lg shadow-black/10"
+    class="absolute right-8 bg-white dark:bg-[oklch(0.261_0_0/0.7)] backdrop-blur-md w-14 h-14 rounded-full shadow-lg shadow-black/10"
   />
   <div class="relative left-1 flex items-center justify-evenly w-56 h-14">
     <ActionBarItem v-for="item, index in items" :item :index />
