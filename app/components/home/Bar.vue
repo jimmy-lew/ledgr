@@ -30,8 +30,6 @@ const items = [
       { icon: 'lucide:scan-line', title: 'Statements', click: handleAddStatement },
       { icon: 'lucide:square-dashed', title: 'Widgets', click: handleAddWidget },
       { icon: 'lucide:refresh-cw', title: 'Subscriptions' },
-      { type: 'divider' } as const,
-      { title: 'Customize', click: () => customiseDrawer.open()},
     ]
   },
 ]

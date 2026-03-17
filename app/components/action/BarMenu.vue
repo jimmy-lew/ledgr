@@ -27,8 +27,8 @@ const animate = computed(() => {
       <UIcon name="lucide:settings" />
     </button>
   </Motion>
-	<Motion
-	  v-if="item.items"
+  <Motion
+    v-if="item.items"
     :ref="setSubItemRef(index)"
     :initial :animate
     :transition="{ duration: 0.3 }"
@@ -41,12 +41,10 @@ const animate = computed(() => {
       class="w-full group font-medium transition-all duration-75 active:scale-90 first:bg-white/5 first:rounded-full"
       @click="subItemSelect(index, i, click)"
     >
-      <USeparator v-if="type === 'divider'" class="px-2 py-0.5" :ui="{ border: 'bg-black/5 dark:bg-white/10' }"/>
       <div
-        v-else
         class="
         flex items-center gap-4
-        rounded-full px-2.5 py-2 mx-auto w-full
+        rounded-full p-2.5 mx-auto w-full
         text-white font-medium
         duration-300
         group-active:bg-black/5 group-hover:bg-black/5
@@ -57,6 +55,26 @@ const animate = computed(() => {
       >
           <Icon v-if="name" :name class="size-5"/>
         {{ title }}
+      </div>
+    </button>
+
+    <USeparator class="px-2 py-0.5" :ui="{ border: 'bg-black/5 dark:bg-white/10' }"/>
+    <button
+      class="w-full group font-medium transition-all duration-75 active:scale-90 first:bg-white/5 first:rounded-full"
+    >
+      <div
+        class="
+        flex items-center gap-4
+        rounded-full mx-auto w-full
+        px-2.5 py-1.5
+        text-white font-medium
+        duration-300
+        group-active:bg-black/5 group-hover:bg-black/5
+        dark:group-active:bg-white/5 dark:group-hover:bg-white/5
+        group-active:px-3 group-hover:px-3
+        "
+      >
+         Customize
       </div>
     </button>
   </Motion>
