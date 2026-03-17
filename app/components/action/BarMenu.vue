@@ -32,7 +32,7 @@ const animate = computed(() => {
     :ref="setSubItemRef(index)"
     :initial :animate
     :transition="{ duration: 0.3 }"
-    class="p-3 flex flex-col items-center absolute overflow-y-scroll w-full"
+    class="pt-3 px-3 flex flex-col items-center absolute overflow-y-scroll w-full"
     @mouseleave="handleHoverEnd"
   >
     <button
@@ -45,8 +45,8 @@ const animate = computed(() => {
       <div
         v-else
         class="
-        flex items-center gap-4
-        rounded-full px-3 py-2 mx-auto w-full
+        flex items-center gap-5
+        rounded-full p-2 mx-auto w-full
         text-lg text-white font-medium
         duration-300
         group-active:bg-black/5 group-hover:bg-black/5
