@@ -31,7 +31,7 @@ const items = [
       { icon: 'lucide:square-dashed', title: 'Widgets', click: handleAddWidget },
       { icon: 'lucide:refresh-cw', title: 'Subscriptions' },
       { type: 'divider' } as const,
-      { icon: 'lucide:arrow-up-down', title: 'Customize', click: () => customiseDrawer.open()},
+      { title: 'Customize', click: () => customiseDrawer.open()},
     ]
   },
 ]

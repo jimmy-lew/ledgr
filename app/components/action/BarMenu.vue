@@ -45,9 +45,9 @@ const animate = computed(() => {
       <div
         v-else
         class="
-        flex items-center gap-5
-        rounded-full p-2 mx-auto w-full
-        text-lg text-white font-medium
+        flex items-center gap-4
+        rounded-full px-2.5 py-2 mx-auto w-full
+        text-white font-medium
         duration-300
         group-active:bg-black/5 group-hover:bg-black/5
         dark:group-active:bg-white/5 dark:group-hover:bg-white/5
