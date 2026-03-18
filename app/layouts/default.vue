@@ -3,10 +3,10 @@
 
 <template>
 <div class="relative">
-  <div class="min-h-screen flex flex-col bg-[#edf0ea] dark:bg-[oklch(15%_0_0)]">
+  <div class="min-h-screen flex flex-col bg-[#edf0ea] dark:bg-[oklch(35%_0_0)]">
     <slot />
   </div>
-  <HomeBar />
+   <HomeBar />
 </div>
 </template>
 
