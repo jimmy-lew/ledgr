@@ -3,9 +3,6 @@
 
 <template>
 <div class="relative flex flex-col items-center min-h-screen w-full bg-[oklch(96%_0_0)] dark:bg-[oklch(0.1591_0_0)] font-mono overflow-hidden pb-24">
-  <!-- <div class="relative flex flex-col items-center min-h-screen w-full bg-default overflow-hidden"> -->
-   <!-- <div class="absolute -top-20 -left-25 w-72 h-72 bg-blue-600/40 rounded-full blur-[90px]"></div>
-  <div class="absolute -top-10 -left-5 w-64 h-52 bg-emerald-500 rounded-full blur-[100px]"></div> -->
   <div class="absolute rounded-xl bg-cover bg-no-repeat bg-[url('https://i.pinimg.com/736x/d6/ac/44/d6ac44091afa772b3744f1ecad3d33e3.jpg')] w-72 h-42 right-12 top-12 sm:left-12"></div>
   <div class="absolute flex flex-col gap-4 p-8 rounded-xl bg-white/10 backdrop-blur-sm sm:backdrop-blur-xs shadow-md w-72 h-42 left-12 top-18 sm:top-12">
     <h2 class="text-white font-bold">Balance</h2>
