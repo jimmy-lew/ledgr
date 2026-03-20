@@ -2,12 +2,18 @@
 import type { NavItem } from '~/types';
 
 const props = defineProps<{ item: NavItem, index: number }>()
+const emit = defineEmits<{ select: [] }>()
 const { menuActive } = useActionBar()
+const router = useRouter()
+const handleSelect = (e: Event) => {
+  emit('select')
+  if (props.item.to) router.push(props.item.to)
+}
 </script>
 
 <template>
 	<button
-		@click="() => {}"
+		@click="handleSelect"
     class="relative flex items-center justify-center w-14 h-12 text-xl font-medium transition-all duration-200 active:scale-90 rounded-full z-10"
     :class="[ menuActive ? 'text-transparent' : 'text-black dark:text-white' ]"
   >

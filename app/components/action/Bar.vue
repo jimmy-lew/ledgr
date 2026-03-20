@@ -4,7 +4,9 @@ import type { NavItem } from '~/types';
 const props = defineProps<{ items: NavItem[] }>()
 
 const { menuState, menuActive } = useActionBar()
-const indicatorPos = computed(() => 60)
+const INDICATOR_PADDING = 4
+const activeIndex = ref(0)
+const indicatorPos = computed(() => (activeIndex.value * 56) + INDICATOR_PADDING)
 </script>
 
 <template>
@@ -23,18 +25,18 @@ const indicatorPos = computed(() => 60)
     <ActionBarMenu />
 
     <div class="relative left-1 flex items-center justify-evenly w-56 h-14 z-20">
-      <ActionBarItem v-for="item, index in items" :item :index />
+      <ActionBarItem v-for="item, index in items" :item :index @select="activeIndex = index" />
       <ActionBarMenuTrigger />
     </div>
 
     <Motion
       v-if="!menuActive"
       as="div"
-      class="absolute bottom-0.75 w-14 h-12 bg-linear-to-b from-black/7 to-black/12 dark:from-[#2f2f2f] dark:to-[#2f2f2f] rounded-full origin-center duration-700 group-active:scale-95 z-10"
+      class="absolute bottom-0.75 w-14 h-12 bg-linear-to-b from-black/7 to-black/12 dark:from-[#2f2f2f] dark:to-[#2f2f2f] rounded-full origin-center group-active:scale-95 z-10"
       :initial="{ left: `${indicatorPos}px`, opacity: 0 }"
       :animate="{ left: `${indicatorPos}px`, opacity: 1}"
       :exit="{ opacity: 0, transition: { duration: 0.05 } }"
-      :transition="{ default: {type: 'spring', stiffness: 400, damping: 30}, opacity: { duration: 1, ease: 'linear' } }"
+      :transition="{ left: {type: 'spring', stiffness: 110, damping: 17, mass: 1, duration: 0.1}, opacity: { duration: 1, ease: 'linear' } }"
     />
   </Motion>
 
