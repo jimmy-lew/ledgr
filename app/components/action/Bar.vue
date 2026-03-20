@@ -56,10 +56,8 @@ const handleSearch = () => {
     as="button"
     :initial="searchMenuState" :animate="searchMenuState"
     :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }"
-    class="relative flex
-    bg-action
-    backdrop-blur-md
-    border border-action-border
+    class="relative flex font-mono
+    bg-action backdrop-blur-md border border-action-border
     rounded-full
     shadow-lg shadow-black/10"
     @click="handleSearch"
@@ -72,7 +70,7 @@ const handleSearch = () => {
     >
       <UIcon name="lucide:search" />
     </div>
-    <UInput v-if="searchActive" placeholder="Search..." variant="none" :ui="{ base: 'pl-0 pr-3' }" class="-ml-2"/>
+    <UInput v-if="searchActive" autofocus placeholder="Search..." variant="none" :ui="{ base: 'pl-0 pr-3' }" class="-ml-2"/>
   </Motion>
 
   <button
