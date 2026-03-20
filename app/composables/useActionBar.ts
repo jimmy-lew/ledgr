@@ -16,9 +16,9 @@ export const useActionBar = createSharedComposable(() => {
   const width = ref(DEFAULT_WIDTH)
 
   const menuState = computed(() => {
-    if (!menuActive.value || !menuRef.value) return { width: width.value, height: DEFAULT_HEIGHT, borderRadius: BORDER_RADIUS, zIndex: 0 }
+    if (!menuActive.value || !menuRef.value) return { width: width.value, height: DEFAULT_HEIGHT, borderRadius: BORDER_RADIUS }
     const rect = menuRef.value.getBoundingClientRect()
-    return { width: width.value, height: rect.height + 8, borderRadius: 24, zIndex: 30 }
+    return { width: width.value, height: rect.height + 8, borderRadius: 24 }
   })
 
   const setMenuRef = (el: any) => { if (el) menuRef.value = el.$el || el }
