@@ -17,7 +17,7 @@
     "Geist Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
 
-  --color-action: oklch(1 0 0 / 0.8);
+  --color-action: oklch(1 0 0 / 0.3);
   --color-action-border: oklch(0.35 0.01 264.53 / 0.2);
 }
 
