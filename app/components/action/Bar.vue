@@ -3,38 +3,13 @@ import type { NavItem } from '~/types';
 
 const props = defineProps<{ items: NavItem[] }>()
 
-const { activeItemRef, menuState, activeGroup } = useActionBar()
-
-const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 36, 36))
+const { menuState, menuActive } = useActionBar()
+const indicatorPos = computed(() => 36)
 </script>
 
 <template>
-
-<!-- <div class="fixed bottom-8 -translate-x-1/2 left-1/2 w-full px-4 flex gap-3 items-end justify-between">
-  <Motion
-    as="div"
-    :initial="containerState" :animate="containerState"
-    :transition="{ type: 'spring', stiffness: 170, damping: 26, mass: 1 }"
-    class="relative bg-white w-64 h-14 rounded-full shadow-lg shadow-black/10"
-  >
-    <ActionBarMenu v-for="item, index in items" :key="index" :item :index />
-  </Motion>
-  <Motion
-    as="div"
-    class="bg-white w-14 h-14 rounded-full shadow-lg shadow-black/10"
-  />
-</div>
- -->
 <div class="fixed bottom-4 -translate-x-1/2 left-1/2 w-full px-8 py-4 flex gap-3 items-end justify-between">
-  <!-- <Motion
-    tag="div"
-    class="absolute bottom-5 w-14 h-12 from-black/7 to-black/12 rounded-full origin-center group-active:scale-95 z-100"
-    :class="activeGroup ? 'bg-transparent' : 'bg-linear-to-b'"
-    :animate="{ left: `${indicatorPos}px`, }"
-    :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
-  />  -->
-  <!-- bg-linear-to-b from-black/10 via-white/30 to-black/5
-  dark:from-white/20 dark:via-black/30 dark:to-white/5 -->
+  <!-- BG Overlay -->
   <Motion
     as="div"
     :initial="menuState" :animate="menuState"
@@ -47,6 +22,22 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
   >
     <ActionBarMenu />
   </Motion>
+
+  <!-- Main Nav -->
+  <div class="relative left-1 flex items-center justify-evenly w-56 h-14 z-20">
+    <ActionBarItem v-for="item, index in items" :item :index />
+    <ActionBarMenuTrigger />
+  </div>
+
+  <Motion
+    tag="div"
+    class="absolute bottom-5 w-14 h-12 from-black/7 to-black/12 dark:from-[#2f2f2f] dark:to-[#2f2f2f] rounded-full origin-center group-active:scale-95 z-10"
+    :class="menuActive ? 'bg-transparent' : 'bg-linear-to-b'"
+    :animate="{ left: `${indicatorPos}px`, }"
+    :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
+  />
+
+  <!-- Search BG Overlay -->
   <Motion
     as="div"
     :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }"
@@ -57,10 +48,7 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
     w-14 h-14 rounded-full
     shadow-lg shadow-black/10"
   />
-  <div class="relative left-1 flex items-center justify-evenly w-56 h-14">
-    <ActionBarItem v-for="item, index in items" :item :index />
-    <ActionBarMenuTrigger />
-  </div>
+  <!-- Search -->
   <div
     class="flex items-center justify-center
     size-14
@@ -70,7 +58,6 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
     <UIcon name="lucide:search" />
   </div>
 </div>
-
 </template>
 
 <style scoped>
