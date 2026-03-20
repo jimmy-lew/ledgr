@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { CustomiseDrawer, StatementUpload, WidgetCreate } from '#components';
+import { CustomiseDrawer, SettingsDrawer, StatementUpload, WidgetCreate } from '#components';
 
-const { subItemSelect, menuActive, setMenuRef } = useActionBar()
+const { menuActive, setMenuRef } = useActionBar()
 const router = useRouter()
 const overlay = useOverlay()
 
 const statementUploadModal = overlay.create(StatementUpload)
 const createWidgetModal = overlay.create(WidgetCreate)
 const customiseDrawer = overlay.create(CustomiseDrawer)
+const settingsDrawer = overlay.create(SettingsDrawer)
 
 const handleAddStatement = () => {
   statementUploadModal.open()
@@ -40,7 +41,7 @@ const animate = computed(() => {
     <div />
     <button
       class="flex items-center justify-center size-8 bg-action backdrop-blur-md border border-action-border rounded-full font-medium text-lg transition-all duration-75 active:scale-90"
-      @click="() => router.push('/settings')"
+      @click="settingsDrawer.open"
     >
       <UIcon name="lucide:settings" />
     </button>
@@ -55,7 +56,7 @@ const animate = computed(() => {
       v-for="({icon: name, title, click}, i) in items"
       :key="i"
       class="w-full group font-medium transition-all duration-75 active:scale-90"
-      @click="subItemSelect(3, i, click)"
+      @click="() => { }"
     >
       <div
         class="
