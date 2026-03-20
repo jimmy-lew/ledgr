@@ -4,8 +4,8 @@
 
 <template>
 	<div class="relative flex flex-col items-center font-mono px-8 py-4 gap-6">
-    <div class="flex items-center justify-between w-full pt-8">
-      <h1 class="text-xl font-black">Search</h1>
+    <div class="flex items-center justify-between w-full pt-6">
+      <h1 class="text-2xl font-bold">Search</h1>
       <div class="flex items-center justify-center rounded-full bg-black/5 dark:bg-white/5 size-12 text-lg">
         <UIcon name="lucide:edit" />
       </div>

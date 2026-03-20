@@ -70,7 +70,7 @@ const handleSearch = () => {
     >
       <UIcon name="lucide:search" />
     </div>
-    <UInput v-if="searchActive" autofocus placeholder="Search..." variant="none" :ui="{ base: 'pl-0 pr-3' }" class="-ml-2"/>
+    <UInput v-if="searchActive" autofocus placeholder="Search..." variant="none" :ui="{ base: 'pl-0 pr-3' }" class="-ml-2 text-lg"/>
   </Motion>
 
   <button
