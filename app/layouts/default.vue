@@ -3,7 +3,7 @@
 
 <template>
 <div class="relative">
-  <div class="flex flex-col bg-[oklch(96%_0_0)] dark:bg-[#070707] ">
+  <div class="min-h-screen flex flex-col bg-[oklch(96%_0_0)] dark:bg-[#070707] ">
     <slot />
   </div>
    <HomeBar />
