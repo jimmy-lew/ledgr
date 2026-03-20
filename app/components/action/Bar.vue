@@ -80,7 +80,7 @@ const handleSearch = () => {
     border border-action-border rounded-full
     text-xl text-black dark:text-white font-medium
     transition-all duration-200 active:scale-90"
-    @click="() => {searchActive = false; router.push('/') }"
+    @click="() => {router.push('/') }"
   >
     <UIcon name="lucide:x" />
   </button>
