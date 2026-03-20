@@ -28,7 +28,7 @@ const handleSearch = () => {
     :initial="menuState" :animate="menuState"
     :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }"
     class="
-    relative overflow-x-hidden
+    relative
     bg-action backdrop-blur-md
     border border-action-border
     rounded-full
