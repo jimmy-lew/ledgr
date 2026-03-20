@@ -16,7 +16,7 @@ const isDark = computed({
           <h1 class="col-span-1 font-bold text-center">Settings</h1>
           <h1 class="col-span-1 flex items-center justify-end">
             <button
-              class="size-8 bg-white/5 rounded-full flex items-center justify-center duration-75 transition-all active:scale-90"
+              class="size-10 bg-white/5 rounded-full flex items-center justify-center duration-75 transition-all active:scale-90 text-lg font-medium"
             >
               <UIcon name="lucide:x" />
             </button>
