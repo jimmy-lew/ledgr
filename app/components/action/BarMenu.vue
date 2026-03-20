@@ -27,20 +27,20 @@ const items = [
   { icon: 'lucide:refresh-cw', title: 'Subscriptions' },
 ]
 
-const initial = { opacity: 0, zIndex: 1 }
-const animate = computed(() => {
-  return { opacity: menuActive.value ? 1 : 0, zIndex: menuActive.value ? 2 : 1 }
-})
+const initial = { opacity: 0 }
+const animate = computed(() => ({ opacity: menuActive.value ? 1 : 0 }))
 </script>
 
 <template>
   <Motion
+    as="div"
     :initial :animate
+    :transition="{ duration: 0.3 }"
     class="absolute -top-10 flex items-center justify-between w-full px-3"
   >
     <div />
     <button
-      class="flex items-center justify-center size-8 bg-action backdrop-blur-md border border-action-border rounded-full font-medium text-lg transition-all duration-75 active:scale-90"
+      class="flex items-center justify-center size-8 bg-white dark:bg-[#171717] border border-action-border rounded-full font-medium text-lg transition-all duration-75 active:scale-90"
       @click="settingsDrawer.open"
     >
       <UIcon name="lucide:settings" />
@@ -50,7 +50,7 @@ const animate = computed(() => {
     :ref="setMenuRef"
     :initial :animate
     :transition="{ duration: 0.3 }"
-    class="pt-3 px-3 flex flex-col items-center absolute overflow-y-scroll w-full"
+    class="pt-3 px-3 flex flex-col items-center absolute overflow-y-scroll w-full text-black dark:text-white font-medium"
   >
     <button
       v-for="({icon: name, title, click}, i) in items"
@@ -62,7 +62,6 @@ const animate = computed(() => {
         class="
         flex items-center gap-3.5
         rounded-full px-2 py-2.5 mx-auto w-full
-        text-white font-medium
         duration-300
         group-active:bg-black/5 group-hover:bg-black/5
         dark:group-active:bg-white/5 dark:group-hover:bg-white/5
@@ -77,15 +76,14 @@ const animate = computed(() => {
     <USeparator class="px-2 py-0.5" :ui="{ border: 'bg-black/5 dark:bg-white/10' }"/>
     <button
       class="w-full group font-medium transition-all duration-75 active:scale-90 first:bg-white/5 first:rounded-full"
+      @click="customiseDrawer.open"
     >
       <div
         class="
         flex items-center gap-4
         rounded-full mx-auto w-full
         px-2.5 py-1.5
-        text-white font-medium
-        duration-300
-        group-active:px-3 group-hover:px-3
+        duration-300 group-active:px-3 group-hover:px-3
         "
       >
          Customize
