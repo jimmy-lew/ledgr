@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const emit = defineEmits<{ close: [] }>()
+
 const colorMode = useColorMode()
 
 const isDark = computed({
@@ -16,7 +18,8 @@ const isDark = computed({
           <h1 class="col-span-1 font-bold text-center">Settings</h1>
           <h1 class="col-span-1 flex items-center justify-end">
             <button
-              class="size-10 bg-white/5 rounded-full flex items-center justify-center duration-75 transition-all active:scale-90 text-lg font-medium"
+              class="size-10 bg-black/5 dark:bg-white/5 rounded-full flex items-center justify-center duration-75 transition-all active:scale-90 text-lg font-medium"
+              @click="emit('close')"
             >
               <UIcon name="lucide:x" />
             </button>

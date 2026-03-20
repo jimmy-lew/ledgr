@@ -2,9 +2,7 @@
 const value = ref<File | null>(null)
 const { summary, isLoading, error, parseStatement } = useBankStatement()
 
-const emit = defineEmits<{
-  close: [],
-}>()
+const emit = defineEmits<{ close: [] }>()
 
 const submit = async () => {
   if (!value.value)

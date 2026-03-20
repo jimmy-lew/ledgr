@@ -18,6 +18,10 @@ const handleAddWidget = () => {
   createWidgetModal.open()
 }
 
+const handleSettings = () => {
+  settingsDrawer.open()
+}
+
 const items = [
   { icon: 'lucide:home', title: 'Home', click: () => router.push('/')},
   { icon: 'lucide:chart-line', title: 'Insights', click: () => router.push('/insights') },
@@ -41,7 +45,7 @@ const animate = computed(() => ({ opacity: menuActive.value ? 1 : 0 }))
     <div />
     <button
       class="flex items-center justify-center size-8 bg-white dark:bg-[#171717] border border-action-border rounded-full font-medium text-lg transition-all duration-75 active:scale-90"
-      @click="settingsDrawer.open"
+      @click="handleSettings"
     >
       <UIcon name="lucide:settings" />
     </button>
@@ -56,7 +60,7 @@ const animate = computed(() => ({ opacity: menuActive.value ? 1 : 0 }))
       v-for="({icon: name, title, click}, i) in items"
       :key="i"
       class="w-full group font-medium transition-all duration-75 active:scale-90"
-      @click="() => { }"
+      @click="() => { click?.() }"
     >
       <div
         class="
