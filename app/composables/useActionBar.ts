@@ -13,6 +13,8 @@ export const useActionBar = createSharedComposable(() => {
   const router = useRouter()
   const itemRefs = ref<HTMLElement[]>([])
   const subItemRefs = ref<HTMLElement[]>([])
+  const menuActive = ref(false)
+  const menuRef = ref<HTMLElement>()
   const activeItemRef = computed(() => itemRefs.value[activeItem.value])
 
   const width = ref(DEFAULT_WIDTH)
@@ -30,6 +32,12 @@ export const useActionBar = createSharedComposable(() => {
   })
   const subContainerState = computed(() => objectMap(containerState.value, (k,v) => [k, v-2]))
 
+  const menuState = computed(() => {
+    if (!menuActive.value || !menuRef.value) return { width: width.value, height: DEFAULT_HEIGHT, borderRadius: BORDER_RADIUS, zIndex: 1 }
+    const rect = menuRef.value.getBoundingClientRect()
+    return { width: width.value, height: rect.height + 8, borderRadius: 24, zIndex: 20 }
+  })
+
   const select = (index: number, to?: string) => { selectedItem.value = index; if (to) router.push(to)}
   const subItemSelect = (index: number, si: number, cb?: () => void) => {
     select(index)
@@ -46,12 +54,15 @@ export const useActionBar = createSharedComposable(() => {
   const handleHoverEnd = () => { setTimeout(_handleHoverEnd, HOVER_DELAY) }
   const setItemRef = (index: number) => (el: any) => { if (el) itemRefs.value[index] = el }
   const setSubItemRef = (index: number) => (el: any) => { if (el) subItemRefs.value[index] = el.$el || el }
+  const setMenuRef = (el: any) => { if (el) menuRef.value = el.$el || el }
+  const toggleMenu = () => { menuActive.value = !menuActive.value }
 
   return {
     setItemRef, setSubItemRef,
     selectedItem, selectedSubItem, hoveredItem,
     handleHover, handleHoverEnd, select, subItemSelect,
     activeItemRef, activeItem, activeGroup,
+    menuActive, menuState, toggleMenu, setMenuRef,
     containerState, subContainerState
   }
 })

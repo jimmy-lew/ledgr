@@ -1,16 +1,34 @@
 <script setup lang="ts">
-import type { NavItem } from '~/types';
+import { CustomiseDrawer, StatementUpload, WidgetCreate } from '#components';
 
-const props = defineProps<{item: NavItem, index: number}>()
-
-const { setSubItemRef, handleHoverEnd, hoveredItem, selectedItem, selectedSubItem, subItemSelect } = useActionBar()
+const { subItemSelect, menuActive, setMenuRef } = useActionBar()
 const router = useRouter()
+const overlay = useOverlay()
 
-const isHovered = computed(() => hoveredItem.value === props.index)
-const isSelected = computed(() => selectedItem.value === props.index)
+const statementUploadModal = overlay.create(StatementUpload)
+const createWidgetModal = overlay.create(WidgetCreate)
+const customiseDrawer = overlay.create(CustomiseDrawer)
+
+const handleAddStatement = () => {
+  statementUploadModal.open()
+}
+
+const handleAddWidget = () => {
+  createWidgetModal.open()
+}
+
+const items = [
+  { icon: 'lucide:home', title: 'Home', click: () => router.push('/')},
+  { icon: 'lucide:chart-line', title: 'Insights', click: () => router.push('/insights') },
+  { icon: 'lucide:chart-pie', title: 'Budget', click: () => router.push('/budget') },
+  { icon: 'lucide:scan-line', title: 'Statements', click: handleAddStatement },
+  { icon: 'lucide:square-dashed', title: 'Widgets', click: handleAddWidget },
+  { icon: 'lucide:refresh-cw', title: 'Subscriptions' },
+]
+
 const initial = { opacity: 0, zIndex: 1 }
 const animate = computed(() => {
-  return { opacity: isHovered.value ? 1 : 0, zIndex: isHovered.value ? 2 : 1 }
+  return { opacity: menuActive.value ? 1 : 0, zIndex: menuActive.value ? 2 : 1 }
 })
 </script>
 
@@ -28,18 +46,16 @@ const animate = computed(() => {
     </button>
   </Motion>
   <Motion
-    v-if="item.items"
-    :ref="setSubItemRef(index)"
+    :ref="setMenuRef"
     :initial :animate
     :transition="{ duration: 0.3 }"
     class="pt-3 px-3 flex flex-col items-center absolute overflow-y-scroll w-full"
-    @mouseleave="handleHoverEnd"
   >
     <button
-      v-for="({type, icon: name, title, click}, i) in item.items"
+      v-for="({icon: name, title, click}, i) in items"
       :key="i"
-      class="w-full group font-medium transition-all duration-75 active:scale-90 first:bg-white/5 first:rounded-full"
-      @click="subItemSelect(index, i, click)"
+      class="w-full group font-medium transition-all duration-75 active:scale-90"
+      @click="subItemSelect(3, i, click)"
     >
       <div
         class="
@@ -51,7 +67,6 @@ const animate = computed(() => {
         dark:group-active:bg-white/5 dark:group-hover:bg-white/5
         group-active:px-3 group-hover:px-3
         "
-        :class="isSelected && selectedSubItem === i ? 'bg-black/10 dark:bg-white/5' : ''"
       >
           <Icon v-if="name" :name class="size-5"/>
         {{ title }}

@@ -3,19 +3,9 @@ import type { NavItem } from '~/types';
 
 const props = defineProps<{ items: NavItem[] }>()
 
-const { activeItemRef, containerState, activeGroup } = useActionBar()
+const { activeItemRef, menuState, activeGroup } = useActionBar()
 
 const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 36, 36))
-
-// const handleKeydown = (e: KeyboardEvent) => {
-//   const current = selectedItem.value
-//   if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-//     e.preventDefault()
-//     const dir = e.key === 'ArrowRight' ? 1 : -1
-//     const next = (current + dir + props.items.length) % props.items.length
-//     select(next, props.items[next]?.to)
-//   }
-// }
 </script>
 
 <template>
@@ -36,35 +26,48 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
 </div>
  -->
 <div class="fixed bottom-4 -translate-x-1/2 left-1/2 w-full px-8 py-4 flex gap-3 items-end justify-between">
-    <!-- <Motion
-      tag="div"
-      class="absolute bottom-5 w-14 h-12 from-black/7 to-black/12 rounded-full origin-center group-active:scale-95 z-100"
-      :class="activeGroup ? 'bg-transparent' : 'bg-linear-to-b'"
-      :animate="{ left: `${indicatorPos}px`, }"
-      :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
-    /> -->
-    <!-- bg-linear-to-b from-black/10 via-white/30 to-black/5
-    dark:from-white/20 dark:via-black/30 dark:to-white/5 -->
+  <!-- <Motion
+    tag="div"
+    class="absolute bottom-5 w-14 h-12 from-black/7 to-black/12 rounded-full origin-center group-active:scale-95 z-100"
+    :class="activeGroup ? 'bg-transparent' : 'bg-linear-to-b'"
+    :animate="{ left: `${indicatorPos}px`, }"
+    :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
+  />  -->
+  <!-- bg-linear-to-b from-black/10 via-white/30 to-black/5
+  dark:from-white/20 dark:via-black/30 dark:to-white/5 -->
   <Motion
     as="div"
-    :initial="containerState" :animate="containerState"
+    :initial="menuState" :animate="menuState"
     :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }"
     class="absolute
     bg-white/80 dark:bg-[oklch(0.261_0_0/0.7)]
     backdrop-blur-md
     border border-[oklch(35%_0.01_264.53/0.2)]
-    w-64 h-14 rounded-full shadow-lg shadow-black/10"
+    rounded-full
+    shadow-lg shadow-black/10"
   >
-    <ActionBarMenu v-for="item, index in items" :key="index" :item :index />
+    <ActionBarMenu />
   </Motion>
-   <Motion
+  <Motion
     as="div"
-    class="absolute right-8 bg-white dark:bg-[oklch(0.261_0_0/0.7)] backdrop-blur-md w-14 h-14 rounded-full shadow-lg shadow-black/10"
+    :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }"
+    class="absolute right-8
+    bg-white dark:bg-[oklch(0.261_0_0/0.7)]
+    backdrop-blur-md
+    border border-[oklch(35%_0.01_264.53/0.2)]
+    w-14 h-14 rounded-full
+    shadow-lg shadow-black/10"
   />
   <div class="relative left-1 flex items-center justify-evenly w-56 h-14">
     <ActionBarItem v-for="item, index in items" :item :index />
+    <ActionBarMenuTrigger />
   </div>
-   <div class="flex items-center justify-center size-14 text-xl text-black dark:text-white font-medium transition-all duration-200 active:scale-90">
+  <div
+    class="flex items-center justify-center
+    size-14
+    text-xl text-black dark:text-white font-medium
+    transition-all duration-200 active:scale-90"
+  >
     <UIcon name="lucide:search" />
   </div>
 </div>

@@ -17,7 +17,6 @@ const isSelected = computed(() => selectedItem.value === props.index)
     class="relative flex items-center justify-center w-14 h-12 text-xl font-medium transition-all duration-200 active:scale-90 rounded-full z-10"
     :class="[ activeGroup ? 'text-transparent' : 'text-black dark:text-white' ]"
   >
-
     <!-- :class="[
       isHovered ? 'text-white! dark:text-black!' : '',
       (isSelected && hoveredItem < 0) ? 'text-white dark:text-black' : 'text-black dark:text-white'
