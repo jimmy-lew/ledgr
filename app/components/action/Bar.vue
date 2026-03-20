@@ -40,9 +40,8 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
     :initial="menuState" :animate="menuState"
     :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }"
     class="absolute
-    bg-white/80 dark:bg-[oklch(0.261_0_0/0.7)]
-    backdrop-blur-md
-    border border-[oklch(35%_0.01_264.53/0.2)]
+    bg-action backdrop-blur-md
+    border border-action-border
     rounded-full
     shadow-lg shadow-black/10"
   >
@@ -52,9 +51,9 @@ const indicatorPos = computed(() => Math.max(activeItemRef.value?.offsetLeft ?? 
     as="div"
     :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }"
     class="absolute right-8
-    bg-white dark:bg-[oklch(0.261_0_0/0.7)]
+    bg-action
     backdrop-blur-md
-    border border-[oklch(35%_0.01_264.53/0.2)]
+    border border-action-border
     w-14 h-14 rounded-full
     shadow-lg shadow-black/10"
   />
