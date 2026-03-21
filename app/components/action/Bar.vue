@@ -11,7 +11,6 @@ const indicatorPos = computed(() => (activeIndex.value * 56) + INDICATOR_PADDING
 
 const handleSearch = () => {
   router.push('/search')
-  searchActive.value = true
 }
 </script>
 
@@ -22,11 +21,12 @@ const handleSearch = () => {
     searchActive ? 'px-6' : 'px-8'
   ]"
 >
+
+  <!-- :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }" -->
   <Motion
-    v-if="!searchActive"
     as="div"
     :initial="menuState" :animate="menuState"
-    :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }"
+    :transition="{ duration: 0.3, ease: 'linear' }"
     class="
     relative
     bg-action backdrop-blur-md
@@ -42,7 +42,7 @@ const handleSearch = () => {
     </div>
 
     <Motion
-      v-if="!menuActive"
+      v-if="!menuActive && !searchActive"
       as="div"
       class="absolute bottom-0.75 w-14 h-12 bg-linear-to-b from-black/7 to-black/12 dark:from-[#2f2f2f] dark:to-[#2f2f2f] rounded-full origin-center group-active:scale-95 z-10"
       :initial="{ left: indicatorPos, opacity: 0 }"
@@ -55,7 +55,7 @@ const handleSearch = () => {
   <Motion
     as="button"
     :initial="searchMenuState" :animate="searchMenuState"
-    :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }"
+    :transition="{ duration: 0.2, ease: 'linear' }"
     class="relative flex font-mono
     bg-action backdrop-blur-md border border-action-border
     rounded-full
@@ -80,7 +80,7 @@ const handleSearch = () => {
     border border-action-border rounded-full
     text-xl text-black dark:text-white font-medium
     transition-all duration-200 active:scale-90"
-    @click="() => {router.push('/') }"
+    @click="() => { router.push('/') }"
   >
     <UIcon name="lucide:x" />
   </button>
