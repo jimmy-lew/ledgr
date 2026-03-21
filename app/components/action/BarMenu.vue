@@ -5,13 +5,13 @@ const { menuActive, setMenuRef } = useActionBar()
 const router = useRouter()
 const overlay = useOverlay()
 
-const statementUploadModal = overlay.create(StatementUpload)
+const statementUpload = overlay.create(StatementUpload)
 const createWidgetModal = overlay.create(WidgetCreate)
 const customiseDrawer = overlay.create(CustomiseDrawer)
 const settingsDrawer = overlay.create(SettingsDrawer)
 
 const handleAddStatement = () => {
-  statementUploadModal.open()
+  statementUpload.open()
 }
 
 const handleAddWidget = () => {
