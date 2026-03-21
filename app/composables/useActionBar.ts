@@ -30,6 +30,9 @@ export const useActionBar = createSharedComposable(() => {
   const setMenuRef = (el: any) => { if (el) menuRef.value = el.$el || el }
   const toggleMenu = () => { menuActive.value = !menuActive.value }
 
+  onClickOutside(menuRef, () => menuActive.value = false)
+  defineShortcuts({ escape: () => { menuActive.value = false } })
+
   return {
     menuActive, menuState, toggleMenu, setMenuRef,
     searchActive, searchMenuState,

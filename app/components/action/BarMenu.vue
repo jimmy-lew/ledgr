@@ -31,36 +31,37 @@ const items = [
   { icon: 'lucide:refresh-cw', title: 'Subscriptions' },
 ]
 
+const handleSelect = (i: number) => {
+  const item = items[i]
+  if (!item || !item.click) return
+  item.click()
+}
+
 const initial = { opacity: 0 }
 const animate = computed(() => ({ opacity: menuActive.value ? 1 : 0 }))
 </script>
 
 <template>
   <Motion
-    as="div"
-    :initial :animate
-    :transition="{ duration: 0.3 }"
-    class="absolute -top-10 flex items-center justify-between w-full px-3"
-  >
-    <div />
-    <button
-      class="flex items-center justify-center size-8 bg-white dark:bg-[#171717] border border-action-border rounded-full font-medium text-lg transition-all duration-75 active:scale-90"
-      @click="handleSettings"
-    >
-      <UIcon name="lucide:settings" />
-    </button>
-  </Motion>
-  <Motion
     :ref="setMenuRef"
     :initial :animate
     :transition="{ duration: 0.3 }"
-    class="pt-3 px-3 flex flex-col items-center absolute overflow-y-scroll w-full text-black dark:text-white font-medium"
+    class="pt-3 px-3 flex flex-col items-center absolute w-full text-black dark:text-white font-medium"
   >
+    <div class="absolute -top-10 flex items-center justify-between w-full px-3">
+      <div />
+      <button
+        class="flex items-center justify-center size-8 bg-white dark:bg-[#171717] border border-action-border rounded-full font-medium text-lg transition-all duration-75 active:scale-90"
+        @click="handleSettings"
+      >
+        <UIcon name="lucide:settings" />
+      </button>
+    </div>
     <button
-      v-for="({icon: name, title, click}, i) in items"
+      v-for="({icon: name, title}, i) in items"
       :key="i"
       class="w-full group font-medium transition-all duration-75 active:scale-90"
-      @click="() => { click?.() }"
+      @click="() => handleSelect(i)"
     >
       <div
         class="
@@ -72,7 +73,7 @@ const animate = computed(() => ({ opacity: menuActive.value ? 1 : 0 }))
         group-active:px-3 group-hover:px-3
         "
       >
-          <Icon v-if="name" :name class="size-5"/>
+        <Icon v-if="name" :name class="size-5"/>
         {{ title }}
       </div>
     </button>

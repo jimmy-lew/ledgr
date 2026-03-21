@@ -36,7 +36,7 @@ const handleSearch = () => {
   >
     <ActionBarMenu />
 
-    <div class="relative left-1 flex items-center justify-evenly w-56 h-14 z-20">
+    <div v-if="!menuActive" class="relative mx-1 flex items-center justify-evenly w-56 h-14">
       <ActionBarItem v-for="item, index in items" :item :index @select="activeIndex = index" />
       <ActionBarMenuTrigger />
     </div>
@@ -44,7 +44,7 @@ const handleSearch = () => {
     <Motion
       v-if="!menuActive && !searchActive"
       as="div"
-      class="absolute bottom-0.75 w-14 h-12 bg-linear-to-b from-black/7 to-black/12 dark:from-[#2f2f2f] dark:to-[#2f2f2f] rounded-full origin-center group-active:scale-95 z-10"
+      class="absolute bottom-0.75 w-14 h-12 bg-linear-to-b from-black/7 to-black/12 dark:from-[#2f2f2f] dark:to-[#2f2f2f] rounded-full origin-center group-active:scale-95"
       :initial="{ left: indicatorPos, opacity: 0 }"
       :animate="{ left: indicatorPos, opacity: 1}"
       :exit="{ opacity: 0, transition: { duration: 0.05 } }"
@@ -76,7 +76,7 @@ const handleSearch = () => {
   <button
     v-if="searchActive"
     class="flex items-center justify-center
-    size-12 bg-action backdrop-blur-md
+    size-12 bg-action backdrop-blur-md shadow-lg shadow-black/10
     border border-action-border rounded-full
     text-xl text-black dark:text-white font-medium
     transition-all duration-200 active:scale-90"
