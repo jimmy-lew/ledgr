@@ -5,13 +5,13 @@ const { menuActive, setMenuRef } = useActionBar()
 const router = useRouter()
 const overlay = useOverlay()
 
-const statementUpload = overlay.create(StatementUpload)
+const statementDrawer = overlay.create(StatementUpload)
 const createWidgetModal = overlay.create(WidgetCreate)
 const customiseDrawer = overlay.create(CustomiseDrawer)
 const settingsDrawer = overlay.create(SettingsDrawer)
 
 const handleAddStatement = () => {
-  statementUpload.open()
+  statementDrawer.open()
 }
 
 const handleAddWidget = () => {
@@ -33,8 +33,9 @@ const items = [
 
 const handleSelect = (i: number) => {
   const item = items[i]
-  if (!item || !item.click) return
-  item.click()
+  if (!item) return
+  item.click?.()
+  menuActive.value = false
 }
 
 const initial = { opacity: 0 }
@@ -79,6 +80,7 @@ const animate = computed(() => ({ opacity: menuActive.value ? 1 : 0 }))
     </button>
 
     <USeparator class="px-2 py-0.5" :ui="{ border: 'bg-black/5 dark:bg-white/10' }"/>
+
     <button
       class="w-full group font-medium transition-all duration-75 active:scale-90 first:bg-white/5 first:rounded-full"
       @click="customiseDrawer.open"
