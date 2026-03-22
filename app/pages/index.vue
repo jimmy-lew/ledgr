@@ -11,14 +11,14 @@ onMounted(() => {
 
 <div class="flex items-center justify-between w-full pt-6">
   <h1 class="text-2xl font-bold">Home</h1>
-  <div class="flex items-center justify-center gap-4 rounded-full bg-black/5 dark:bg-white/5 h-12 px-4 py-2 text-lg">
+  <div class="flex items-center justify-center gap-4 rounded-full bg-black/5 dark:bg-white/5 h-12 px-3.75 py-2 text-lg">
     <UIcon name="lucide:edit" />
     <UIcon name="lucide:ellipsis" />
   </div>
 </div>
 <UTextarea
   variant="none"
-  placeholder="Set a sleep schedule and ditch screens before bed."
+  placeholder="Add your latest transaction here... [Item <amount>]"
   :max-rows="3"
   autoresize
   :ui="{ base: 'text-2xl px-0' } "

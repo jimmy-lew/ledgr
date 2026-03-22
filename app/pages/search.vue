@@ -10,7 +10,8 @@ onMounted(() => {
 <template>
 <div class="flex items-center justify-between w-full pt-6">
   <h1 class="text-2xl font-bold">Search</h1>
-  <div class="flex items-center justify-center rounded-full bg-black/5 dark:bg-white/5 size-12 text-lg">
+
+  <div class="flex items-center justify-center gap-4 rounded-full bg-black/5 dark:bg-white/5 h-12 px-3.75 py-2 text-lg">
     <UIcon name="lucide:edit" />
   </div>
 </div>
