@@ -21,7 +21,7 @@ const handleSelect = () => {
     :transition="{ delay: index * 0.06, duration: 0.35, ease: 'easeOut' }"
     class="
       flex flex-col shrink-0 rounded-xl p-3 text-sm
-      bg-default dark:bg-zinc-850 backdrop-blur-sm
+      bg-default dark:bg-[oklch(0.1448_0_0)] shadow-base-sm
       w-40 h-48 sm:w-60 sm:h-72
       cursor-pointer active:scale-95
       transition-all duration-300

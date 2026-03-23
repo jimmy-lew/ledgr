@@ -2,7 +2,7 @@
 
 <template>
 
-<div class="flex items-center justify-between rounded-2xl bg-white dark:bg-[rgb(10,10,10)] shadow-base-sm p-2">
+<div class="flex items-center justify-between rounded-2xl bg-white dark:bg-[oklch(0.1448_0_0)] shadow-base-sm p-2">
   <div class="flex flex-col gap-1 p-3 w-1/2">
     <span class="text-xs text-muted">
       Last month
