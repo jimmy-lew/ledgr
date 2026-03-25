@@ -1,10 +1,4 @@
 <script setup lang="ts">
-
-const { searchActive } = useActionBar()
-
-onMounted(() => {
-  searchActive.value = true
-})
 </script>
 
 <template>
