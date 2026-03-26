@@ -5,7 +5,7 @@ const description = ''
 useHead({
   meta: [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1, interactive-widget=overlays-content' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1, interactive-widget=resizes-content' },
   ],
   link: [{ rel: 'icon', href: '/favicon.png' }],
   htmlAttrs: {
