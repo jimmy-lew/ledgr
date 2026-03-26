@@ -16,10 +16,10 @@ export const useActionBar = createSharedComposable(() => {
   const width = ref(DEFAULT_WIDTH)
 
   const menuState = computed(() => {
-    if (searchActive.value) return { width: 0, borderWidth: 0 }
-    if (!menuActive.value || !menuRef.value) return { width: width.value, height: DEFAULT_HEIGHT, borderRadius: BORDER_RADIUS, borderWidth: 1 }
+    if (searchActive.value) return { width: 48, height: 48 }
+    if (!menuActive.value || !menuRef.value) return { width: width.value, height: DEFAULT_HEIGHT, borderRadius: BORDER_RADIUS }
     const rect = menuRef.value.getBoundingClientRect()
-    return { width: width.value, height: rect.height + 8, borderRadius: 24, borderWidth: 1 }
+    return { width: width.value, height: rect.height + 8, borderRadius: 24 }
   })
 
   const searchMenuState = computed(() => {

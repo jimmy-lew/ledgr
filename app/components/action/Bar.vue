@@ -26,7 +26,7 @@ const handleSearch = () => {
   <Motion
     as="div"
     :initial="menuState" :animate="menuState"
-    :transition="{ duration: 0.3, ease: 'linear' }"
+    :transition="{ duration: 0.2, ease: 'linear' }"
     class="
     relative
     bg-action backdrop-blur-md
@@ -36,9 +36,13 @@ const handleSearch = () => {
   >
     <ActionBarMenu />
 
-    <div v-if="!menuActive" class="relative mx-1 flex items-center justify-evenly w-56 h-14">
-      <ActionBarItem v-for="item, index in items" :item :index @select="activeIndex = index" />
+    <div v-if="!menuActive && !searchActive" class="relative mx-1 flex items-center justify-evenly w-56 h-full">
+      <ActionBarItem v-for="item, index in items" :item :index @select="activeIndex = index" class="w-14"/>
       <ActionBarMenuTrigger />
+    </div>
+
+    <div v-if="searchActive" class="relative">
+        <ActionBarItem :item="items[activeIndex]" :index="activeIndex" class="w-12" />
     </div>
 
     <Motion
@@ -73,7 +77,7 @@ const handleSearch = () => {
     <UInput v-if="searchActive" autofocus placeholder="Search..." variant="none" :ui="{ base: 'pl-0 pr-3' }" class="-ml-2 text-lg"/>
   </Motion>
 
-  <button
+  <!-- <button
     v-if="searchActive"
     class="flex items-center justify-center
     size-12 bg-action backdrop-blur-md shadow-lg shadow-black/10
@@ -83,7 +87,7 @@ const handleSearch = () => {
     @click="() => { router.push('/') }"
   >
     <UIcon name="lucide:x" />
-  </button>
+  </button> -->
 </div>
 </template>
 
