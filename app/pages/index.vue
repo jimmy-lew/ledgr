@@ -12,13 +12,19 @@ const { searchActive } = useActionBar()
     <UIcon name="lucide:ellipsis" />
   </div>
 </div>
-<UTextarea
+<div class="flex flex-col items-center rounded-2xl bg-white dark:bg-[oklch(0.1448_0_0)] shadow-base-sm px-6 py-3 aspect-video">
+    <div class="flex flex-col items-center justify-center w-full h-full">
+        <span class="text-muted">Balance</span>
+        <h1 class="text-3xl font-bold">$20,000.00</h1>
+    </div>
+</div>
+<!-- <UTextarea
   variant="none"
   placeholder="Add your latest transaction here... [Item <amount>]"
   :max-rows="3"
   autoresize
   :ui="{ base: 'text-2xl px-0' } "
-/>
+/> -->
 <HomeGlanceInsights />
 <HomeWidget />
 <HomeGlanceTransactions />
