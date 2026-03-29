@@ -11,34 +11,8 @@
 <div class="flex flex-col w-full gap-1">
   <span class="font-medium text-muted text-sm mb-3">Recently viewed</span>
   <div class="w-full flex items-center gap-2 py-2">
-    <div class="flex items-center justify-center size-4 rounded-full bg-[#555fbc]">
-      <UIcon name="lucide:check" class="text-[#070707] text-xs font-medium" />
-    </div>
-    <span class="font-medium text-sm">
-      Load Game Feature
-    </span>
-  </div>
-  <div class="w-full flex items-center gap-2 py-2">
-    <div class="flex items-center justify-center size-4 rounded-full bg-[#555fbc]">
-      <UIcon name="lucide:check" class="text-[#070707] text-xs font-medium" />
-    </div>
-    <span class="font-medium text-sm">
-      Load Game Feature
-    </span>
-  </div>
-  <div class="w-full flex items-center gap-2 py-2">
-    <div class="flex items-center justify-center size-4 rounded-full bg-[#555fbc]">
-      <UIcon name="lucide:check" class="text-[#070707] text-xs font-medium" />
-    </div>
-    <span class="font-medium text-sm">
-      Load Game Feature
-    </span>
-  </div>
-  <div class="w-full flex items-center gap-2 py-2">
-    <div class="flex items-center justify-center size-4 rounded-full bg-[#555fbc]">
-      <UIcon name="lucide:check" class="text-[#070707] text-xs font-medium" />
-    </div>
-    <span class="font-medium text-sm">
+    <UIcon name="icon-park-solid:check-one" class="text-[#555fbc] text-sm font-bold size-5" />
+    <span class="font-medium">
       Load Game Feature
     </span>
   </div>

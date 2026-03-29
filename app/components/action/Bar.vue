@@ -18,7 +18,7 @@ const handleSearch = () => {
 <div
   class="fixed bottom-4 -translate-x-1/2 left-1/2 w-full py-4 flex gap-3 items-end justify-center"
   :class="[
-    searchActive ? 'px-6' : 'px-8'
+    searchActive ? 'px-2' : 'px-4'
   ]"
 >
 
