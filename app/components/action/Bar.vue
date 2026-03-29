@@ -42,7 +42,7 @@ const handleSearch = () => {
     </div>
 
     <div v-if="searchActive" class="relative">
-        <ActionBarItem :item="items[activeIndex]" :index="activeIndex" class="w-12" />
+      <ActionBarItem :item="items[activeIndex]" :index="activeIndex" class="w-12 text-muted" />
     </div>
 
     <Motion
@@ -76,18 +76,6 @@ const handleSearch = () => {
     </div>
     <UInput v-if="searchActive" autofocus placeholder="Search..." variant="none" :ui="{ base: 'pl-0 pr-3' }" class="-ml-2 text-lg"/>
   </Motion>
-
-  <!-- <button
-    v-if="searchActive"
-    class="flex items-center justify-center
-    size-12 bg-action backdrop-blur-md shadow-lg shadow-black/10
-    border border-action-border rounded-full
-    text-xl text-black dark:text-white font-medium
-    transition-all duration-200 active:scale-90"
-    @click="() => { router.push('/') }"
-  >
-    <UIcon name="lucide:x" />
-  </button> -->
 </div>
 </template>
 
