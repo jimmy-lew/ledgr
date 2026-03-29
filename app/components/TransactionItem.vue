@@ -16,7 +16,7 @@ const amt = computed(() => {
 </script>
 
 <template>
-<div class="flex items-start justify-between w-full hover:bg-black/5 dark:hover:bg-zinc-850 active:scale-95 duration-200 transition-all rounded-md px-3 py-2">
+<div class="flex items-start justify-between w-full hover:bg-black/5 dark:hover:bg-zinc-850 active:scale-95 duration-200 transition-all rounded-md py-2">
   <div class="flex items-center gap-2 grow">
     <div class="rounded-full bg-black/5 dark:bg-white/5 size-8 p-2">
       <UIcon name="lucide:arrow-right-left"/>
