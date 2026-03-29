@@ -18,9 +18,11 @@ const amt = computed(() => {
 <template>
 <div class="flex items-start justify-between w-full hover:bg-black/5 dark:hover:bg-zinc-850 active:scale-95 duration-200 transition-all rounded-md py-2">
   <div class="flex items-center gap-2 grow">
-    <div class="rounded-full bg-black/5 dark:bg-white/5 size-8 p-2">
-      <UIcon name="lucide:arrow-right-left"/>
-    </div>
+    <UChip inset position="bottom-right" size="xl">
+      <div class="rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center size-8 p-2">
+        <UIcon name="lucide:arrow-right-left"/>
+      </div>
+    </UChip>
     <div class="flex flex-col w-full">
       <span class="font-medium text-sm truncate max-w-7/8">{{ type }}</span>
       <span class="text-muted text-xs">{{ dateDisplay }}</span>
