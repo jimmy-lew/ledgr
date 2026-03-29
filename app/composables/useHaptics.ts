@@ -1,60 +1,39 @@
+import { useWebHaptics } from 'web-haptics/vue'
+
 /**
- * Thin wrapper around the Web Vibration API.
- * Degrades silently on unsupported platforms (iOS Safari, desktop).
+ * Thin semantic layer over web-haptics.
  *
- * Usage:
- *   const haptics = useHaptics()
- *   haptics.snap()      // crossing a threshold
- *   haptics.commit()    // destructive confirmation
+ * Maps swipe gesture moments to the closest matching
+ * web-haptics preset — handles SSR no-ops and iOS
+ * Safari 17.4+ support automatically via the library.
  */
-
-type Pattern = number | number[]
-
-/** Named patterns — tune durations (ms) to taste */
-const PATTERNS = {
-  /** Barely perceptible – swipe start / right-swipe confirm */
-  selection: 6,
-  /** Light tick – snap open */
-  light: 12,
-  /** Mid tick – crossing snap threshold on the way back */
-  medium: 22,
-  /** Strong thud – crossing the commit threshold */
-  heavy: 48,
-  /** Two-pulse snap – item locks open at delete button */
-  snap: [10, 28, 10] as number[],
-  /** Rising triple – you're about to delete */
-  commit: [20, 24, 50] as number[],
-  /** Sharp double – item deleted */
-  error: [60, 30, 60] as number[],
-} as const
-
-export type HapticName = keyof typeof PATTERNS
-
 export function useHaptics() {
-  const isSupported =
-    typeof navigator !== 'undefined' && 'vibrate' in navigator
-
-  function trigger(pattern: Pattern) {
-    if (!isSupported) return
-    // Cancel any in-flight vibration before starting a new one
-    navigator.vibrate(0)
-    navigator.vibrate(pattern)
-  }
-
-  function fire(name: HapticName) {
-    trigger(PATTERNS[name])
-  }
+  const { trigger, isSupported } = useWebHaptics()
 
   return {
     isSupported,
-    fire,
-    // Convenience aliases
-    selection: () => fire('selection'),
-    light:     () => fire('light'),
-    medium:    () => fire('medium'),
-    heavy:     () => fire('heavy'),
-    snap:      () => fire('snap'),
-    commit:    () => fire('commit'),
-    error:     () => fire('error'),
+
+    /** Swipe initiated — barely perceptible tick */
+    selection: () => trigger('success'),
+
+    /** Crossed into the snap zone — card locks open */
+    snap:      () => trigger('medium'),
+
+    /** Pulled back out of snap zone */
+    light:     () => trigger('light'),
+
+    /** Pulled back out of commit zone */
+    medium:    () => trigger('medium'),
+
+    /** Crossed into commit zone — about to delete */
+    commit:    () => trigger('warning'),
+
+    /** Item deleted — destructive confirmation */
+    error:     () => trigger('error'),
+
+    /** Right-swipe confirm */
+    heavy:     () => trigger('heavy'),
   }
 }
+
+export type Haptics = ReturnType<typeof useHaptics>
