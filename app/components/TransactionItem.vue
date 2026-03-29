@@ -186,7 +186,7 @@ const showLabel    = computed(() => translateX.value < -32)
   >
     <!-- ── Delete action backdrop ─────────────────────────────── -->
     <div
-      class="absolute inset-y-0 right-0 flex items-center justify-center rounded-xl"
+      class="absolute inset-y-0 right-0 flex items-center justify-center rounded-xl z-0"
       :style="{
         width: `${revealWidth}px`,
         backgroundColor: deleteBg,

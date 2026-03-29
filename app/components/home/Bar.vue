@@ -7,5 +7,5 @@ const items = [
 </script>
 
 <template>
-  <ActionBar :items class="rounded-3xl"/>
+  <ActionBar :items class="rounded-3xl z-50"/>
 </template>
