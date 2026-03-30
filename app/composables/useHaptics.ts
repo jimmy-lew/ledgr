@@ -13,25 +13,12 @@ export function useHaptics() {
   return {
     isSupported,
 
-    /** Swipe initiated — barely perceptible tick */
     selection: () => trigger('success'),
-
-    /** Crossed into the snap zone — card locks open */
     snap:      () => trigger('medium'),
-
-    /** Pulled back out of snap zone */
     light:     () => trigger('light'),
-
-    /** Pulled back out of commit zone */
     medium:    () => trigger('medium'),
-
-    /** Crossed into commit zone — about to delete */
     commit:    () => trigger('warning'),
-
-    /** Item deleted — destructive confirmation */
     error:     () => trigger('error'),
-
-    /** Right-swipe confirm */
     heavy:     () => trigger('heavy'),
   }
 }
