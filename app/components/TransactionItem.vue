@@ -62,7 +62,7 @@ const amt = computed(() =>
 )
 
 // ── Constants ─────────────────────────────────────────────────
-const SNAP_THRESHOLD   = 120    // px – snaps open to lock delete button visible
+const SNAP_THRESHOLD   = 140    // px – snaps open to lock delete button visible
 const COMMIT_THRESHOLD = 200   // px – full swipe auto-deletes without releasing
 const MAX_DRAG_LEFT    = 280
 const MAX_DRAG_RIGHT   = 100
@@ -89,11 +89,9 @@ const { isSwiping, distanceX } = usePointerSwipe(rowRef, {
   onSwipeStart() {
     didCrossSnap.value   = false
     didCrossCommit.value = false
-    haptics.selection()
   },
 
   onSwipeEnd(_e, direction) {
-    // Ignore if predominantly vertical (let the scroll through)
     if (direction === 'up' || direction === 'down') {
       return
     }
@@ -115,11 +113,6 @@ const { isSwiping, distanceX } = usePointerSwipe(rowRef, {
   },
 })
 
-/**
- * distanceX (VueUse) = posStart.x - posEnd.x  →  positive = left swipe
- * translateX we want  = posEnd.x - posStart.x  →  negative = left swipe
- * So translateX = -distanceX, offset-adjusted and clamped.
- */
 const translateX = computed(() => {
   if (!isSwiping.value) return snapOffset.value
   const raw = snapOffset.value - distanceX.value
@@ -149,7 +142,6 @@ watch(translateX, val => {
   }
 })
 
-// ── Delete logic ──────────────────────────────────────────────
 function commitDelete() {
   if (isCommitting.value) return
   isCommitting.value = true
@@ -158,7 +150,6 @@ function commitDelete() {
   setTimeout(() => emit('delete'), 320)
 }
 
-// ── Delete button appearance ──────────────────────────────────
 /** 0 = just peeking at snap, 1 = at commit threshold (full red) */
 const deleteProgress = computed(() => {
   const abs = Math.abs(Math.min(0, translateX.value))
@@ -184,7 +175,6 @@ const showLabel    = computed(() => translateX.value < -32)
       'transition-[opacity,height] duration-300 ease-in-out h-0! opacity-0!': isCommitting,
     }"
   >
-    <!-- ── Delete action backdrop ─────────────────────────────── -->
     <div
       class="absolute inset-y-0 right-0 flex items-center justify-center rounded-xl z-0"
       :style="{
