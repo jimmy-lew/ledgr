@@ -1,48 +1,4 @@
-<!-- <script setup lang="ts">
-const props = defineProps<{
-  date: string
-  type: string
-  description: string
-  withdrawal: number | null
-  deposit: number | null
-}>()
-
-const [day, month, year] = props.date.split('/').map(p => parseInt(p, 10)) as [number, number, number]
-const dateDisplay = computed(() => new Date(year, month - 1, day).toLocaleDateString())
-
-const amt = computed(() => {
-  return props.withdrawal === null ? `+${props.deposit}` : `-${props.withdrawal}`
-})
-</script>
-
-<template>
-<div
-  class="
-  flex items-start justify-between w-full
-  active:scale-95 dark:active:bg-white/5
-  dark:bg-[#070707]
-  duration-200 transition-all
-  rounded-lg px-3 py-2"
->
-  <div class="flex items-center gap-2 grow">
-    <UChip inset position="bottom-right" size="xl">
-      <div class="rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center size-8 p-2">
-        <UIcon name="lucide:arrow-right-left"/>
-      </div>
-    </UChip>
-    <div class="flex flex-col w-full">
-      <span class="font-medium text-sm truncate max-w-7/8">{{ type }}</span>
-      <span class="text-muted text-xs">{{ dateDisplay }}</span>
-    </div>
-  </div>
-   <span class="text-sm"> {{ amt }} </span>
-</div>
-</template>
- -->
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { usePointerSwipe } from '@vueuse/core'
-import { useHaptics } from '~/composables/useHaptics'
 
 const props = defineProps<{
   date: string
@@ -62,7 +18,7 @@ const amt = computed(() =>
 )
 
 // ── Constants ─────────────────────────────────────────────────
-const SNAP_THRESHOLD   = 140    // px – snaps open to lock delete button visible
+const SNAP_THRESHOLD   = 120    // px – snaps open to lock delete button visible
 const COMMIT_THRESHOLD = 200   // px – full swipe auto-deletes without releasing
 const MAX_DRAG_LEFT    = 280
 const MAX_DRAG_RIGHT   = 100
@@ -150,7 +106,6 @@ function commitDelete() {
   setTimeout(() => emit('delete'), 320)
 }
 
-/** 0 = just peeking at snap, 1 = at commit threshold (full red) */
 const deleteProgress = computed(() => {
   const abs = Math.abs(Math.min(0, translateX.value))
   return Math.min(1, Math.max(0, (abs - SNAP_THRESHOLD) / (COMMIT_THRESHOLD - SNAP_THRESHOLD)))
