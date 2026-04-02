@@ -21,6 +21,7 @@ export function useSwipeable(item: Ref<HTMLElement | undefined>, opts: UseSwipea
   } = opts
 
   const offset = ref(0)
+  const didCrossThreshold = ref(false)
   const haptics = useHaptics()
 
   const onSwipeEnd = (_e: PointerEvent, direction: UseSwipeDirection) => {
@@ -52,8 +53,12 @@ export function useSwipeable(item: Ref<HTMLElement | undefined>, opts: UseSwipea
 
   watch(translateX, val => {
     if (!isSwiping.value) return
-    if (val <= -leftThreshold || val >= rightThreshold) { handleThresholdBuzz() }
-    // if (val >= rightThreshold) {   }
+    if ((val <= -leftThreshold || val >= rightThreshold) && !didCrossThreshold.value) {
+      didCrossThreshold.value = true
+      handleThresholdBuzz()
+    } else if ((val > -leftThreshold && val < rightThreshold) && didCrossThreshold) {
+      didCrossThreshold.value = false
+    }
   })
 
   return {
