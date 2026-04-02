@@ -63,13 +63,9 @@ const showLabel    = computed(() => translateX.value < -32)
         dark:bg-[#070707]
         rounded-xl px-3 py-2
         relative z-10 select-none touch-pan-y
-        transition-all
       "
       :class="{ 'transition-transform duration-250 ease-out': !isSwiping }"
-      :style="{
-        transform: `translateX(${isCommitting ? -440 : translateX}px)`,
-        transition: isCommitting ? 'transform 0.3s ease-in' : undefined,
-      }"
+      :style="{ transform: `translateX(${translateX}px)` }"
     >
       <div class="flex items-center gap-2 grow">
         <UChip inset position="bottom-right" size="xl">
