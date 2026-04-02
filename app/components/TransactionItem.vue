@@ -109,10 +109,8 @@ function commitDelete() {
 const deleteBg = computed(() => {
   const abs = Math.abs(Math.min(0, translateX.value))
   const p = Math.min(1, Math.max(0, (abs - SNAP_THRESHOLD) / (COMMIT_THRESHOLD - SNAP_THRESHOLD)))
-  const r = Math.round(44  + (239 - 44) * p)
-  const g = Math.round(44  + (68  - 44) * p)
-  const b = Math.round(44  + (68  - 44) * p)
-  return `rgb(${r},${g},${b})`
+  const color = transitionColor([44, 44, 44], [239, 68, 68], p)
+  return `rgb(${color.join(',')})`
 })
 
 const revealWidth  = computed(() => Math.max(0, -translateX.value))
