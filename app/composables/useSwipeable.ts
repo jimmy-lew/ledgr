@@ -61,7 +61,11 @@ export function useSwipeable(item: Ref<HTMLElement | undefined>, opts: UseSwipea
     }
   })
 
-  return {
-    translateX, isSwiping
-  }
+  const progress = computed(() => {
+    const leftProgess = Math.min(1, Math.abs(translateX.value) / leftThreshold)
+    const rightProgress = Math.min(1, Math.abs(translateX.value) / rightThreshold)
+    return { leftProgess, rightProgress }
+  })
+
+  return { translateX, isSwiping, progress }
 }
