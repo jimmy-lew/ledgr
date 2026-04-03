@@ -25,13 +25,21 @@ const { translateX, isSwiping, progress } = useSwipeable(rowRef, {
   leftThresholdCrossed() { console.log('left crossed') },
   rightThresholdCrossed() { console.log('right crossed') }
 })
-const deleteBg = computed(() => {
+const deleteLabel = computed(() => {
   const color = transitionColor([44, 44, 44], [239, 68, 68], progress.value.leftProgess)
-  return `rgb(${color.join(',')})`
+  return {
+    width: `${-translateX.value}px`,
+    backgroundColor: `rgb(${color.join(',')})`,
+    transition: isSwiping ? 'none' : 'width 0.25s ease, background-color 0.12s ease',
+  }
 })
-const readBg = computed(() => {
+const readLabel = computed(() => {
   const color = transitionColor([44, 44, 44], [81, 162, 255], progress.value.rightProgress)
-  return `rgb(${color.join(',')})`
+  return {
+    width: `${translateX.value}px`,
+    backgroundColor: `rgb(${color.join(',')})`,
+    transition: isSwiping ? 'none' : 'width 0.25s ease, background-color 0.12s ease',
+  }
 })
 
 const showLabel = computed(() => Math.abs(translateX.value) > 32)
@@ -42,14 +50,7 @@ const showLabel = computed(() => Math.abs(translateX.value) > 32)
     class="relative overflow-hidden transition-all duration-300"
     :class="{ 'ease-in-out h-0! opacity-0!': isCommitting }"
   >
-    <div
-      class="absolute inset-y-0 right-0 flex items-center justify-center rounded-xl z-0"
-      :style="{
-        width: `${-translateX}px`,
-        backgroundColor: deleteBg,
-        transition: isSwiping ? 'none' : 'width 0.25s ease, background-color 0.12s ease',
-      }"
-    >
+    <div class="absolute inset-y-0 right-0 flex items-center justify-center rounded-xl z-0" :style="deleteLabel" >
       <Transition name="label">
         <div
           v-if="showLabel"
@@ -61,14 +62,7 @@ const showLabel = computed(() => Math.abs(translateX.value) > 32)
       </Transition>
     </div>
 
-    <div
-      class="absolute inset-y-0 left-0 flex items-center justify-center rounded-xl z-0"
-      :style="{
-        width: `${translateX}px`,
-        backgroundColor: readBg,
-        transition: isSwiping ? 'none' : 'width 0.25s ease, background-color 0.12s ease',
-      }"
-    >
+    <div class="absolute inset-y-0 left-0 flex items-center justify-center rounded-xl z-0" :style="readLabel" >
       <Transition name="label">
         <div
           v-if="showLabel"
@@ -83,26 +77,28 @@ const showLabel = computed(() => Math.abs(translateX.value) > 32)
     <div
       ref="rowRef"
       class="
-        flex items-start justify-between w-full
+        flex
         dark:bg-[#070707]
-        rounded-xl px-3 py-2.5
+        rounded-xl px-3 py-2.5 gap-3
         relative z-10 select-none touch-pan-y
       "
       :class="{ 'transition-transform duration-250 ease-out': !isSwiping }"
       :style="{ transform: `translateX(${translateX}px)` }"
     >
-      <div class="flex items-center gap-2 grow">
-        <UChip inset position="bottom-right" size="xl">
-          <div class="rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center size-10 p-2">
-            <UIcon name="lucide:arrow-right-left" />
-          </div>
-        </UChip>
-        <div class="flex flex-col w-full">
-          <span class="font-medium text-sm truncate max-w-7/8">{{ type }}</span>
-          <span class="text-muted text-xs">{{ dateDisplay }}</span>
+      <UChip inset position="bottom-right" size="xl">
+        <div class="rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center size-10 p-2">
+          <UIcon name="lucide:arrow-right-left" />
         </div>
+      </UChip>
+      <div class="flex flex-col grow">
+        <div class="flex items-center justify-between w-full">
+          <span class="font-medium truncate max-w-52">{{ type }}</span>
+        </div>
+        <span class="text-muted text-sm">{{ dateDisplay }}</span>
       </div>
-      <span class="text-sm">{{ amt }}</span>
+      <div class="flex flex-col">
+        <span>{{ amt }}</span>
+      </div>
     </div>
 
   </div>
