@@ -81,6 +81,7 @@ const showLabel = computed(() => Math.abs(translateX.value) > 32)
         dark:bg-[#070707]
         rounded-xl px-3 py-2.5 gap-3
         relative z-10 select-none touch-pan-y
+        active:bg-[#252525]
       "
       :class="{ 'transition-transform duration-250 ease-out': !isSwiping }"
       :style="{ transform: `translateX(${translateX}px)` }"
