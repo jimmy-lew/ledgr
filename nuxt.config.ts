@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/tailwind.css'],
   imports: { dirs: ['types/**'] },
   colorMode: { preference: 'system' },
+  icon: { mode: 'svg' },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false }
 })

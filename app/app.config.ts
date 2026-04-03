@@ -1,4 +1,12 @@
 export default defineAppConfig({
+  icon: {
+    customize: (content: string, name: string, prefix: string, provider: string) => {
+      if (prefix === 'lucide') {
+        content = content.replace(/stroke-width="[^"]*"/g, 'stroke-width="3"')
+      }
+      return content
+    }
+  },
   ui: {
     colors: {
       primary: 'blue',
