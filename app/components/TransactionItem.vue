@@ -64,7 +64,7 @@ const showLabel    = computed(() => translateX.value < -32)
       class="
         flex items-start justify-between w-full
         dark:bg-[#070707]
-        rounded-xl px-3 py-2
+        rounded-xl px-3 py-2.5
         relative z-10 select-none touch-pan-y
       "
       :class="{ 'transition-transform duration-250 ease-out': !isSwiping }"
