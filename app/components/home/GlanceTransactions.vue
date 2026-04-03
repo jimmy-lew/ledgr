@@ -12,9 +12,17 @@
     <TransactionItem date="01/12/2025" type="DEBIT_CARD_TRANSACTION" description="" :withdrawal="8.6" :deposit="null" />
     <TransactionItem date="30/11/2025" type="ADVICE_FAST_PAYMENT_RECEIPT" description="" :withdrawal="null" :deposit="13" />
     <TransactionItem date="30/11/2025" type="ADVICE_FAST_PAYMENT_RECEIPT" description="" :withdrawal="null" :deposit="13" />
+    <TransactionItem date="01/12/2025" type="DEBIT_CARD_TRANSACTION" description="" :withdrawal="8.6" :deposit="null" />
     <TransactionItem date="30/11/2025" type="ADVICE_FAST_PAYMENT_RECEIPT" description="" :withdrawal="null" :deposit="13" />
     <TransactionItem date="30/11/2025" type="ADVICE_FAST_PAYMENT_RECEIPT" description="" :withdrawal="null" :deposit="13" />
     <TransactionItem date="30/11/2025" type="ADVICE_FAST_PAYMENT_RECEIPT" description="" :withdrawal="null" :deposit="13" />
+    <TransactionItem date="01/12/2025" type="DEBIT_CARD_TRANSACTION" description="" :withdrawal="8.6" :deposit="null" />
+    <TransactionItem date="30/11/2025" type="ADVICE_FAST_PAYMENT_RECEIPT" description="" :withdrawal="null" :deposit="13" />
+    <TransactionItem date="01/12/2025" type="DEBIT_CARD_TRANSACTION" description="" :withdrawal="8.6" :deposit="null" />
+    <TransactionItem date="01/12/2025" type="DEBIT_CARD_TRANSACTION" description="" :withdrawal="8.6" :deposit="null" />
+    <TransactionItem date="30/11/2025" type="ADVICE_FAST_PAYMENT_RECEIPT" description="" :withdrawal="null" :deposit="13" />
+    <TransactionItem date="30/11/2025" type="ADVICE_FAST_PAYMENT_RECEIPT" description="" :withdrawal="null" :deposit="13" />
+    <TransactionItem date="01/12/2025" type="DEBIT_CARD_TRANSACTION" description="" :withdrawal="8.6" :deposit="null" />
   </div>
 </div>
 </template>
