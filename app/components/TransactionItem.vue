@@ -21,18 +21,20 @@ const amt = computed(() =>
 const rowRef = ref<HTMLElement>()
 const isCommitting = ref(false)
 
-const { translateX, isSwiping } = useSwipeable(rowRef, {
+const { translateX, isSwiping, progress } = useSwipeable(rowRef, {
   leftThresholdCrossed() { console.log('left crossed') },
   rightThresholdCrossed() { console.log('right crossed') }
 })
 const deleteBg = computed(() => {
-  const p = Math.min(1, Math.abs(translateX.value) / (120))
-  const color = transitionColor([44, 44, 44], [239, 68, 68], p)
+  const color = transitionColor([44, 44, 44], [239, 68, 68], progress.value.leftProgess)
+  return `rgb(${color.join(',')})`
+})
+const readBg = computed(() => {
+  const color = transitionColor([44, 44, 44], [81, 162, 255], progress.value.rightProgress)
   return `rgb(${color.join(',')})`
 })
 
-const revealWidth  = computed(() => Math.max(0, -translateX.value))
-const showLabel    = computed(() => translateX.value < -32)
+const showLabel = computed(() => Math.abs(translateX.value) > 32)
 </script>
 
 <template>
@@ -43,7 +45,7 @@ const showLabel    = computed(() => translateX.value < -32)
     <div
       class="absolute inset-y-0 right-0 flex items-center justify-center rounded-xl z-0"
       :style="{
-        width: `${revealWidth}px`,
+        width: `${-translateX}px`,
         backgroundColor: deleteBg,
         transition: isSwiping ? 'none' : 'width 0.25s ease, background-color 0.12s ease',
       }"
@@ -55,6 +57,25 @@ const showLabel    = computed(() => translateX.value < -32)
         >
           <span class="text-sm font-semibold tracking-wide">Delete</span>
           <UIcon name="lucide:archive-x" class="size-4 shrink-0" />
+        </div>
+      </Transition>
+    </div>
+
+    <div
+      class="absolute inset-y-0 left-0 flex items-center justify-center rounded-xl z-0"
+      :style="{
+        width: `${translateX}px`,
+        backgroundColor: readBg,
+        transition: isSwiping ? 'none' : 'width 0.25s ease, background-color 0.12s ease',
+      }"
+    >
+      <Transition name="label">
+        <div
+          v-if="showLabel"
+          class="flex items-center gap-1.5 text-white select-none px-4 whitespace-nowrap"
+        >
+          <UIcon name="lucide:square-check" class="size-4 shrink-0" />
+          <span class="text-sm font-semibold tracking-wide">Unread</span>
         </div>
       </Transition>
     </div>
