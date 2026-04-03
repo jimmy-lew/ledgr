@@ -7,5 +7,8 @@ export default defineNuxtConfig({
   colorMode: { preference: 'system' },
   icon: { mode: 'svg' },
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: false }
+  devtools: { enabled: false },
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
+  }
 })

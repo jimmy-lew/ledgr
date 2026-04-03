@@ -17,7 +17,7 @@ const handleSearch = () => {
 
 <template>
 <div
-  class="fixed bottom-0 -translate-x-1/2 left-1/2 w-full pt-4 pb-8 flex gap-3 items-end justify-center"
+  class="fixed bottom-0 left-0 right-0 pt-4 pb-8 h-24 flex gap-3 items-end justify-center"
   :class="[ searchActive ? 'px-2' : 'px-4' ]"
 >
   <Motion
@@ -69,7 +69,7 @@ const handleSearch = () => {
       text-xl text-black dark:text-white font-medium
       transition-all duration-200 active:scale-90"
     >
-      <UIcon name="lucide:search" :customize/>
+      <UIcon name="lucide:search" />
     </div>
     <UInput v-if="searchActive" autofocus placeholder="Search..." variant="none" :ui="{ base: 'pl-0 pr-3' }" class="-ml-2 text-lg"/>
   </Motion>
