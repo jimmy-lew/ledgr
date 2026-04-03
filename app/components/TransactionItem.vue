@@ -79,7 +79,7 @@ const showLabel = computed(() => Math.abs(translateX.value) > 32)
       class="
         flex
         dark:bg-[#070707]
-        rounded-xl px-3 py-2.5 gap-3
+        rounded-xl px-3 py-2 gap-3
         relative z-10 select-none touch-pan-y
         active:bg-[#252525]
       "
