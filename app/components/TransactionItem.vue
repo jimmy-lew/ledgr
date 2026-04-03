@@ -50,18 +50,6 @@ const showLabel = computed(() => Math.abs(translateX.value) > 32)
     class="relative overflow-hidden transition-all duration-300"
     :class="{ 'ease-in-out h-0! opacity-0!': isCommitting }"
   >
-    <div class="absolute inset-y-0 right-0 flex items-center justify-center rounded-xl z-0" :style="deleteLabel" >
-      <Transition name="label">
-        <div
-          v-if="showLabel"
-          class="flex items-center gap-1.5 text-white select-none px-4 whitespace-nowrap"
-        >
-          <span class="text-sm font-semibold tracking-wide">Delete</span>
-          <UIcon name="lucide:archive-x" class="size-4 shrink-0" />
-        </div>
-      </Transition>
-    </div>
-
     <div class="absolute inset-y-0 left-0 flex items-center justify-center rounded-xl z-0" :style="readLabel" >
       <Transition name="label">
         <div
@@ -70,6 +58,18 @@ const showLabel = computed(() => Math.abs(translateX.value) > 32)
         >
           <UIcon name="lucide:square-check" class="size-4 shrink-0" />
           <span class="text-sm font-semibold tracking-wide">Unread</span>
+        </div>
+      </Transition>
+    </div>
+
+    <div class="absolute inset-y-0 right-0 flex items-center justify-center rounded-xl z-0" :style="deleteLabel" >
+      <Transition name="label">
+        <div
+          v-if="showLabel"
+          class="flex items-center gap-1.5 text-white select-none px-4 whitespace-nowrap"
+        >
+          <span class="text-sm font-semibold tracking-wide">Delete</span>
+          <UIcon name="lucide:archive-x" class="size-4 shrink-0" />
         </div>
       </Transition>
     </div>
