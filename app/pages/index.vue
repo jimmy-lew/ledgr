@@ -5,7 +5,7 @@ const { searchActive } = useActionBar()
 
 <template>
 
-<div class="flex flex-col gap-4 px-1">
+<div class="flex flex-col gap-4 px-2">
   <!-- <div class="flex flex-col items-center rounded-2xl bg-white dark:bg-[oklch(0.1448_0_0)] shadow-base-sm px-6 py-3 aspect-video">
       <div class="flex flex-col items-center justify-center w-full h-full">
           <span class="text-muted">Balance</span>
