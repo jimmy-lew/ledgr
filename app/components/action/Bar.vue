@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { NavItem } from '~/types';
-
-const props = defineProps<{ items: NavItem[] }>()
-
+const items = [
+  { icon: 'lucide:home', to: '/' },
+  { icon: 'lucide:chart-pie', to: '/budget' },
+  { icon: 'lucide:scan-line', to: '' },
+]
 const { menuState, menuActive, searchMenuState, searchActive } = useActionBar()
 const router = useRouter()
 const INDICATOR_PADDING = 4
@@ -16,13 +17,9 @@ const handleSearch = () => {
 
 <template>
 <div
-  class="fixed bottom-4 -translate-x-1/2 left-1/2 w-full py-4 flex gap-3 items-end justify-center"
-  :class="[
-    searchActive ? 'px-2' : 'px-4'
-  ]"
+  class="fixed bottom-0 -translate-x-1/2 left-1/2 w-full pt-4 pb-8 flex gap-3 items-end justify-center"
+  :class="[ searchActive ? 'px-2' : 'px-4' ]"
 >
-
-  <!-- :transition="{ type: 'spring', stiffness: 110, damping: 17, mass: 1 }" -->
   <Motion
     as="div"
     :initial="menuState" :animate="menuState"
@@ -72,7 +69,7 @@ const handleSearch = () => {
       text-xl text-black dark:text-white font-medium
       transition-all duration-200 active:scale-90"
     >
-      <UIcon name="lucide:search" />
+      <UIcon name="lucide:search" :customize/>
     </div>
     <UInput v-if="searchActive" autofocus placeholder="Search..." variant="none" :ui="{ base: 'pl-0 pr-3' }" class="-ml-2 text-lg"/>
   </Motion>
