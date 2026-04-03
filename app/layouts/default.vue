@@ -10,6 +10,17 @@ withDefaults(defineProps<{
 })
 
 const route = useRoute()
+const prevPath = ref('')
+
+watch(() => route.path, (newPath, oldPath) => {
+  if (oldPath) {
+    prevPath.value = oldPath
+  }
+})
+
+const slideDirection = computed(() => {
+  return route.path > prevPath.value ? 'forward' : 'back'
+})
 </script>
 
 <template>
@@ -22,7 +33,9 @@ const route = useRoute()
     </div>
     <div class="flex-1 min-h-0 overflow-hidden">
       <Transition name="page" mode="out-in">
-        <slot />
+        <div :key="route.path" :class="slideDirection">
+          <slot />
+        </div>
       </Transition>
     </div>
   </div>
@@ -32,14 +45,24 @@ const route = useRoute()
 <style>
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 .page-enter-from {
   opacity: 0;
-  transform: translateX(20px);
 }
 .page-leave-to {
   opacity: 0;
-  transform: translateX(-20px);
+}
+.forward.page-enter-from {
+  transform: translateX(30px);
+}
+.forward.page-leave-to {
+  transform: translateX(-30px);
+}
+.back.page-enter-from {
+  transform: translateX(-30px);
+}
+.back.page-leave-to {
+  transform: translateX(30px);
 }
 </style>
