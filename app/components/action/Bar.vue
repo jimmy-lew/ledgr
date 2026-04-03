@@ -20,6 +20,7 @@ const handleSearch = () => {
   class="fixed bottom-0 left-0 right-0 pt-4 pb-8 h-24 flex gap-3 items-end justify-center"
   :class="[ searchActive ? 'px-2' : 'px-4' ]"
 >
+  <GradientBlur />
   <Motion
     as="div"
     :initial="menuState" :animate="menuState"
@@ -29,7 +30,7 @@ const handleSearch = () => {
     bg-action backdrop-blur-md
     border border-action-border
     rounded-full
-    shadow-lg shadow-black/10"
+    shadow-lg shadow-black/10 z-10"
   >
     <ActionBarMenu />
 
@@ -60,7 +61,7 @@ const handleSearch = () => {
     class="relative flex font-mono
     bg-action backdrop-blur-md border border-action-border
     rounded-full
-    shadow-lg shadow-black/10"
+    shadow-lg shadow-black/10 z-10"
     @click="handleSearch"
   >
     <div
