@@ -10,7 +10,10 @@ const props = defineProps<{
 
 const emit = defineEmits<{ delete: [] }>()
 
-const dateDisplay = computed(() => new Date().toLocaleDateString())
+const dateDisplay = computed(() => {
+  const d = new Date()
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+})
 const amt = computed(() =>
   props.withdrawal === null ? `+${props.deposit}` : `-${props.withdrawal}`
 )
@@ -69,7 +72,7 @@ const showLabel    = computed(() => translateX.value < -32)
     >
       <div class="flex items-center gap-2 grow">
         <UChip inset position="bottom-right" size="xl">
-          <div class="rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center size-8 p-2">
+          <div class="rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center size-10 p-2">
             <UIcon name="lucide:arrow-right-left" />
           </div>
         </UChip>
