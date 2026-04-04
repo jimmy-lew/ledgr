@@ -27,7 +27,7 @@ const handleSearch = () => {
     :transition="{ duration: 0.2, ease: 'linear' }"
     class="
     relative
-    bg-action backdrop-blur-md
+    bg-action backdrop-blur-[6px]
     border border-action-border
     rounded-full
     shadow-lg shadow-black/10 z-10"
