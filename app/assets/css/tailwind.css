@@ -14,7 +14,9 @@
 
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 .page-enter-from {
   opacity: 0;
@@ -26,7 +28,7 @@
 }
 
 @theme {
-  --font-sans: "Geist", sans-serif;
+  --font-sans: "Inter", "Geist", sans-serif;
   --font-header: "Outfit", var(--font-sans);
   --font-mono:
     "Geist Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
