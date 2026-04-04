@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useRoute } from '#imports'
 
-withDefaults(defineProps<{
+const { count } = useSelectedTransactions()
+
+const props = withDefaults(defineProps<{
   title?: string,
   icons?: string[]
 }>(), {
@@ -21,6 +23,13 @@ watch(() => route.path, (newPath, oldPath) => {
 const slideDirection = computed(() => {
   return route.path > prevPath.value ? 'forward' : 'back'
 })
+
+const displayTitle = computed(() => {
+  if (count.value > 0) {
+    return `${count.value} Selected`
+  }
+  return props.title
+})
 </script>
 
 <template>
@@ -28,7 +37,7 @@ const slideDirection = computed(() => {
     <div class="fixed top-0 flex items-center justify-between w-full pt-10 px-5 shrink-0 z-50 ">
       <!-- <div class="absolute inset-0 backdrop-blur-3xl"></div> -->
       <GradientBlur class="rotate-180" />
-      <h1 class="text-2xl font-bold z-10">{{ title }}</h1>
+      <h1 class="text-2xl font-bold z-10">{{ displayTitle }}</h1>
       <div class="flex items-center justify-center gap-4 rounded-full bg-black/5 dark:bg-[#131313] h-12 px-3 py-1 text-lg z-10">
         <UIcon v-for="icon, i in icons" :key="i" :name="icon" class="transition-all duration-75 active:scale-90"/>
       </div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 const props = defineProps<{
+  id: string
   date: string
   type: string
   description: string
@@ -10,33 +11,30 @@ const props = defineProps<{
 
 const emit = defineEmits<{ delete: [] }>()
 
-const dateDisplay = computed(() => {
-  const d = new Date()
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-})
-const amt = computed(() =>
-  props.withdrawal === null ? `+${props.deposit}` : `-${props.withdrawal}`
-)
-
 const itemRef = ref<HTMLElement>()
 const isCommitting = ref(false)
-const isSelected = ref(false)
 
 const haptics = useHaptics()
+const { isSelected: isItemSelected, toggle: toggleSelection, count } = useSelectedTransactions()
 const { translateX, isSwiping, progress } = useSwipeable(itemRef, {
   leftThresholdCrossed() { console.log('left crossed') },
   rightThresholdCrossed() { console.log('right crossed') }
 })
 
+const isSelected = computed(() => isItemSelected(props.id))
+const dateDisplay = computed(() => new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))
+const amt = computed(() => props.withdrawal === null ? `+${props.deposit}` : `-${props.withdrawal}` )
+const showLabel = computed(() => Math.abs(translateX.value) > 32)
+
 useLongPressClick(itemRef, {
-  delay: 1000,
+  delay: 500,
   onLongPress: () => {
     haptics.snap()
-    isSelected.value = true
+    toggleSelection(props.id)
   },
   onClick: () => {
-    if (isSelected.value) {
-      isSelected.value = false
+    if (count.value > 0 || isItemSelected(props.id)) {
+      toggleSelection(props.id)
     }
   }
 })
@@ -58,7 +56,6 @@ const readLabel = computed(() => {
   }
 })
 
-const showLabel = computed(() => Math.abs(translateX.value) > 32)
 </script>
 
 <template>
