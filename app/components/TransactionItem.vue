@@ -21,18 +21,26 @@ const amt = computed(() =>
 const itemRef = ref<HTMLElement>()
 const isCommitting = ref(false)
 const isSelected = ref(false)
-const isLongPressing = ref(false)
 
 const haptics = useHaptics()
 const { translateX, isSwiping, progress } = useSwipeable(itemRef, {
   leftThresholdCrossed() { console.log('left crossed') },
   rightThresholdCrossed() { console.log('right crossed') }
 })
-onLongPress(itemRef, () => {
-  haptics.snap()
-  isSelected.value = true
-  isLongPressing.value = true
-}, { delay: 500 })
+
+useLongPressClick(itemRef, {
+  delay: 1000,
+  onLongPress: () => {
+    haptics.snap()
+    isSelected.value = true
+  },
+  onClick: () => {
+    if (isSelected.value) {
+      isSelected.value = false
+    }
+  }
+})
+
 const deleteLabel = computed(() => {
   const color = transitionColor([44, 44, 44], [239, 68, 68], progress.value.leftProgess)
   return {
@@ -51,18 +59,6 @@ const readLabel = computed(() => {
 })
 
 const showLabel = computed(() => Math.abs(translateX.value) > 32)
-
-const handleSelect = () => {
-  if (isLongPressing.value) {
-    isLongPressing.value = false
-    return
-  }
-  console.log('Clicked')
-  if (isSelected.value) {
-    isSelected.value = false
-    return
-  }
-}
 </script>
 
 <template>
@@ -105,7 +101,6 @@ const handleSelect = () => {
       "
       :class="{ 'transition-transform duration-250 ease-out': !isSwiping, 'bg-[#252525]!': isSelected }"
       :style="{ transform: `translateX(${translateX}px)` }"
-      @click="handleSelect"
     >
       <UChip inset position="bottom-right" size="xl" :show="!isSelected">
         <div class="rounded-full flex items-center justify-center size-10 p-2" :class="isSelected ? 'bg-black dark:bg-white text-white dark:text-black' : 'bg-black/5 dark:bg-white/5'">
