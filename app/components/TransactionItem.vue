@@ -26,16 +26,20 @@ const dateDisplay = computed(() => new Date().toLocaleDateString('en-US', { mont
 const amt = computed(() => props.withdrawal === null ? `+${props.deposit}` : `-${props.withdrawal}` )
 const showLabel = computed(() => Math.abs(translateX.value) > 32)
 
+const selectItem = () => {
+  if (isSwiping.value) return
+  haptics.snap()
+  toggleSelection(props.id)
+}
+
 useLongPressClick(itemRef, {
   delay: 500,
   onLongPress: () => {
-    haptics.snap()
-    toggleSelection(props.id)
+    selectItem()
   },
   onClick: () => {
     if (count.value > 0 || isItemSelected(props.id)) {
-      haptics.snap()
-      toggleSelection(props.id)
+      selectItem()
     }
   }
 })
