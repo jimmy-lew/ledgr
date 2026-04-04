@@ -94,9 +94,9 @@ const readLabel = computed(() => {
         dark:bg-[#070707]
         rounded-xl px-3 py-3 gap-3
         relative z-10 select-none touch-pan-y
-        active:bg-[#252525]
+        active:bg-[#1b1b1b]
       "
-      :class="{ 'transition-transform duration-250 ease-out': !isSwiping, 'bg-[#252525]!': isSelected }"
+      :class="{ 'transition-transform duration-250 ease-out': !isSwiping, 'bg-[#1b1b1b]!': isSelected }"
       :style="{ transform: `translateX(${translateX}px)` }"
     >
       <UChip inset position="bottom-right" size="xl" :show="!isSelected">
