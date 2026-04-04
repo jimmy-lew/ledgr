@@ -34,6 +34,7 @@ useLongPressClick(itemRef, {
   },
   onClick: () => {
     if (count.value > 0 || isItemSelected(props.id)) {
+      haptics.snap()
       toggleSelection(props.id)
     }
   }
