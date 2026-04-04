@@ -18,13 +18,21 @@ const amt = computed(() =>
   props.withdrawal === null ? `+${props.deposit}` : `-${props.withdrawal}`
 )
 
-const rowRef = ref<HTMLElement>()
+const itemRef = ref<HTMLElement>()
 const isCommitting = ref(false)
+const isSelected = ref(false)
+const isLongPressing = ref(false)
 
-const { translateX, isSwiping, progress } = useSwipeable(rowRef, {
+const haptics = useHaptics()
+const { translateX, isSwiping, progress } = useSwipeable(itemRef, {
   leftThresholdCrossed() { console.log('left crossed') },
   rightThresholdCrossed() { console.log('right crossed') }
 })
+onLongPress(itemRef, () => {
+  haptics.snap()
+  isSelected.value = true
+  isLongPressing.value = true
+}, { delay: 500 })
 const deleteLabel = computed(() => {
   const color = transitionColor([44, 44, 44], [239, 68, 68], progress.value.leftProgess)
   return {
@@ -43,6 +51,18 @@ const readLabel = computed(() => {
 })
 
 const showLabel = computed(() => Math.abs(translateX.value) > 32)
+
+const handleSelect = () => {
+  if (isLongPressing.value) {
+    isLongPressing.value = false
+    return
+  }
+  console.log('Clicked')
+  if (isSelected.value) {
+    isSelected.value = false
+    return
+  }
+}
 </script>
 
 <template>
@@ -74,24 +94,26 @@ const showLabel = computed(() => Math.abs(translateX.value) > 32)
       </Transition>
     </div>
 
-    <div
-      ref="rowRef"
+    <button
+      ref="itemRef"
       class="
-        flex
+        flex w-full
         dark:bg-[#070707]
         rounded-xl px-3 py-2 gap-3
         relative z-10 select-none touch-pan-y
         active:bg-[#252525]
       "
-      :class="{ 'transition-transform duration-250 ease-out': !isSwiping }"
+      :class="{ 'transition-transform duration-250 ease-out': !isSwiping, 'bg-[#252525]!': isSelected }"
       :style="{ transform: `translateX(${translateX}px)` }"
+      @click="handleSelect"
     >
-      <UChip inset position="bottom-right" size="xl">
-        <div class="rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center size-10 p-2">
-          <UIcon name="lucide:arrow-right-left" />
+      <UChip inset position="bottom-right" size="xl" :show="!isSelected">
+        <div class="rounded-full flex items-center justify-center size-10 p-2" :class="isSelected ? 'bg-black dark:bg-white text-white dark:text-black' : 'bg-black/5 dark:bg-white/5'">
+          <UIcon v-if="isSelected" name="lucide:check" />
+          <UIcon v-else name="lucide:arrow-right-left" />
         </div>
       </UChip>
-      <div class="flex flex-col grow">
+      <div class="flex flex-col items-start grow">
         <div class="flex items-center justify-between w-full">
           <span class="font-medium truncate max-w-52">{{ type }}</span>
         </div>
@@ -100,7 +122,7 @@ const showLabel = computed(() => Math.abs(translateX.value) > 32)
       <div class="flex flex-col">
         <span>{{ amt }}</span>
       </div>
-    </div>
+    </button>
 
   </div>
 </template>
