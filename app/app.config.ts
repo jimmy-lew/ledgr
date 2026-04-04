@@ -15,9 +15,9 @@ export default defineAppConfig({
     },
     drawer: {
       slots: {
-        handle: '!mt-2',
+        handle: '!mt-2 -bottom-2',
         overlay: 'bg-black/5 dark:bg-transparent',
-        content: '!rounded-t-4xl bg-[#FAFAFA] dark:bg-[#171717] ring-0'
+        content: 'bg-transparent ring-0 mx-2 mb-2'
       },
       compoundVariants: [
         {

@@ -26,11 +26,11 @@ const displayTitle = computed(() => selectionActive.value ? `${count.value} Sele
 </script>
 
 <template>
-  <div class="relative min-h-screen flex flex-col bg-[oklch(96%_0_0)] dark:bg-[#070707] pt-4 gap-2">
+  <div class="relative min-h-screen flex flex-col bg-white dark:bg-[#070707] pt-4 gap-2">
     <div class="fixed top-0 flex items-center justify-between w-full pt-10 px-5 shrink-0 z-50 ">
       <GradientBlur class="rotate-180" />
       <h1 class="text-2xl font-bold z-10">{{ displayTitle }}</h1>
-      <div class="flex items-center justify-center gap-4 rounded-full bg-black/5 dark:bg-[#1d1d1d] h-12 px-3 py-1 text-lg z-10">
+      <div class="flex items-center justify-center gap-4 rounded-full bg-black/5 dark:bg-[#1d1d1d] h-12 px-3.75 py-1 text-lg z-10 transition-all duration-75 has-first:active:scale-90">
         <button v-if="selectionActive" @click="clear">Done</button>
         <UIcon v-else v-for="icon, i in icons" :key="i" :name="icon" class="transition-all duration-75 active:scale-90"/>
       </div>

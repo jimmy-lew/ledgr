@@ -23,7 +23,7 @@ const { translateX, isSwiping, progress } = useSwipeable(itemRef, {
 
 const isSelected = computed(() => isItemSelected(props.id))
 const dateDisplay = computed(() => new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))
-const amt = computed(() => props.withdrawal === null ? `+${props.deposit}` : `-${props.withdrawal}` )
+const amt = computed(() => props.withdrawal === null ? `+${props.deposit}` : `${props.withdrawal}` )
 const showLabel = computed(() => Math.abs(translateX.value) > 32)
 
 const selectItem = () => {
@@ -96,15 +96,15 @@ const readLabel = computed(() => {
       ref="itemRef"
       class="
         flex w-full
-        dark:bg-[#070707]
+        bg-white dark:bg-[#070707]
         rounded-xl px-3 py-3 gap-3
         relative z-10 select-none touch-pan-y
-        active:bg-[#1b1b1b]
+        active:bg-[#f5f5f5] dark:active:bg-[#1b1b1b]
       "
-      :class="{ 'transition-transform duration-250 ease-out': !isSwiping, 'bg-[#1b1b1b]!': isSelected }"
+      :class="{ 'transition-transform duration-250 ease-out': !isSwiping, 'bg-[#f5f5f5]! dark:bg-[#1b1b1b]!': isSelected }"
       :style="{ transform: `translateX(${translateX}px)` }"
     >
-      <UChip inset position="bottom-right" size="xl" :show="!isSelected">
+      <UChip inset position="bottom-right" size="xl" :show="false">
         <div class="rounded-full flex items-center justify-center size-10 p-2" :class="isSelected ? 'bg-black dark:bg-white text-white dark:text-black' : 'bg-black/5 dark:bg-white/5'">
           <UIcon v-if="isSelected" name="lucide:check" />
           <UIcon v-else name="lucide:arrow-right-left" />
@@ -117,7 +117,7 @@ const readLabel = computed(() => {
         <span class="text-muted text-sm">{{ dateDisplay }}</span>
       </div>
       <div class="flex flex-col">
-        <span class="px-1 py-px rounded-sm dark:bg-white/5">{{ amt }}</span>
+        <span class="px-1 py-px rounded-sm dark:bg-white/5" :class="{'text-green-400': withdrawal === null}">{{ amt }}</span>
       </div>
     </button>
 
