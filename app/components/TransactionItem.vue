@@ -117,7 +117,7 @@ const readLabel = computed(() => {
         <span class="text-muted text-sm">{{ dateDisplay }}</span>
       </div>
       <div class="flex flex-col">
-        <span class="px-1 py-px rounded-sm dark:bg-white/5" :class="{'text-green-400': withdrawal === null}">{{ amt }}</span>
+        <span class="px-1 py-px rounded-sm" :class="{'text-green-400': withdrawal === null}">{{ amt }}</span>
       </div>
     </button>
 
