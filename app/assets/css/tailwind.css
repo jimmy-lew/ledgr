@@ -4,69 +4,69 @@
 @variant dark (&:where(.dark, .dark *));
 
 * {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 *::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .page-enter-active,
 .page-leave-active {
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
 }
 .page-enter-from {
-  opacity: 0;
-  transform: translateX(20px);
+    opacity: 0;
+    transform: translateX(20px);
 }
 .page-leave-to {
-  opacity: 0;
-  transform: translateX(-20px);
+    opacity: 0;
+    transform: translateX(-20px);
 }
 
 @theme {
-  --font-sans: "Inter", "Geist", sans-serif;
-  --font-header: "Outfit", var(--font-sans);
-  --font-mono:
-    "Geist Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
+    --font-sans: "Inter", "Geist", sans-serif;
+    --font-header: "Outfit", var(--font-sans);
+    --font-mono:
+        "Geist Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
 
-  --color-action: oklch(1 0 0 / 0.3);
-  --color-action-border: oklch(0.65 0.01 264.53 / 0.3);
+    --color-action: oklch(1 0 0 / 0.2);
+    --color-action-border: oklch(0.65 0.01 264.53 / 0.3);
 }
 
 @utility shadow-base-sm {
-  box-shadow:
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px,
-    rgba(0, 0, 0, 0.04) 0px 2px 2px 0px,
-    rgb(250, 250, 250) 0px 0px 0px 1px;
-
-  .dark & {
     box-shadow:
-      rgba(255, 255, 255, 0.145) 0px 0px 0px 1px,
-      rgba(0, 0, 0, 0.16) 0px 1px 2px 0px,
-      rgb(0, 0, 0) 0px 0px 0px 1px;
-  }
+        rgba(0, 0, 0, 0.08) 0px 0px 0px 1px,
+        rgba(0, 0, 0, 0.04) 0px 2px 2px 0px,
+        rgb(250, 250, 250) 0px 0px 0px 1px;
+
+    .dark & {
+        box-shadow:
+            rgba(255, 255, 255, 0.145) 0px 0px 0px 1px,
+            rgba(0, 0, 0, 0.16) 0px 1px 2px 0px,
+            rgb(0, 0, 0) 0px 0px 0px 1px;
+    }
 }
 
 .dark {
-  --color-action: oklch(0.261 0 0 / 0.7);
-  --color-action-border: oklch(0.35 0.01 264.53 / 0.2);
+    --color-action: oklch(0.261 0 0 / 0.7);
+    --color-action-border: oklch(0.35 0.01 264.53 / 0.2);
 }
 
 @theme static {
-  --color-zinc-950: oklch(0 0 0);
-  --color-zinc-900: oklch(0 0 0);
-  --color-zinc-850: oklch(0.18 0 0);
-  --color-zinc-800: oklch(0.26 0 0);
-  --color-zinc-700: oklch(0.35 0 0);
-  --color-zinc-600: oklch(0.45 0 0);
-  --color-zinc-500: oklch(0.55 0 0);
-  --color-zinc-400: oklch(0.65 0 0);
-  --color-zinc-300: oklch(0.75 0 0);
-  --color-zinc-200: oklch(0.85 0 0);
-  --color-zinc-100: oklch(1 0 0);
+    --color-zinc-950: oklch(0 0 0);
+    --color-zinc-900: oklch(0 0 0);
+    --color-zinc-850: oklch(0.18 0 0);
+    --color-zinc-800: oklch(0.26 0 0);
+    --color-zinc-700: oklch(0.35 0 0);
+    --color-zinc-600: oklch(0.45 0 0);
+    --color-zinc-500: oklch(0.55 0 0);
+    --color-zinc-400: oklch(0.65 0 0);
+    --color-zinc-300: oklch(0.75 0 0);
+    --color-zinc-200: oklch(0.85 0 0);
+    --color-zinc-100: oklch(1 0 0);
 }
