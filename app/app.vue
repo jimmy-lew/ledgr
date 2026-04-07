@@ -33,10 +33,16 @@ const router = useRouter()
 defineShortcuts({
   'G-H': () => router.push('/'),
 })
+
+const toaster = {
+  expand: false,
+  position: 'bottom-center' as const,
+  class: 'bottom-24 w-74',
+}
 </script>
 
 <template>
-  <UApp>
+  <UApp :toaster>
     <div class="bg-white dark:bg-[#070707]" data-vaul-drawer-wrapper>
       <NuxtLayout>
         <NuxtPage />

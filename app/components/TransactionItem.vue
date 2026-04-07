@@ -15,9 +15,10 @@ const itemRef = ref<HTMLElement>()
 const isCommitting = ref(false)
 
 const haptics = useHaptics()
+const toast = useToast()
 const { isSelected: isItemSelected, toggle: toggleSelection, count } = useSelectedTransactions()
 const { translateX, isSwiping, progress } = useSwipeable(itemRef, {
-  leftThresholdCrossed() { console.log('left crossed') },
+  leftThresholdCrossed() { toast.add({ title: 'Item deleted', progress: false }) },
   rightThresholdCrossed() { console.log('right crossed') }
 })
 

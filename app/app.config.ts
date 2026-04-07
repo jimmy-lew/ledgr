@@ -13,6 +13,11 @@ export default defineAppConfig({
       secondary: 'purple',
       neutral: 'zinc'
     },
+    toast: {
+      slots: {
+        root: 'rounded-full ring-0 bg-white dark:bg-[#1d1d1d]',
+      }
+    },
     drawer: {
       slots: {
         handle: '!mt-2 -bottom-2',
