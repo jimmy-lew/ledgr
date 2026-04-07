@@ -10,7 +10,7 @@ const isDark = computed({
 </script>
 
 <template>
-  <UDrawer>
+  <UDrawer title="Settings" description="Settings drawer">
     <template #content>
       <div class="flex flex-col h-screen gap-2 py-4 px-6 bg-white dark:bg-[#171717] rounded-4xl">
         <div class="grid grid-cols-3 items-center">
