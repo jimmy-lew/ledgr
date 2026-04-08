@@ -21,9 +21,9 @@ const showDeleteToast = () => {
   toast.add({
     title: 'Item deleted',
     progress: false,
-    closeIcon: ' ',
+    close: false,
     actions: [{ label: 'Undo', variant: 'ghost', color: 'neutral' }],
-    ui: { root: 'py-3', wrapper: 'flex-row items-center justify-between', actions: 'mt-0', close: 'size-0' }
+    ui: { root: 'py-3', wrapper: 'w-full flex-row items-center justify-between', actions: 'mt-0' },
   })
 }
 
