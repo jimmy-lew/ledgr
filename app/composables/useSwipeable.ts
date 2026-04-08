@@ -43,7 +43,7 @@ export function useSwipeable(item: Ref<HTMLElement | undefined>, opts: UseSwipea
     haptics.snap()
   }
 
-  const { isSwiping, distanceX } = usePointerSwipe(item, { threshold: 0, onSwipeEnd})
+  const { isSwiping, distanceX } = usePointerSwipe(item, { threshold: 10, onSwipeEnd})
 
   const translateX = computed(() => {
     if (!isSwiping.value) return offset.value
