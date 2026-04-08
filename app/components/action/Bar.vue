@@ -7,7 +7,7 @@ const items = [
 const { menuState, menuActive, searchMenuState, searchActive } = useActionBar()
 const router = useRouter()
 const INDICATOR_PADDING = 4
-const activeIndex = ref(0)
+const activeIndex = ref(3)
 const indicatorPos = computed(() => (activeIndex.value * 56) + INDICATOR_PADDING)
 
 const handleSearch = () => {

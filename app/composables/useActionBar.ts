@@ -1,4 +1,4 @@
-const DEFAULT_WIDTH = 228 // 224px content spacing + 4px padding
+const DEFAULT_WIDTH = 232 // 224px content spacing + 8px padding
 const DEFAULT_HEIGHT = 56 // 48px content height + 4px padding
 const BORDER_RADIUS = 999
 
