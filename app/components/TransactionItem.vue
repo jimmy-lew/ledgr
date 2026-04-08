@@ -17,8 +17,18 @@ const isCommitting = ref(false)
 const haptics = useHaptics()
 const toast = useToast()
 const { isSelected: isItemSelected, toggle: toggleSelection, count } = useSelectedTransactions()
+const showDeleteToast = () => {
+  toast.add({
+    title: 'Item deleted',
+    progress: false,
+    closeIcon: ' ',
+    actions: [{ label: 'Undo', variant: 'ghost', color: 'neutral' }],
+    ui: { root: 'py-3', wrapper: 'flex-row items-center justify-between', actions: 'mt-0', close: 'size-0' }
+  })
+}
+
 const { translateX, isSwiping, progress } = useSwipeable(itemRef, {
-  leftThresholdCrossed() { toast.add({ title: 'Item deleted', progress: false }) },
+  leftThresholdCrossed: showDeleteToast,
   rightThresholdCrossed() { console.log('right crossed') }
 })
 
