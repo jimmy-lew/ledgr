@@ -25,17 +25,18 @@ export function useLongPressClick(
   }
 
   const handleLongPress = () => {
-    isLongPressing.value = true
     onLongPress?.()
   }
 
   const handlePointerDown = () => {
+    isLongPressing.value = true
     timeout = setTimeout(() => {
       handleLongPress()
     }, delay)
   }
 
   const handleRelease = () => {
+    isLongPressing.value = false
     if (!timeout) return
     clearTimeout(timeout)
     timeout = null
