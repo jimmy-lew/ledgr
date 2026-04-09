@@ -43,10 +43,11 @@ const toaster = {
 
 <template>
   <UApp :toaster>
-    <div class="bg-white dark:bg-[#070707]" data-vaul-drawer-wrapper>
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
+    <div class="flex flex-1 w-full h-full min-h-screen bg-neutral-50 sm:bg-white sm:dark:bg-[#070707]" data-vaul-drawer-wrapper>
+        <HomeSidebar />
+        <NuxtLayout>
+            <NuxtPage />
+        </NuxtLayout>
     </div>
   </UApp>
 </template>
