@@ -7,7 +7,7 @@ useHead({
     { charset: 'utf-8' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1, interactive-widget=resizes-content' },
   ],
-  link: [{ rel: 'icon', href: '/favicon.png' }],
+  link: [{ rel: 'icon', href: '/ledgr.svg' }],
   htmlAttrs: {
     lang: 'en',
     class: ''
@@ -37,7 +37,7 @@ defineShortcuts({
 const toaster = {
   expand: false,
   position: 'bottom-center' as const,
-  class: 'bottom-24 w-74',
+  class: 'bottom-24 sm:bottom-4 w-74',
 }
 </script>
 
