@@ -26,7 +26,7 @@ const displayTitle = computed(() => selectionActive.value ? `${count.value} Sele
 </script>
 
 <template>
-  <div class="relative flex grow shrink flex-col overflow-hidden sm:m-2 sm:rounded-xl content-shadow bg-white dark:bg-[#070707] pt-4 gap-2">
+  <div class="relative flex grow shrink flex-col overflow-hidden sm:m-2 sm:rounded-xl content-box pt-4 sm:p-0 gap-2">
     <div class="fixed sm:hidden top-0 flex items-center justify-between w-full pt-10 px-5 shrink-0 z-50 ">
       <GradientBlur class="rotate-180" />
       <h1 class="text-2xl font-bold z-10">{{ displayTitle }}</h1>
@@ -35,7 +35,7 @@ const displayTitle = computed(() => selectionActive.value ? `${count.value} Sele
         <UIcon v-else v-for="icon, i in icons" :key="i" :name="icon" class="transition-all duration-75 active:scale-90"/>
       </div>
     </div>
-    <div class="flex-1 min-h-0 overflow-hidden pt-22 sm:pt-0">
+    <div class="flex-1 min-h-0 overflow-hidden pt-22 sm:pt-0 bg-default sm:dark:bg-neutral">
       <Transition name="page" mode="out-in">
         <div :key="route.path" :class="slideDirection">
           <slot />
@@ -47,11 +47,6 @@ const displayTitle = computed(() => selectionActive.value ? `${count.value} Sele
 </template>
 
 <style>
-
-.content-shadow {
-    box-shadow: lch(0 0 0 / 0.02) 0px 3px 6px -2px, lch(0 0 0 / 0.04) 0px 1px 1px;
-    border: 0.5px solid lch(90.84 0 282);
-}
 
 .page-enter-active,
 .page-leave-active {

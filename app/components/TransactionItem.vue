@@ -107,7 +107,7 @@ const readLabel = computed(() => {
       ref="itemRef"
       class="
         flex w-full
-        bg-white dark:bg-[#070707]
+        bg-default sm:bg-neutral
         rounded-xl px-3 py-3 gap-3
         relative z-10 select-none touch-pan-y
         active:bg-[#f5f5f5] dark:active:bg-[#1b1b1b]
