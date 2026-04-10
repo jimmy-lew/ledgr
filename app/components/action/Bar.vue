@@ -40,7 +40,7 @@ const handleSearch = () => {
     </div>
 
     <div v-if="searchActive" class="relative">
-      <ActionBarItem :item="items[activeIndex]" :index="activeIndex" class="w-12 text-muted" />
+      <ActionBarItem :item="items[activeIndex] || items[0]" :index="activeIndex" class="w-12 text-muted" />
     </div>
 
     <Motion
