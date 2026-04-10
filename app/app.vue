@@ -46,8 +46,9 @@ const toaster = {
     <div class="flex flex-1 w-full h-full min-h-full bg-default sm:bg-neutral sm:dark:bg-default" data-vaul-drawer-wrapper>
       <HomeSidebar />
       <NuxtLayout>
-          <NuxtPage />
+        <NuxtPage />
       </NuxtLayout>
+      <ActionBar class="z-50 sm:hidden" />
     </div>
   </UApp>
 </template>
