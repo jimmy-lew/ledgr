@@ -16,6 +16,7 @@ export function useLongPressClick(
   let timeout: TimerHandle | null = null
 
   const handleClick = (e: Event) => {
+    console.log('long press click', isLongPressing.value)
     if (isLongPressing.value) {
       isLongPressing.value = false
       e.stopImmediatePropagation()
@@ -35,7 +36,8 @@ export function useLongPressClick(
     }, delay)
   }
 
-  const handleRelease = () => {
+  const handleRelease = (e: PointerEvent) => {
+    if (e.pointerType === 'touch') { isLongPressing.value = false }
     if (!timeout) return
     clearTimeout(timeout)
     timeout = null
