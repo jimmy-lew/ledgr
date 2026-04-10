@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <USidebar :open="true" variant="inset" collapsible="offcanvas">
-        Test
-    </USidebar>
+  <UDashboardSidebar collapsible resizable :ui="{ root: 'border-0' }">
+      Test
+  </UDashboardSidebar>
 </template>
