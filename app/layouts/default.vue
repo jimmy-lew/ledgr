@@ -21,15 +21,18 @@ const slideDirection = computed(() => route.path > prevPath.value ? 'forward' : 
 
 <template>
   <MobileHeader :title :icons />
-  <main class="relative flex flex-col grow shrink gap-2 sm:my-2 sm:mr-2 sm:rounded-xl content-box pt-4 sm:p-0">
-    <div class="flex-1 min-h-0 overflow-hidden pt-22 sm:pt-0 bg-default sm:dark:bg-neutral">
-      <Transition name="page" mode="out-in">
-        <div :key="route.path" :class="slideDirection">
-          <slot />
-        </div>
-      </Transition>
-    </div>
-  </main>
+  <div class="relative flex flex-col grow shrink min-w-0">
+    <main class="relative flex flex-col grow shrink gap-2 sm:my-2 sm:mr-2 sm:rounded-xl sm:content-box pt-4 sm:p-0 bg-default sm:dark:bg-neutral">
+      <div class="flex-1 min-h-0 overflow-hidden pt-22 sm:pt-0">
+        <Transition name="page" mode="out-in">
+          <div :key="route.path" :class="slideDirection" class="relative sm:absolute inset-0 overflow-hidden">
+            <slot />
+          </div>
+        </Transition>
+      </div>
+    </main>
+    <div class="w-full h-7 shrink"></div>
+  </div>
 </template>
 
 <style>
