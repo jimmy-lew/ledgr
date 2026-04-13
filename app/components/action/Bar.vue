@@ -9,6 +9,9 @@ const router = useRouter()
 const INDICATOR_PADDING = 4
 const activeIndex = ref(3)
 const indicatorPos = computed(() => (activeIndex.value * 56) + INDICATOR_PADDING)
+const activeItem = computed(() => {
+ return items[activeIndex.value] || { icon: 'lucide:home', to: '/' }
+})
 
 const handleSearch = () => {
   router.push('/search')
@@ -40,7 +43,7 @@ const handleSearch = () => {
     </div>
 
     <div v-if="searchActive" class="relative">
-      <ActionBarItem :item="items[activeIndex] || items[0]" :index="activeIndex" class="w-12 text-muted" />
+      <ActionBarItem :item="activeItem" :index="activeIndex" class="w-12 text-muted" />
     </div>
 
     <Motion
