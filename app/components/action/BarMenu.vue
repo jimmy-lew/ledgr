@@ -1,26 +1,7 @@
 <script setup lang="ts">
-import { CustomiseDrawer, SettingsDrawer, StatementUpload, WidgetCreate } from '#components';
-
 const { menuActive, setMenuRef } = useActionBar()
 const router = useRouter()
-const overlay = useOverlay()
-
-const statementDrawer = overlay.create(StatementUpload)
-const createWidgetModal = overlay.create(WidgetCreate)
-const customiseDrawer = overlay.create(CustomiseDrawer)
-const settingsDrawer = overlay.create(SettingsDrawer)
-
-const handleAddStatement = () => {
-  statementDrawer.open()
-}
-
-const handleAddWidget = () => {
-  createWidgetModal.open()
-}
-
-const handleSettings = () => {
-  settingsDrawer.open()
-}
+const { handleAddStatement, handleAddWidget, handleCustomize, handleSettings } = useOverlayItems()
 
 const items = [
   { icon: 'lucide:home', title: 'Home', click: () => router.push('/')},
@@ -83,7 +64,7 @@ const animate = computed(() => ({ opacity: menuActive.value ? 1 : 0 }))
 
     <button
       class="w-full group font-medium transition-all duration-75 active:scale-90 first:bg-white/5 first:rounded-full"
-      @click="customiseDrawer.open"
+      @click="handleCustomize"
     >
       <div
         class="
