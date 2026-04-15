@@ -1,0 +1,10 @@
+items:
+  - icon: lucide:home
+    to: /
+    label: Home
+  - icon: lucide:chart-pie
+    to: /budget
+    label: Budget
+  - icon: lucide:scan-line
+    to: ''
+    label: Add transaction

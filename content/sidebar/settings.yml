@@ -1,0 +1,13 @@
+items:
+  - icon: lucide:settings
+    to: /settings/preferences
+    label: Preferences
+  - icon: lucide:user
+    to: /settings/profile
+    label: Profile
+  - icon: lucide:bell
+    to: /settings/notifications
+    label: Notifications
+  - icon: lucide:shield-check
+    to: /settings/security
+    label: Security and access

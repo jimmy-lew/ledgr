@@ -1,5 +1,16 @@
 <script setup lang="ts">
 
+const route = useRoute()
+
+const sidebarKey = computed(() => route.path.startsWith('/settings') ? 'settings' : 'default')
+
+const { data: sidebarData } = await useAsyncData(
+  `sidebar-${sidebarKey.value}`,
+  () => queryCollection('sidebar').where('stem', '=', `sidebar/${sidebarKey.value}`).first(),
+  { watch: [sidebarKey] })
+
+const items = computed(() => sidebarData.value?.items ?? [])
+
 const isCollapsed = ref(false)
 
 defineShortcuts({
@@ -21,6 +32,8 @@ const sidebarUi = computed(() => ({
     resizable
     :ui="sidebarUi"
   >
-    Test
+      <ul class="flex flex-col">
+          <UButton v-for="item in items" v-bind="item" variant="ghost" color="neutral" />
+      </ul>
   </UDashboardSidebar>
 </template>

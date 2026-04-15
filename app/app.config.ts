@@ -1,7 +1,7 @@
 export default defineAppConfig({
   icon: {
     customize: (content: string, name: string, prefix: string, provider: string) => {
-      if (prefix === 'lucide') {
+      if (prefix === 'lucide' && typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches) {
         content = content.replace(/stroke-width="[^"]*"/g, 'stroke-width="3"')
       }
       return content

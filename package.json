@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@libsql/client": "^0.15.0",
+    "@nuxt/content": "^3.13.0",
     "@nuxt/eslint": "1.15.1",
     "@nuxt/fonts": "0.14.0",
     "@nuxt/hints": "1.0.0-alpha.6",
@@ -23,6 +24,7 @@
     "@vueuse/core": "^14.2.1",
     "@vueuse/math": "^14.2.1",
     "@vueuse/nuxt": "^14.2.1",
+    "better-sqlite3": "^12.9.0",
     "effect": "^3.19.18",
     "motion-v": "2.0.0-beta.4",
     "nuxt": "^4.4.2",
@@ -38,5 +40,11 @@
     "@tauri-apps/cli": "^2.10.0",
     "@types/node": "^25.2.3",
     "typescript": "^5.9.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "sqlite3"
+    ]
   }
 }
