@@ -28,7 +28,7 @@ const router = useRouter()
 
 defineShortcuts({
   'G-H': () => router.push('/'),
-  'G-S': () => router.push('/search')
+  'G-S': () => router.push('/settings')
 })
 
 const toaster = {
