@@ -33,7 +33,7 @@ const sidebarUi = computed(() => ({
     :ui="sidebarUi"
   >
       <ul class="flex flex-col">
-          <UButton v-for="item in items" v-bind="item" variant="ghost" color="neutral" />
+          <UButton v-for="item in items" v-bind="item" variant="ghost" color="neutral" :ui="{ leadingIcon: 'size-4' }"/>
       </ul>
   </UDashboardSidebar>
 </template>
