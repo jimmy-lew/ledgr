@@ -8,8 +8,8 @@ const isDark = computed({
 </script>
 
 <template>
-<div class="flex flex-col pt-12 w-160">
-  <h2>General</h2>
+<div class="flex flex-col pt-8 w-160">
+  <h2 class="pl-4 font-medium">General</h2>
   <div class="flex flex-col gap-px mt-2">
     <div class="flex items-center justify-between bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 active:scale-95 transition-all duration-300 px-4 py-3 first:rounded-t-3xl last:rounded-b-3xl">
       Workspace
