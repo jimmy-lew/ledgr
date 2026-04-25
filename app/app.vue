@@ -25,8 +25,15 @@ useSeoMeta({
 })
 
 const router = useRouter()
+const colorMode = useColorMode()
+
+const isDark = computed({
+  get() { return colorMode.value === 'dark' },
+  set(_isDark: boolean) { colorMode.preference = _isDark ? 'dark' : 'light' }
+})
 
 defineShortcuts({
+  'T-T': () => isDark.value = !isDark.value,
   'G-H': () => router.push('/'),
   'G-S': () => router.push('/settings/preferences')
 })
